@@ -1,32 +1,28 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-main>
+      <v-app-bar elevation="1" color="#153040" height="90" justify-center >
+        <v-app-bar-nav-icon color="white" x-large ></v-app-bar-nav-icon>
+        <v-app-bar-title class="text-h3 white--text text-no-wrap" style="font-family:'Jockey One', sans-serif !important;" ><div>Ca<span class="orange--text lighten-1">R</span>ent</div></v-app-bar-title>
+        
+      </v-app-bar>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
+<script>
+export default {
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  data: () => ({
+    //
+  }),
+};
+</script>
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+<style>
+
+
 </style>
