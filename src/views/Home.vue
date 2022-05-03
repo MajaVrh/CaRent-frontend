@@ -1,15 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <img
+      src="https://www.askideas.com/wp-content/uploads/2017/12/Funny-Laughing-Face-Car.jpg"
+      alt=""
+    />
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'Home',
-  components: {
-  }
-}
+  name: "Home",
+  components: {},
+};
 </script>
