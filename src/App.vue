@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list-item>
+    <v-navigation-drawer v-model="drawer" app clipped>
+      <v-list-item style="margin-top: 5rem">
         <v-list-item-content>
           <v-list-item-title class="text-h6"> Menu</v-list-item-title>
           <v-list-item-subtitle> Where do you wanna go? </v-list-item-subtitle>
@@ -19,7 +19,16 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-app-bar elevation="1" color="#153040" height="70" justify-center>
+      <v-app-bar
+        style="z-index: 999 !important"
+        clipped-left
+        clipped-right
+        elevation="1"
+        color="#153040"
+        height="70"
+        justify-center
+        fixed
+      >
         <v-app-bar-nav-icon
           @click="closeDrawer()"
           color="white"
@@ -40,8 +49,8 @@
           ></v-avatar
         >
       </v-app-bar>
-      <v-navigation-drawer right v-model="drawerAccount" app>
-        <v-list-item>
+      <v-navigation-drawer app clipped right v-model="drawerAccount">
+        <v-list-item style="margin-top: 5rem">
           <v-list-item-content>
             <v-list-item-title class="text-h6"> Account</v-list-item-title>
           </v-list-item-content>
@@ -65,36 +74,43 @@
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
-      <hr style="background-color: orange; padding: 0.15rem 0" />
+      <hr
+        style="
+          z-index: 9999 !important;
+          background-color: orange;
+          padding: 0.16rem 0;
+        "
+      />
       <router-view />
     </v-main>
 
     <v-footer dark padless color="#153040">
       <v-container
-        class="text-h4 white--text text-no-wrap d-flex justify-center mt-16"
+        :cols="12"
+        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
 
-      <v-container class="pb-8 d-flex justify-space-around">
+      <v-container :cols="8" class="pb-8">
         <v-card
           flat
           tile
           class="lighten-1 white--text text-center pb-16"
           color="#153040"
         >
-          <v-row class="pb-8 justify-space-between" style="width: 50rem">
-            <v-col style="width: 10rem">
-              <v-card color="#153040" class="text-left" outlined>
+          <v-row class="pb-8">
+            <v-col :cols="12" :xs="12" :md="4" :sm="12">
+              <v-card color="#153040" outlined>
                 <v-icon size="30" class="pb-1 mr-1"> mdi-email </v-icon>
                 <b> Email</b>
               </v-card>
-              <v-card color="#153040" class="text-left" outlined>
+              <v-card color="#153040" outlined>
                 carent@gmail.com <br />
                 carent.help@gmail.com
               </v-card>
             </v-col>
-            <v-col style="width: 10rem">
+            <v-col :cols="12" :xs="12" :md="4" :sm="12">
               <v-card color="#153040" outlined>
                 <v-icon size="30" class="pb-1 mr-1"> mdi-phone-classic </v-icon>
                 <b> Phone</b>
@@ -105,14 +121,14 @@
                 + 099 123 4555
               </v-card>
             </v-col>
-            <v-col style="width: 10rem">
-              <v-card color="#153040" class="text-right" outlined>
+            <v-col :cols="12" :xs="12" :md="4" :sm="12">
+              <v-card color="#153040" outlined>
                 <v-icon size="30" class="pb-1 mr-1"
                   >mdi-clock-time-four
                 </v-icon>
                 <b> Worikng hours</b>
               </v-card>
-              <v-card color="#153040" class="text-right" outlined>
+              <v-card color="#153040" outlined>
                 Monday-Friday <br />
                 08:00-16:00 <br />
               </v-card>
