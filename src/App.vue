@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="colorChange">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list-item style="margin-top: 5rem">
         <v-list-item-content>
@@ -28,6 +28,7 @@
         height="70"
         justify-center
         fixed
+        v-if="this.$route.name != 'login'"
       >
         <v-app-bar-nav-icon
           @click="closeDrawer()"
@@ -74,20 +75,20 @@
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
-      <hr
-        style="
-          z-index: 9999 !important;
-          background-color: orange;
-          padding: 0.16rem 0;
-        "
-      />
       <router-view />
     </v-main>
 
-    <v-footer dark padless color="#153040">
+    <v-footer dark padless color="#153040" v-if="this.$route.name != 'login'">
       <v-container
         :cols="12"
-        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
+        class="
+          text-h4
+          white--text
+          text-no-wrap
+          d-flex
+          justify-space-around
+          mt-15
+        "
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
@@ -191,8 +192,13 @@ export default {
       }
       this.drawerAccount = !this.drawerAccount;
     },
+    
   },
 };
 </script>
 
-<style></style>
+<style>
+.login {
+  background-color: #153040 !important;
+}
+</style>
