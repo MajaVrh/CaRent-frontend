@@ -64,14 +64,14 @@
           </v-card>
         </v-col>
         <v-col
-          :cols="11"
+          :cols="12"
           :xs="3"
           :md="5"
           :sm="8"
           class="justify-center text-center align-center"
         >
           <v-card flat>
-            <v-img class="img-home" src="../assets/auto1.png" fill />
+            <v-img class="img-home-car" src="../assets/auto1.png" fill />
           </v-card>
         </v-col>
       </v-row>
@@ -149,6 +149,33 @@ hr {
 }
 
 .margina {
-  margin-top: -3rem;
+  margin-top: -2rem;
+}
+
+@media only screen and (max-width: 960px) {
+  .img-home-car {
+    margin-left: 40%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .img-home-car {
+    margin-left: 40%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .img-home-car {
+    width: 60%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

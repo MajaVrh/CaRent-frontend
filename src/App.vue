@@ -10,7 +10,13 @@
 
       <v-list dense nav style="padding: 0">
         <v-list-item-group v-model="selectedItem" color="orange" class="p-0">
-          <v-list-item class="pl-5" v-for="(item, i) in items" :key="i">
+          <v-list-item
+            class="pl-5"
+            v-for="(item, i) in items"
+            :key="i"
+            link
+            :to="item.link"
+          >
             <v-list-item-content>
               <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
@@ -165,11 +171,11 @@ export default {
     selectedItem: 1,
     selectedItemAccount: 1,
     items: [
-      { text: "Home" },
-      { text: "Vehicles and stations" },
-      { text: "Rent it" },
-      { text: "My account" },
-      { text: "Contact us" },
+      { text: "Home", link: "/" },
+      { text: "Vehicles and stations", link: "/vehiclesandstations" },
+      { text: "Rent it", link: "/" },
+      { text: "My account", link: "/" },
+      { text: "Contact us", link: "/" },
     ],
     itemsAccount: [
       { text: "My rents" },
