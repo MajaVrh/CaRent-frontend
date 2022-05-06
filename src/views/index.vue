@@ -1,0 +1,62 @@
+<template>
+  <v-container fill-height>
+    <v-row align="center" justify="center">
+      <v-col align="center" justify="center">
+        <v-container
+          class="text-h1 white--text"
+          style="font-family: 'Jockey One', sans-serif !important"
+        >
+          Ca<span class="orange--text lighten-1">R</span>ent
+        </v-container>
+        <v-btn
+          width="200"
+          class="mb-3 mt-5 text-capitalize"
+          outlined
+          color="orange"
+          style="background-color: white"
+          :to="{ name: 'Home' }"
+          >Home page</v-btn
+        ><br />
+        <v-btn
+          width="200"
+          class="mb-3 white--text text-capitalize"
+          color="orange"
+          :to="{ name: 'register' }"
+          >Register</v-btn
+        ><br />
+        <v-btn
+          width="200"
+          class="white--text text-capitalize"
+          color="orange"
+          :to="{ name: 'login' }"
+          >Login</v-btn
+        >
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+export default {
+  name: "login",
+  components: {},
+  mounted() {
+    const appBody = document.querySelector("#colorChange");
+    if (window.location.pathname == "/index") {
+      appBody.classList.add("backCol");
+    }
+  },
+  beforeDestroy() {
+    const appBody = document.querySelector("#colorChange");
+    if (window.location.pathname != "/index") {
+      appBody.classList.remove("backCol");
+    }
+  },
+};
+</script>
+
+<style>
+.v-btn::before {
+  background-color: transparent;
+}
+</style>

@@ -15,15 +15,21 @@
               <v-card-text class="text-h6 mt-2 mb-2" style="padding: 0 !important">
                 Enter the requiered inforamtion
               </v-card-text>
+              <v-text-field label="Name" color="orange"></v-text-field>
+              <v-text-field label="Surname" color="orange"></v-text-field>
               <v-text-field label="Email" color="orange"></v-text-field>
               <v-text-field label="Password" color="orange"></v-text-field>
+              <v-text-field
+                label="Confirm password"
+                color="orange"
+              ></v-text-field>
               <v-card-actions class="justify-center mt-5">
                 <v-btn
                   color="orange"
                   class="white--text"
                   width="250"
                   height="40"
-                  >Login</v-btn
+                  >Register</v-btn
                 >
               </v-card-actions>
             </v-container>
@@ -36,17 +42,17 @@
 
 <script>
 export default {
-  name: "login",
+  name: "register",
   mounted() {
     const appBody = document.querySelector("#colorChange");
-    if (window.location.pathname == "/login") {
+    if (window.location.pathname == "/register") {
       appBody.classList.add("backCol");
     }
   },
 
   beforeDestroy() {
     const appBody = document.querySelector("#colorChange");
-    if (window.location.pathname != "/login") {
+    if (window.location.pathname != "/register") {
       appBody.classList.remove("backCol");
     }
   },

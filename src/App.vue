@@ -1,6 +1,6 @@
 <template>
   <v-app id="colorChange">
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped v-if="exist">
       <v-list-item style="margin-top: 5rem">
         <v-list-item-content>
           <v-list-item-title class="text-h6"> Menu</v-list-item-title>
@@ -34,7 +34,7 @@
         height="70"
         justify-center
         fixed
-        v-if="this.$route.name != 'login'"
+        v-if="exist"
       >
         <v-app-bar-nav-icon
           @click="closeDrawer()"
@@ -56,7 +56,7 @@
           ></v-avatar
         >
       </v-app-bar>
-      <v-navigation-drawer app clipped right v-model="drawerAccount">
+      <v-navigation-drawer app clipped right v-model="drawerAccount" v-if="exist">
         <v-list-item style="margin-top: 5rem">
           <v-list-item-content>
             <v-list-item-title class="text-h6"> Account</v-list-item-title>
@@ -84,7 +84,7 @@
       <router-view />
     </v-main>
 
-    <v-footer dark padless color="#153040" v-if="this.$route.name != 'login'">
+    <v-footer dark padless color="#153040" v-if="exist">
       <v-container
         :cols="12"
         class="
@@ -166,6 +166,8 @@ export default {
   name: "App",
 
   data: () => ({
+    falsePages: ['/login', '/index', '/register'],
+    exist: true,
     drawer: false,
     drawerAccount: false,
     selectedItem: 1,
@@ -174,17 +176,16 @@ export default {
       { text: "Home", link: "/" },
       { text: "Vehicles and stations", link: "/vehiclesandstations" },
       { text: "Rent it", link: "/" },
-      { text: "My account", link: "/" },
       { text: "Contact us", link: "/" },
     ],
     itemsAccount: [
       { text: "My rents" },
-      { text: "Log out" },
-
       { text: "My account" },
+      { text: "Log out" },
     ],
     icons: ["mdi-facebook", "mdi-instagram"],
   }),
+
   methods: {
     closeDrawer() {
       if (this.drawerAccount == true) {
@@ -199,12 +200,23 @@ export default {
       this.drawerAccount = !this.drawerAccount;
     },
     
+    ExisElement() {
+      const isPage = this.falsePages.includes(this.$route.path)
+      this.exist = !isPage; 
+    },
   },
+  updated() {
+    this.ExisElement()
+  },
+  mounted(){
+    this.ExisElement()
+  }
+
 };
 </script>
 
 <style>
-.login {
+.backCol {
   background-color: #153040 !important;
 }
 </style>

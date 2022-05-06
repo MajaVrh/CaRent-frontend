@@ -2,8 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -12,18 +11,26 @@ const routes = [
     component: Home,
   },
   {
-    path: '/login',
-    name: 'login',
+    path: "/index",
+    name: "index",
+    component: () => import("../views/index.vue"),
+  },
+  {
+    path: "/login",
+    name: "login",
     component: () => import("../views/login.vue"),
   },
   {
-  path: "/vehiclesandstations",
+    path: "/vehiclesandstations",
     name: "VehiclesAndStations",
     component: () => import("../views/VehiclesAndStations.vue"),
   },
-
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("../views/register.vue"),
+  },
 ];
-
 
 const router = new VueRouter({
   mode: "history",
