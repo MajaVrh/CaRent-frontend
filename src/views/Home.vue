@@ -172,7 +172,7 @@ hr {
 
 @media only screen and (max-width: 600px) {
   .img-home-car {
-    width: 60%;
+    width: 70%;
     margin-left: 10%;
     display: flex;
     justify-content: center;

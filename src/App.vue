@@ -24,7 +24,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-main>
+    <v-main style="margin-top: 4.4rem;">
       <v-app-bar
         style="z-index: 999 !important"
         clipped-left

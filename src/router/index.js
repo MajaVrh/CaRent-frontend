@@ -30,6 +30,11 @@ const routes = [
     name: "register",
     component: () => import("../views/register.vue"),
   },
+  {
+    path: "/myaccount",
+    name: "myaccount",
+    component: () => import("../views/myaccount.vue"),
+  },
 ];
 
 const router = new VueRouter({
