@@ -24,7 +24,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-main style="margin-top: 4.4rem;">
+    <v-main style="margin-top: 4.3rem">
       <v-app-bar
         style="z-index: 999 !important"
         clipped-left
@@ -56,7 +56,13 @@
           ></v-avatar
         >
       </v-app-bar>
-      <v-navigation-drawer app clipped right v-model="drawerAccount" v-if="exist">
+      <v-navigation-drawer
+        app
+        clipped
+        right
+        v-model="drawerAccount"
+        v-if="exist"
+      >
         <v-list-item style="margin-top: 5rem">
           <v-list-item-content>
             <v-list-item-title class="text-h6"> Account</v-list-item-title>
@@ -73,6 +79,8 @@
               class="pl-5"
               v-for="(item, i) in itemsAccount"
               :key="i"
+              link
+              :to="item.link"
             >
               <v-list-item-content>
                 <v-list-item-title v-text="item.text"></v-list-item-title>
@@ -87,14 +95,7 @@
     <v-footer dark padless color="#153040" v-if="exist">
       <v-container
         :cols="12"
-        class="
-          text-h4
-          white--text
-          text-no-wrap
-          d-flex
-          justify-space-around
-          mt-15
-        "
+        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
@@ -133,7 +134,7 @@
                 <v-icon size="30" class="pb-1 mr-1"
                   >mdi-clock-time-four
                 </v-icon>
-                <b> Worikng hours</b>
+                <b> Working hours</b>
               </v-card>
               <v-card color="#153040" outlined>
                 Monday-Friday <br />
@@ -166,7 +167,7 @@ export default {
   name: "App",
 
   data: () => ({
-    falsePages: ['/login', '/index', '/register'],
+    falsePages: ["/login", "/index", "/register"],
     exist: true,
     drawer: false,
     drawerAccount: false,
@@ -180,8 +181,10 @@ export default {
     ],
     itemsAccount: [
       { text: "My rents" },
-      { text: "My account" },
+      { text: "My account", link: "/myaccount" },
       { text: "Log out" },
+      { text: "Create account", link: "/register" },
+      { text: "Login", link: "/login" },
     ],
     icons: ["mdi-facebook", "mdi-instagram"],
   }),
@@ -199,23 +202,26 @@ export default {
       }
       this.drawerAccount = !this.drawerAccount;
     },
-    
+
     ExisElement() {
-      const isPage = this.falsePages.includes(this.$route.path)
-      this.exist = !isPage; 
+      const isPage = this.falsePages.includes(this.$route.path);
+      this.exist = !isPage;
     },
   },
   updated() {
-    this.ExisElement()
+    this.ExisElement();
   },
-  mounted(){
-    this.ExisElement()
-  }
-
+  mounted() {
+    this.ExisElement();
+  },
 };
 </script>
 
 <style>
+body {
+  overflow-x: hidden !important;
+}
+
 .backCol {
   background-color: #153040 !important;
 }

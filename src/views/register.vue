@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height>
+  <v-container style="margin-top: -4.4rem" fill-height>
     <v-row align="center" justify="center">
       <v-col align="center" justify="center">
         <v-card width="500" class="py-5 px-5">
@@ -12,7 +12,10 @@
           >
             Ca<span class="orange--text lighten-1">R</span>ent
             <v-container class="text-left pl-15 pr-15">
-              <v-card-text class="text-h6 mt-2 mb-2" style="padding: 0 !important">
+              <v-card-text
+                class="text-h6 mt-2 mb-2"
+                style="padding: 0 !important"
+              >
                 Enter the requiered inforamtion
               </v-card-text>
               <v-text-field label="Name" color="orange"></v-text-field>
@@ -59,5 +62,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
