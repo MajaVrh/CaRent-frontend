@@ -49,7 +49,7 @@
         About us</v-row
       >
       <v-row class="text-h6 font-weight-regular pl-6 pr-6">
-        <v-col :cols="12" :xs="9" :md="7" :sm="12" class="">
+        <v-col :cols="12" :xs="9" :md="7" :sm="12">
           <v-card flat>
             Our offices are located in the centers of some of the most
             attractive cities and their airports. Find us at seven easily
@@ -192,17 +192,6 @@ hr {
   }
 }
 
-@media only screen and (max-width: 960px) {
-  .mapa {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  .margina {
-    margin-top: 0rem !important;
-    margin-bottom: 1rem !important;
-  }
-}
-
 @media only screen and (max-width: 660px) {
   .margina {
     margin-top: 2rem !important;
@@ -212,6 +201,21 @@ hr {
     margin-top: -1rem;
   }
 }
+
+.carPicName {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.mapa {
+  margin-top: -4%;
+  margin-bottom: -4%;
+}
+
 .margina {
   margin-bottom: 3rem !important;
 }

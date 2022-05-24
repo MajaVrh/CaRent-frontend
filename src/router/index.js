@@ -35,6 +35,11 @@ const routes = [
     name: "myaccount",
     component: () => import("../views/myaccount.vue"),
   },
+  {
+    path: "/rentit",
+    name: "RentIt",
+    component: () => import("../views/RentIt.vue"),
+  },
 ];
 
 const router = new VueRouter({

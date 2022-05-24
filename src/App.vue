@@ -176,7 +176,7 @@ export default {
     items: [
       { text: "Home", link: "/" },
       { text: "Vehicles and stations", link: "/vehiclesandstations" },
-      { text: "Rent it", link: "/" },
+      { text: "Rent it", link: "/rentit" },
       { text: "Contact us", link: "/" },
     ],
     itemsAccount: [
