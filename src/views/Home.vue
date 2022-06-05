@@ -115,7 +115,8 @@
           </v-btn></v-col
         >
         <v-col :cols="12" :xs="12" :md="4" :sm="4"
-          ><v-img class="img-home mb-5" src="../assets/auto3.png" fill
+          >
+          <v-img class="img-home mb-5" src="../assets/auto3.png" fill
         /></v-col>
       </v-row>
     </v-container>

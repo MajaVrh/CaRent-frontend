@@ -21,6 +21,7 @@
               <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -218,5 +219,8 @@ export default {
 <style>
 .backCol {
   background-color: #153040 !important;
+}
+h1, th{
+  font-family: 'Jockey One', sans-serif;
 }
 </style>
