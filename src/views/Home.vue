@@ -49,7 +49,7 @@
         About us</v-row
       >
       <v-row class="text-h6 font-weight-regular pl-6 pr-6">
-        <v-col :cols="12" :xs="9" :md="7" :sm="12" class="">
+        <v-col :cols="12" :xs="9" :md="7" :sm="12">
           <v-card flat>
             Our offices are located in the centers of some of the most
             attractive cities and their airports. Find us at seven easily
@@ -95,8 +95,13 @@
     <hr />
     <v-container>
       <v-row class="justify-center text-center align-center margina">
-        <v-col :cols="12" :xs="12" :md="4" :sm="4"
-          ><v-img class="img-home" src="../assets/auto2.png" fill
+        <v-col
+          class="justify-center text-center align-center"
+          :cols="12"
+          :xs="12"
+          :md="4"
+          :sm="4"
+          ><v-img class="rentit" src="../assets/auto2.png" fill
         /></v-col>
         <v-col :cols="12" :xs="10" :md="4" :sm="4">
           <v-row
@@ -115,8 +120,7 @@
           </v-btn></v-col
         >
         <v-col :cols="12" :xs="12" :md="4" :sm="4"
-          >
-          <v-img class="img-home mb-5" src="../assets/auto3.png" fill
+          ><v-img class="mb-3 rentit" src="../assets/auto3.png" fill
         /></v-col>
       </v-row>
     </v-container>
@@ -178,5 +182,41 @@ hr {
     display: flex;
     justify-content: center;
   }
+
+  .margina {
+    margin-top: 2rem !important;
+    margin-bottom: -5rem !important;
+  }
+  .rentit {
+    margin-top: -1rem;
+  }
+}
+
+@media only screen and (max-width: 660px) {
+  .margina {
+    margin-top: 2rem !important;
+    margin-bottom: -5rem !important;
+  }
+  .rentit {
+    margin-top: -1rem;
+  }
+}
+
+.carPicName {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.mapa {
+  margin-top: -4%;
+  margin-bottom: -4%;
+}
+
+.margina {
+  margin-bottom: 3rem !important;
 }
 </style>

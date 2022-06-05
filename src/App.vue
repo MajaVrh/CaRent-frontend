@@ -10,22 +10,35 @@
 
       <v-list dense nav style="padding: 0">
         <v-list-item-group v-model="selectedItem" color="orange" class="p-0">
-          <v-list-item
-            class="pl-5"
-            v-for="(item, i) in items"
-            :key="i"
-            link
-            :to="item.link"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          
+          <div v-for="(item, i) in items" :key="i">
+            <v-list-item
+              class="pl-5"
+              link
+              :to="item.link"
+              v-if="!item.loginNeeded && !user"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item
+              click:logout
+              class="pl-5"
+              v-else-if="user"
+              link
+              :to="item.link"
+              @click="actionClick(item.action)"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-main style="margin-top: 4.4rem;">
+    <v-main style="margin-top: 4.3rem">
       <v-app-bar
         style="z-index: 999 !important"
         clipped-left
@@ -57,7 +70,13 @@
           ></v-avatar
         >
       </v-app-bar>
-      <v-navigation-drawer app clipped right v-model="drawerAccount" v-if="exist">
+      <v-navigation-drawer
+        app
+        clipped
+        right
+        v-model="drawerAccount"
+        v-if="exist"
+      >
         <v-list-item style="margin-top: 5rem">
           <v-list-item-content>
             <v-list-item-title class="text-h6"> Account</v-list-item-title>
@@ -70,15 +89,32 @@
             color="orange"
             class="p-0"
           >
-            <v-list-item
-              class="pl-5"
-              v-for="(item, i) in itemsAccount"
-              :key="i"
-            >
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <div v-for="(item, i) in itemsAccount" :key="i">
+              <v-list-item
+                click:logout
+                class="pl-5"
+                v-if="!item.loginNeeded && !user"
+                link
+                :to="item.link"
+                @click="actionClick(item.action)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item
+                click:logout
+                class="pl-5"
+                v-else-if="item.loginNeeded && user"
+                link
+                :to="item.link"
+                @click="actionClick(item.action)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
@@ -88,14 +124,7 @@
     <v-footer dark padless color="#153040" v-if="exist">
       <v-container
         :cols="12"
-        class="
-          text-h4
-          white--text
-          text-no-wrap
-          d-flex
-          justify-space-around
-          mt-15
-        "
+        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
@@ -134,7 +163,7 @@
                 <v-icon size="30" class="pb-1 mr-1"
                   >mdi-clock-time-four
                 </v-icon>
-                <b> Worikng hours</b>
+                <b> Working hours</b>
               </v-card>
               <v-card color="#153040" outlined>
                 Monday-Friday <br />
@@ -163,31 +192,46 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   name: "App",
 
   data: () => ({
-    falsePages: ['/login', '/index', '/register'],
+    falsePages: ["/login", "/index", "/register"],
     exist: true,
     drawer: false,
     drawerAccount: false,
     selectedItem: 1,
     selectedItemAccount: 1,
+
     items: [
-      { text: "Home", link: "/" },
-      { text: "Vehicles and stations", link: "/vehiclesandstations" },
-      { text: "Rent it", link: "/" },
-      { text: "Contact us", link: "/" },
+      { text: "Home", link: "/", loginNeeded: false },
+      {
+        text: "Vehicles and stations",
+        link: "/vehiclesandstations",
+        loginNeeded: false,
+      },
+      { text: "Rent it", link: "/rentit", loginNeeded: true },
+      { text: "Contact us", link: "/", loginNeeded: false },
     ],
     itemsAccount: [
-      { text: "My rents" },
-      { text: "My account" },
-      { text: "Log out" },
+      { text: "My rents", link: "/", loginNeeded: true },
+      { text: "My account", link: "/myaccount", loginNeeded: true },
+      { text: "Log out", action: "logout", loginNeeded: true },
+      { text: "Create account", link: "/register", loginNeeded: false },
+      { text: "Login", link: "/login", loginNeeded: false },
     ],
     icons: ["mdi-facebook", "mdi-instagram"],
   }),
 
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
+
   methods: {
+    ...mapMutations({ setAuthToken: "setAuthToken", logOutStore: "logOut" }),
+    ...mapActions({ loadUser: "loadUser" }),
     closeDrawer() {
       if (this.drawerAccount == true) {
         this.drawerAccount = !this.drawerAccount;
@@ -200,23 +244,39 @@ export default {
       }
       this.drawerAccount = !this.drawerAccount;
     },
-    
+
     ExisElement() {
-      const isPage = this.falsePages.includes(this.$route.path)
-      this.exist = !isPage; 
+      const isPage = this.falsePages.includes(this.$route.path);
+      this.exist = !isPage;
+    },
+    actionClick(action) {
+      if (action === "logout") {
+        this.logout();
+      }
+    },
+    logout() {
+      localStorage.removeItem("user");
+
+      this.setAuthToken(null);
+      this.logOutStore();
+      console.log("User removed");
     },
   },
   updated() {
-    this.ExisElement()
+    this.ExisElement();
   },
-  mounted(){
-    this.ExisElement()
-  }
-
+  mounted() {
+    this.ExisElement();
+    this.loadUser();
+  },
 };
 </script>
 
 <style>
+body {
+  overflow-x: hidden !important;
+}
+
 .backCol {
   background-color: #153040 !important;
 }
