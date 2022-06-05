@@ -18,14 +18,26 @@
               >
                 Enter the requiered inforamtion
               </v-card-text>
-              <v-text-field label="Email" color="orange"></v-text-field>
-              <v-text-field label="Password" color="orange"></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email"
+                name="email"
+                color="orange"
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                type="password"
+                name="password"
+                label="Password"
+                color="orange"
+              ></v-text-field>
               <v-card-actions class="justify-center mt-5">
                 <v-btn
                   color="orange"
                   class="white--text"
                   width="250"
                   height="40"
+                  @click="login"
                   >Login</v-btn
                 >
               </v-card-actions>
@@ -38,13 +50,42 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapMutations, mapActions } from "vuex";
 export default {
   name: "login",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
   mounted() {
     const appBody = document.querySelector("#colorChange");
     if (window.location.pathname == "/login") {
       appBody.classList.add("backCol");
     }
+  },
+
+  methods: {
+    ...mapMutations({ setAuthToken: "setAuthToken" }),
+    ...mapActions({ loadUser: "loadUser" }),
+    async login() {
+      try {
+        const res = await axios.post("http://localhost:8000/login", {
+          password: this.password,
+          email: this.email,
+        });
+        let token = res.data;
+        this.setAuthToken(token.token);
+        localStorage.setItem("token", token.token);
+        console.log(res.data);
+        this.$router.push("/");
+        this.loadUser();
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 
   beforeDestroy() {

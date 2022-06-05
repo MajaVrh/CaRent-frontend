@@ -30,7 +30,7 @@
           </v-col>
           <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
             <v-dialog
-              ref="dialog"
+              ref="dialogdate1"
               v-model="modalCheckOut"
               :return-value.sync="dateCheckOut"
               persistent
@@ -63,7 +63,7 @@
                   text
                   color="#FDA300"
                   @click="
-                    $refs.dialog.save(dateCheckOut), funkcija(dateCheckOut)
+                    $refs.dialogdate1.save(dateCheckOut), funkcija(dateCheckOut)
                   "
                 >
                   OK
@@ -73,7 +73,7 @@
           </v-col>
           <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
             <v-dialog
-              ref="dialog"
+              ref="dialogtime1"
               v-model="modalCheckOutTime"
               :return-value.sync="timeCheckOut"
               persistent
@@ -104,7 +104,7 @@
                 <v-btn
                   text
                   color="#FDA300"
-                  @click="$refs.dialog.save(timeCheckOut)"
+                  @click="$refs.dialogtime1.save(timeCheckOut)"
                 >
                   OK
                 </v-btn>
@@ -135,7 +135,7 @@
           </v-col>
           <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
             <v-dialog
-              ref="dialog"
+              ref="dialogdate2"
               v-model="modalDropOff"
               :return-value.sync="dateDropOff"
               persistent
@@ -167,7 +167,9 @@
                 <v-btn
                   text
                   color="#FDA300"
-                  @click="$refs.dialog.save(dateDropOff), funkcija(dateDropOff)"
+                  @click="
+                    $refs.dialogdate2.save(dateDropOff), funkcija(dateDropOff)
+                  "
                 >
                   OK
                 </v-btn>
@@ -176,7 +178,7 @@
           </v-col>
           <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
             <v-dialog
-              ref="dialog"
+              ref="dialogtime2"
               v-model="modalDropOffTime"
               :return-value.sync="timeDropOff"
               persistent
@@ -207,7 +209,7 @@
                 <v-btn
                   text
                   color="#FDA300"
-                  @click="$refs.dialog.save(timeDropOff)"
+                  @click="$refs.dialogtime2.save(timeDropOff)"
                 >
                   OK
                 </v-btn>

@@ -10,17 +10,31 @@
 
       <v-list dense nav style="padding: 0">
         <v-list-item-group v-model="selectedItem" color="orange" class="p-0">
-          <v-list-item
-            class="pl-5"
-            v-for="(item, i) in items"
-            :key="i"
-            link
-            :to="item.link"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <div v-for="(item, i) in items" :key="i">
+            <v-list-item
+              class="pl-5"
+              link
+              :to="item.link"
+              v-if="!item.loginNeeded && !user"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item
+              click:logout
+              class="pl-5"
+              v-else-if="user"
+              link
+              :to="item.link"
+              @click="actionClick(item.action)"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -75,17 +89,32 @@
             color="orange"
             class="p-0"
           >
-            <v-list-item
-              class="pl-5"
-              v-for="(item, i) in itemsAccount"
-              :key="i"
-              link
-              :to="item.link"
-            >
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <div v-for="(item, i) in itemsAccount" :key="i">
+              <v-list-item
+                click:logout
+                class="pl-5"
+                v-if="!item.loginNeeded && !user"
+                link
+                :to="item.link"
+                @click="actionClick(item.action)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item
+                click:logout
+                class="pl-5"
+                v-else-if="item.loginNeeded && user"
+                link
+                :to="item.link"
+                @click="actionClick(item.action)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
@@ -163,6 +192,8 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   name: "App",
 
@@ -173,23 +204,34 @@ export default {
     drawerAccount: false,
     selectedItem: 1,
     selectedItemAccount: 1,
+
     items: [
-      { text: "Home", link: "/" },
-      { text: "Vehicles and stations", link: "/vehiclesandstations" },
-      { text: "Rent it", link: "/rentit" },
-      { text: "Contact us", link: "/" },
+      { text: "Home", link: "/", loginNeeded: false },
+      {
+        text: "Vehicles and stations",
+        link: "/vehiclesandstations",
+        loginNeeded: false,
+      },
+      { text: "Rent it", link: "/rentit", loginNeeded: true },
+      { text: "Contact us", link: "/", loginNeeded: false },
     ],
     itemsAccount: [
-      { text: "My rents" },
-      { text: "My account", link: "/myaccount" },
-      { text: "Log out" },
-      { text: "Create account", link: "/register" },
-      { text: "Login", link: "/login" },
+      { text: "My rents", link: "/", loginNeeded: true },
+      { text: "My account", link: "/myaccount", loginNeeded: true },
+      { text: "Log out", action: "logout", loginNeeded: true },
+      { text: "Create account", link: "/register", loginNeeded: false },
+      { text: "Login", link: "/login", loginNeeded: false },
     ],
     icons: ["mdi-facebook", "mdi-instagram"],
   }),
 
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
+
   methods: {
+    ...mapMutations({ setAuthToken: "setAuthToken", logOutStore: "logOut" }),
+    ...mapActions({ loadUser: "loadUser" }),
     closeDrawer() {
       if (this.drawerAccount == true) {
         this.drawerAccount = !this.drawerAccount;
@@ -207,12 +249,25 @@ export default {
       const isPage = this.falsePages.includes(this.$route.path);
       this.exist = !isPage;
     },
+    actionClick(action) {
+      if (action === "logout") {
+        this.logout();
+      }
+    },
+    logout() {
+      localStorage.removeItem("user");
+
+      this.setAuthToken(null);
+      this.logOutStore();
+      console.log("User removed");
+    },
   },
   updated() {
     this.ExisElement();
   },
   mounted() {
     this.ExisElement();
+    this.loadUser();
   },
 };
 </script>
