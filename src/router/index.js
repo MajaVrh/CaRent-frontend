@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -62,8 +63,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (to.meta.loginNeeded && !user) {
+  const user = store.getters["currentUser"];
+  const isLoading = store.getters["loading"];
+  if (to.meta.loginNeeded && !user && !isLoading) {
     next("/index");
   }
 

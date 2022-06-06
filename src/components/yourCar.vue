@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 style="margin-bottom: 2rem">ime auta {{carName}}</h1>
+    <h1 style="margin-bottom: 2rem">ime auta {{ carName }}</h1>
     <v-row>
       <v-col>
         <p>Doors: 5</p>
@@ -53,19 +53,34 @@
         </table>
       </v-col>
       <v-col
-        style="margin-top:2rem; text-align: center"
+        style="margin-top: 2rem; text-align: center"
         align="center"
         xs="12"
         sm="5"
         md="4"
         v-if="!(windowWidth < 426)"
       >
-        <p class="orange--text text-h5" style="font-family: 'Jockey One', sans-serif !important">Remaining time: 00:05:24:03</p >
+        <p
+          class="orange--text text-h5"
+          style="font-family: 'Jockey One', sans-serif !important"
+        >
+          Remaining time: 00:05:24:03
+        </p>
       </v-col>
     </v-row>
-    <p class="orange--text text-h5" style="font-family: 'Jockey One', sans-serif !important; text-align: center; margin-top: 2rem" v-if="windowWidth < 426">Remaining time: 00:05:24:03</p >
-  <hr v-if="!isLast" class="mt-15" color="#153040">
-  <hr v-else class="mt-15" color="white">
+    <p
+      class="orange--text text-h5"
+      style="
+        font-family: 'Jockey One', sans-serif !important;
+        text-align: center;
+        margin-top: 2rem;
+      "
+      v-if="windowWidth < 426"
+    >
+      Remaining time: 00:05:24:03
+    </p>
+    <hr v-if="!isLast" class="mt-15" color="#153040" />
+    <hr v-else class="mt-15" color="white" />
   </v-container>
 </template>
 
@@ -74,8 +89,8 @@ export default {
   name: "yourCar",
   props: {
     isLast: Boolean,
-    carName: String
-  }
+    carName: Number,
+  },
 };
 </script>
 
@@ -91,7 +106,6 @@ th {
   th,
   tr {
     font-size: 0.9rem !important;
-
   }
 }
 @media only screen and (min-width: 426px) {
@@ -104,4 +118,3 @@ th {
   }
 }
 </style>
-

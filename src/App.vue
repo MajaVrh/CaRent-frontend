@@ -213,10 +213,10 @@ export default {
         loginNeeded: false,
       },
       { text: "Rent it", link: "/rentit", loginNeeded: true },
-      { text: "Contact us", link: "/", loginNeeded: false },
+      { text: "Contact us", link: "/contact", loginNeeded: false },
     ],
     itemsAccount: [
-      { text: "My rents", link: "/", loginNeeded: true },
+      { text: "My rents", link: "/myrents", loginNeeded: true },
       { text: "My account", link: "/myaccount", loginNeeded: true },
       { text: "Log out", action: "logout", loginNeeded: true },
       { text: "Create account", link: "/register", loginNeeded: false },
@@ -259,6 +259,7 @@ export default {
 
       this.setAuthToken(null);
       this.logOutStore();
+      this.$router.push("/index");
       console.log("User removed");
     },
   },
@@ -280,7 +281,8 @@ body {
 .backCol {
   background-color: #153040 !important;
 }
-h1, th{
-  font-family: 'Jockey One', sans-serif;
+h1,
+th {
+  font-family: "Jockey One", sans-serif;
 }
 </style>
