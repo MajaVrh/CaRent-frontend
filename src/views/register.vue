@@ -87,6 +87,7 @@
 
 <script>
 import axios from "axios";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
   name: "register",
@@ -116,6 +117,8 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({ setAuthToken: "setAuthToken" }),
+    ...mapActions({ loadUser: "loadUser" }),
     async register() {
       try {
         const res = await axios.post("http://localhost:8000/register", {
@@ -125,8 +128,12 @@ export default {
           email: this.email,
           age: this.age,
         });
-        this.$router.push("/");
+        let token = res.data;
+        this.setAuthToken(token.token);
+        localStorage.setItem("token", token.token);
         console.log(res.data);
+        this.$router.push("/");
+        this.loadUser();
       } catch (error) {
         console.log(error.response.data);
         this.error = error.response.data.msg;
