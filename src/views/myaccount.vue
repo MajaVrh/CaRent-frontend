@@ -19,7 +19,7 @@
       class="mt-6"
     >
       <v-row align="center">
-        <v-col :cols="10" :xs="8" :md="6" :sm="4" class="grow"
+        <v-col :cols="12" :xs="12" :md="6" :sm="12" class="grow"
           >Your account will be deleted!</v-col
         >
         <v-col :cols="10" :xs="8" :md="6" :sm="4" class="shrink">
@@ -40,39 +40,12 @@
         </v-col>
       </v-row>
     </v-alert>
-    <v-row class="justify-space-around text-center mt-0">
-      <v-col :cols="10" :xs="8" :md="4" :sm="4" class="">
-        <v-row class="text-center justify-center align-center mt-2">
-          <v-icon size="300" color="grey lighten-1">
-            mdi-account-circle
-          </v-icon>
-        </v-row>
-        <v-row class="text-center justify-center align-center">
-          <v-btn
-            width="180"
-            color="#153040"
-            class="white--text text-capitalize"
-            v-if="!settingsON"
-            @click="settingsON = !settingsON"
-            >Settings</v-btn
-          >
-        </v-row>
-        <v-row class="text-center justify-center align-center mt-6">
-          <v-btn
-            width="180"
-            color="error"
-            class="white--text text-capitalize"
-            @click="isVisableDelete = !isVisableDelete"
-            v-if="isVisableDelete"
-            >Delete account</v-btn
-          >
-        </v-row>
-      </v-col>
+    <v-row class="text-center justify-center mx-0 mt-0">
       <v-col
         :cols="10"
         :xs="8"
-        :md="6"
-        :sm="4"
+        :md="7"
+        :sm="12"
         class="text-center justify-center align-center"
       >
         <v-text-field
@@ -147,6 +120,30 @@
           </v-btn></v-row
         >
       </v-col>
+
+      <v-col :cols="12" :xs="12" :md="5" :sm="12">
+        <v-row class="text-center justify-center align-center mt-2"> </v-row>
+        <v-row class="text-center justify-center align-center">
+          <v-btn
+            width="180"
+            color="#153040"
+            class="white--text text-capitalize"
+            v-if="!settingsON"
+            @click="settingsON = !settingsON"
+            >Edit profile</v-btn
+          >
+        </v-row>
+        <v-row class="text-center justify-center align-center mt-6">
+          <v-btn
+            width="180"
+            color="error"
+            class="white--text text-capitalize"
+            @click="isVisableDelete = !isVisableDelete"
+            v-if="isVisableDelete"
+            >Delete account</v-btn
+          >
+        </v-row>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -174,7 +171,7 @@ export default {
 
     async updateData() {
       try {
-        const res = await axios.post("http://localhost:8000/update", {
+        const res = await axios.post("http://localhost:8000/user/update", {
           newName: this.user.name,
           newSurname: this.user.surname,
           newAdress: this.user.adress,
@@ -196,7 +193,7 @@ export default {
     },
     async deleteUser() {
       try {
-        const res = await axios.delete("http://localhost:8000/delete");
+        const res = await axios.delete("http://localhost:8000/user/delete");
         this.setCurrentUser(res.data);
         this.logOut();
         this.$router.push("/index");
