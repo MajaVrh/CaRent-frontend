@@ -1,6 +1,11 @@
 <template>
-  <v-container>
-    <h1 style="margin-bottom: 2rem">ime auta {{ carName }}</h1>
+  <v-container class="mx-6">
+    <v-row
+      class="text-h4 black--text d-flex ml-0 mb-2"
+      style="font-family: 'Jockey One', sans-serif !important"
+    >
+      Car name</v-row
+    >
     <v-row>
       <v-col>
         <p>Doors: 5</p>
@@ -23,7 +28,7 @@
     </v-row>
 
     <v-row>
-      <v-col sm="7" md="8">
+      <v-col sm="9" md="8">
         <table>
           <tr>
             <th>Check-Out</th>
@@ -56,9 +61,9 @@
         style="margin-top: 2rem; text-align: center"
         align="center"
         xs="12"
-        sm="5"
+        sm="3"
         md="4"
-        v-if="!(windowWidth < 426)"
+        v-if="!(windowWidth < 700)"
       >
         <p
           class="orange--text text-h5"
@@ -74,8 +79,9 @@
         font-family: 'Jockey One', sans-serif !important;
         text-align: center;
         margin-top: 2rem;
+        margin-left: -2.5rem;
       "
-      v-if="windowWidth < 426"
+      v-if="windowWidth < 700"
     >
       Remaining time: 00:05:24:03
     </p>
@@ -84,7 +90,7 @@
   </v-container>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: "yourCar",
   props: {
@@ -97,7 +103,7 @@ export default {
 <style lang="scss">
 td,
 th {
-  width: 10rem;
+  width: 12rem;
   text-align: center;
 }
 @media only screen and (max-width: 425px) {

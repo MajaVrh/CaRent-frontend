@@ -1,6 +1,12 @@
 <template>
-  <v-container class="mt-15 mb-15" v-if="user">
-    <h1 class="mb-10">Personal details</h1>
+  <v-container class="pr-8 pl-8 mt-12 mb-12 pb-12" v-if="user">
+    <v-row
+      class="text-h4 black--text d-flex ml-0"
+      style="font-family: 'Jockey One', sans-serif !important"
+    >
+      Personal details</v-row
+    >
+    <v-row class="ml-0 mb-6">You can edit your profile here</v-row>
     <v-alert type="success" outlined text v-if="!isVisible"
       >You have successfully made changes!</v-alert
     >
