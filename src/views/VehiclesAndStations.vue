@@ -114,7 +114,6 @@
             You need a car, rent it now!</v-row
           >
           <v-btn
-            tile
             color="#FDA300"
             class="white--text mt-6 px-15 text-capitalize text-h6"
             style="font-family: 'Jockey One', sans-serif !important"

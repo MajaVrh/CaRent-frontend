@@ -72,7 +72,7 @@ export default {
     ...mapActions({ loadUser: "loadUser" }),
     async login() {
       try {
-        const res = await axios.post("http://localhost:8000/login", {
+        const res = await axios.post("http://localhost:8000/user/login", {
           password: this.password,
           email: this.email,
         });
