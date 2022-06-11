@@ -12,6 +12,17 @@
         class="justify-center align-center text-center px-12"
         v-if="this.user.isAdmin"
       >
+        <v-alert
+          type="success"
+          outlined
+          text
+          justify="center"
+          width="98%"
+          class="mt-4"
+          v-if="isVisibleSuccesNewCar"
+          >You have successfully added a new car!</v-alert
+        >
+
         <v-col :cols="12" :xs="12" :md="5" :sm="12" class="text-center">
           <v-btn
             color="#153040"
@@ -47,35 +58,91 @@
           </v-row>
           <v-row class="justify-space-around">
             <v-col :cols="12" :xs="12" :md="5" :sm="12">
-              <v-text-field label="Make" color="orange"></v-text-field>
-              <v-text-field label="Name" color="orange"></v-text-field>
-              <v-text-field label="Body type" color="orange"></v-text-field>
-              <v-text-field label="Places" color="orange"></v-text-field>
-              <v-text-field label="Power" color="orange"></v-text-field
+              <v-text-field
+                v-model="make"
+                label="Make"
+                color="orange"
+              ></v-text-field>
+              <v-text-field
+                v-model="name"
+                label="Name"
+                color="orange"
+              ></v-text-field>
+              <v-text-field
+                v-model="bodyType"
+                label="Body type"
+                color="orange"
+              ></v-text-field>
+              <v-text-field
+                v-model="places"
+                label="Places"
+                color="orange"
+              ></v-text-field>
+              <v-text-field
+                v-model="power"
+                label="Power"
+                color="orange"
+              ></v-text-field
             ></v-col>
             <v-col :cols="12" :xs="12" :md="5" :sm="12">
               <v-text-field
+                v-model="doors"
                 class="topMargin"
                 label="Doors"
                 color="orange"
               ></v-text-field>
               <v-text-field
+                v-model="luggageCapacity"
                 label="Luggage Capacity"
                 color="orange"
               ></v-text-field>
               <v-text-field
+                v-model="airConditioning"
                 label="Air conditioning"
                 color="orange"
               ></v-text-field>
-              <v-text-field label="Fuel" color="orange"></v-text-field>
-              <v-file-input
-                accept="image/*"
-                label="Image "
+              <v-text-field
+                v-model="fuel"
+                label="Fuel"
                 color="orange"
-                prepend-icon="mdi-camera"
-              ></v-file-input
-            ></v-col>
+              ></v-text-field>
+              <v-row class="d-flex justify-center">
+                <v-col>
+                  <v-btn
+                    @click="openUploadModal"
+                    accept="image/*"
+                    color="#153040"
+                    outlined
+                    class="mt-4 ml-n5 orange--text text-capitalize"
+                    >Add image
+                  </v-btn></v-col
+                >
+                <v-col>
+                  <v-text-field
+                    v-if="imageName"
+                    color="orange"
+                    v-model="imageName"
+                    :disabled="isEmpty(imageName)"
+                    >{{ imageName }}</v-text-field
+                  ></v-col
+                >
+              </v-row>
+            </v-col>
           </v-row>
+          <v-row class="justify-center">
+            <v-alert
+              v-if="isVisibleWarningEmptyFields"
+              class="py-3 text-start"
+              outlined
+              type="warning"
+              prominent
+              border="left"
+              width="90%"
+            >
+              Some of the input fields are empty!
+            </v-alert></v-row
+          >
+
           <v-row class="justify-center">
             <v-btn
               :cols="12"
@@ -100,6 +167,7 @@
               class="white--text px-8 text-capitalize text-h6 mx-3"
               style="font-family: 'Jockey One', sans-serif !important"
               min-width="8.2rem"
+              @click="addCar"
             >
               Add new
             </v-btn></v-row
@@ -346,10 +414,23 @@
 
 <script>
 import offeredCar from "@/components/offeredCar";
+import axios from "axios";
 
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
+    make: "",
+    name: "",
+    bodyType: "",
+    places: "",
+    power: "",
+    doors: "",
+    luggageCapacity: "",
+    airConditioning: "",
+    fuel: "",
+    imageURL: "",
+    isVisibleWarningEmptyFields: false,
+    isVisibleSuccesNewCar: false,
     items: [
       "Pula",
       "Rijeka",
@@ -362,6 +443,7 @@ export default {
 
     searchVisible: false,
     addVisible: false,
+    imageName: "",
 
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -392,6 +474,53 @@ export default {
     ...mapGetters({ user: "currentUser" }),
   },
   methods: {
+    isEmpty(str) {
+      if (str == "") {
+        return false;
+      } else return true;
+    },
+    async addCar() {
+      try {
+        console.log("-------------------------");
+        const res = await axios.post("http://localhost:8000/car/add", {
+          make: this.make,
+          name: this.name,
+          bodyType: this.bodyType,
+          places: this.places,
+          power: this.power,
+          doors: this.doors,
+          luggageCapacity: this.luggageCapacity,
+          airConditioning: this.airConditioning,
+          fuel: this.fuel,
+          imageURL: this.imageURL,
+        });
+        this.isVisibleSuccesNewCar = true;
+        setTimeout(() => {
+          this.isVisibleSuccesNewCar = false;
+        }, "4000");
+
+        (this.make = ""),
+          (this.name = ""),
+          (this.bodyType = ""),
+          (this.places = ""),
+          (this.power = ""),
+          (this.doors = ""),
+          (this.luggageCapacity = ""),
+          (this.airConditioning = ""),
+          (this.fuel = ""),
+          (this.imageURL = "");
+        console.log(res.data);
+        this.addVisible = false;
+      } catch (error) {
+        this.isVisibleWarningEmptyFields = true;
+        setTimeout(() => {
+          this.isVisibleWarningEmptyFields = false;
+        }, "4000");
+        console.log(error.response.data);
+        this.error = error.response.data.msg;
+      }
+    },
+
     allowedDates: (val) => parseInt(val.split("-")[2], 10),
     funkcija(a) {
       console.log(a);
@@ -400,6 +529,24 @@ export default {
       if (this.user.isAdmin) {
         this.searchVisible = false;
       } else this.searchVisible = true;
+    },
+    openUploadModal() {
+      this.image = "";
+      window.cloudinary
+        .openUploadWidget(
+          {
+            cloud_name: "dmp1jlecv",
+            upload_preset: "ml_default",
+          },
+          (error, result) => {
+            if (!error && result && result.event === "success") {
+              console.log("Done uploading..: ", result.info);
+              this.imageName = result.info.original_filename;
+              this.imageURL = result.info.url;
+            }
+          }
+        )
+        .open();
     },
   },
 };

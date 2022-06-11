@@ -12,10 +12,30 @@
         outlined
         text
         justify="center"
-        width="1250"
-        v-if="!isVisible"
+        width="98%"
+        v-if="isVisible"
         >This message has been set successfully!</v-alert
       >
+      <v-alert
+        v-if="isVisibleWarning"
+        outlined
+        type="warning"
+        prominent
+        border="left"
+        width="98%"
+      >
+        Some of the input fields are empty!
+      </v-alert>
+      <v-alert
+        v-if="isVisibleWarningEmail"
+        outlined
+        type="warning"
+        prominent
+        border="left"
+        width="98%"
+      >
+        Invalid email!
+      </v-alert>
     </v-row>
     <v-row justify="center" align="center">
       <v-col justify="center" align="center">
@@ -65,28 +85,48 @@ export default {
       subject: "",
       email: "",
       text: "",
-      isVisible: true,
+      isVisible: false,
+      isVisibleWarning: false,
+      isVisibleWarningEmail: false,
     };
   },
   methods: {
     async send() {
-      await axios.post("http://localhost:8000/contact", {
-        subject: this.subject,
-        from: this.email,
-        text: this.text,
-      });
-      this.subject = "";
-      this.email = "";
-      this.text = "";
-      this.isVisible = false;
+      if (
+        this.subject != "" &&
+        this.email != "" &&
+        this.text != "" &&
+        this.email.includes(".", "@")
+      ) {
+        await axios.post("http://localhost:8000/contact", {
+          subject: this.subject,
+          from: this.email,
+          text: this.text,
+        });
 
-      setTimeout(() => {
         this.isVisible = true;
-      }, "6000");
+        this.subject = "";
+        this.email = "";
+        this.text = "";
+        setTimeout(() => {
+          this.isVisible = false;
+        }, "4000");
+      } else {
+        if (!this.email.includes(".", "@")) {
+          this.isVisibleWarningEmail = true;
+          setTimeout(() => {
+            this.isVisibleWarningEmail = false;
+          }, "4000");
+        } else {
+          this.isVisibleWarning = true;
+          setTimeout(() => {
+            this.isVisibleWarning = false;
+          }, "4000");
+        }
+      }
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
