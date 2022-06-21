@@ -403,12 +403,18 @@
         >
       </v-card>
     </v-container>
-    <hr />
 
-    <v-container>
-      <offeredCar />
+    <v-container class="mt-n12 mb-8">
+      <offeredCar
+        v-for="car in cars"
+        :key="car._id"
+        :id="car._id"
+        :car="car"
+        :deleteCarFrontend="deleteCarFrontend"
+        :isUser="isUser"
+      />
+      <hr />
     </v-container>
-    <hr />
   </div>
 </template>
 
@@ -431,6 +437,7 @@ export default {
     imageURL: "",
     isVisibleWarningEmptyFields: false,
     isVisibleSuccesNewCar: false,
+    isUser: true,
     items: [
       "Pula",
       "Rijeka",
@@ -444,6 +451,7 @@ export default {
     searchVisible: false,
     addVisible: false,
     imageName: "",
+    cars: [],
 
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -469,11 +477,17 @@ export default {
   },
   mounted() {
     this.isAdmin();
+    this.getCars();
   },
   computed: {
     ...mapGetters({ user: "currentUser" }),
   },
+
   methods: {
+    deleteCarFrontend(id) {
+      this.cars = this.cars.filter((x) => x._id !== id);
+    },
+
     isEmpty(str) {
       if (str == "") {
         return false;
@@ -509,7 +523,8 @@ export default {
           (this.airConditioning = ""),
           (this.fuel = ""),
           (this.imageURL = "");
-        console.log(res.data);
+        this.cars.push(res.data.newCar);
+        console.log(res.data.newCar);
         this.addVisible = false;
       } catch (error) {
         this.isVisibleWarningEmptyFields = true;
@@ -528,6 +543,7 @@ export default {
     isAdmin() {
       if (this.user.isAdmin) {
         this.searchVisible = false;
+        this.isUser = false;
       } else this.searchVisible = true;
     },
     openUploadModal() {
@@ -547,6 +563,16 @@ export default {
           }
         )
         .open();
+    },
+
+    async getCars() {
+      try {
+        let res = await axios.get("http://localhost:8000/car");
+        this.cars = res.data;
+        console.log(this.cars);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -576,10 +602,13 @@ export default {
 hr {
   margin-top: 4%;
   margin-bottom: 4%;
-  padding: 0.2rem 0 !important;
-  background-color: rgb(219, 219, 219);
-}
+  padding: 0.1rem 0 !important;
 
+  background-color: rgb(219, 219, 219);
+
+  border: none;
+  justify-self: center;
+}
 .buttons {
   padding: 3rem !important;
   min-width: 70% !important;
