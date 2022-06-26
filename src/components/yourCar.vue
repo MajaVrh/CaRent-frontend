@@ -4,25 +4,26 @@
       class="text-h4 black--text d-flex ml-0 mb-2"
       style="font-family: 'Jockey One', sans-serif !important"
     >
-      Car name</v-row
+      {{carInfo.car.name}}</v-row
     >
     <v-row>
       <v-col>
-        <p>Doors: 5</p>
-        <p>Places: 5</p>
-        <p>Luggage Capacity: 2</p>
-        <p>Transmission: Manual</p>
+        <p>Doors: {{ carInfo.car.doors }}</p>
+        <p>Seats: {{ carInfo.car.seats }}</p>
+        <p>Luggage Capacity: {{ carInfo.car.luggageCapacity }}</p>
+        <p>Transmission: {{ carInfo.car.transmission }}</p>
       </v-col>
       <v-col>
-        <p>Fuel: Diesel</p>
-        <p>Body type: Sedan</p>
-        <p>Experience Driving: 2</p>
+        <p>Fuel: {{ carInfo.car.fuel }}</p>
+        <p>Body type: {{ carInfo.car.bodyType }}</p>
+        <p>Experience Driving: {{ carInfo.car.minDriversAge }}</p>
         <p>Air conditioning: yes</p>
       </v-col>
       <v-col sm="5" md="4" xs="12" align="center">
         <v-img
-          src="https://www.eurostarrental.com/api/userfiles/vehicleMaster/rc-upload-1648462548935-2.png"
+          :src= "carInfo.car.imageURL"
           max-width="250"
+          contain
         ></v-img>
       </v-col>
     </v-row>
@@ -32,28 +33,25 @@
         <table>
           <tr>
             <th>Check-Out</th>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
+            <th>Location</th>
+            <th>Date</th>
           </tr>
           <tr>
             <td align="center"></td>
-            <td align="center">Pula</td>
-            <td align="center">25.4.2022</td>
-            <td align="center">15:00</td>
+            <td align="center">{{ carInfo.checkOutLocation }}</td>
+            <td align="center">{{ moment(carInfo.checkOut).format("DD.MM.YYYY")}}</td>
           </tr>
 
           <tr>
             <th>Drop Off</th>
             <th>Company</th>
             <th>Contact</th>
-            <th>Country</th>
+
           </tr>
           <tr>
             <td></td>
-            <td>Pula</td>
-            <td>25.4.2022</td>
-            <td>15:00</td>
+            <td>{{ carInfo.dropOffLocation }}</td>
+            <td>{{ moment(carInfo.dropOff).format("DD.MM.YYYY")}}</td>
           </tr>
         </table>
       </v-col>
@@ -91,12 +89,17 @@
 </template>
 
 <script scoped>
+
+
+
 export default {
   name: "yourCar",
   props: {
     isLast: Boolean,
     carName: Number,
+    carInfo: Object
   },
+
 };
 </script>
 

@@ -6,7 +6,7 @@
         class="text-h4 black--text ml-0"
         style="font-family: 'Jockey One', sans-serif !important"
       >
-        {{ car.make }}{{ car.name }}</v-row
+        {{ car.make }}{{ car.name }} </v-row
       >
       <v-row class="justify-center align-center">
         <v-col sm="4" md="3" xs="12">
@@ -45,6 +45,7 @@
               class="white--text px-10 text-capitalize text-h6"
               v-if="isUser"
               style="font-family: 'Jockey One', sans-serif !important"
+              @click = "rentCar"
             >
               Rent it
             </v-btn></v-row
@@ -291,6 +292,10 @@ export default {
     carP: Object,
     deleteCarFrontend: Function,
     isUser: Boolean,
+    dateCheckOut: Date,
+    dateDropOff: Date,
+    dropOffLocation: String,
+    checkOutLocation: String
   },
   mounted() {
     this.setCarInfo();
@@ -301,6 +306,22 @@ export default {
       try {
         await axios.delete(`http://localhost:8000/car/delete/${this.car._id}`);
         this.deleteCarFrontend(this.car._id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async rentCar() {
+      try {
+        const res = await axios.post("http://localhost:8000/rent", {
+          carId: this.car._id,
+          dropOffLocation: this.dropOffLocation,
+          checkOutLocation: this.checkOutLocation,
+          checkOut: this.dateCheckOut,
+          dropOff: this.dateDropOff,
+
+        });
+        console.log(res)
       } catch (error) {
         console.log(error);
       }

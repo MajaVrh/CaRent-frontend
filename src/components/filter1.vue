@@ -128,6 +128,7 @@
                       text
                       color="#FDA300"
                       @click="$refs.dialogtime1.save(timeCheckOut)"
+
                     >
                       OK
                     </v-btn>
@@ -434,6 +435,7 @@ export default {
 
     modalDropOffTime: false,
   }),
+
   methods: {
     allowedDates: (val) => parseInt(val.split("-")[2], 10),
     funkcija(a) {

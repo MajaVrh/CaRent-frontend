@@ -263,20 +263,10 @@
     </v-container>
 
     <div>
-      <!--
 
 
 
 
-
-
-
-
-
-
-
-
-      -->
       <v-container>
         <v-card flat v-if="!this.user.isAdmin" class="justify-center">
           <v-card-text class="mt-n12 px-12">
@@ -304,6 +294,7 @@
                   label="Location"
                   dense
                   outlined
+                  v-model="checkOutLocation"
                 ></v-select>
               </v-col>
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
@@ -414,6 +405,7 @@
                   label="Location"
                   dense
                   outlined
+                  v-model="dropOffLocation"
                 ></v-select>
               </v-col>
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
@@ -557,7 +549,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
                   label="Make"
-                  placeholder="Make"
                   outlined
                   dense
                   color="#153040"
@@ -566,7 +557,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
                   label="Name"
-                  placeholder="Name"
                   outlined
                   dense
                   color="#153040"
@@ -575,7 +565,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach"
                 ><v-text-field
                   label="Body type"
-                  placeholder="Body type"
                   outlined
                   dense
                   color="#153040"
@@ -584,7 +573,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
                   label="Places"
-                  placeholder="Places"
                   outlined
                   dense
                   color="#153040"
@@ -596,7 +584,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3">
                 <v-text-field
                   label="Doors"
-                  placeholder="Doors"
                   outlined
                   dense
                   color="#153040"
@@ -605,7 +592,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach"
                 ><v-text-field
                   label="Power"
-                  placeholder="Power"
                   outlined
                   dense
                   color="#153040"
@@ -614,7 +600,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
                   label="Luggage Capacity"
-                  placeholder="Luggage Capacity"
                   outlined
                   dense
                   color="#153040"
@@ -623,7 +608,6 @@
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
                   label="Fuel"
-                  placeholder="Fuel"
                   outlined
                   dense
                   color="#153040"
@@ -663,8 +647,12 @@
           :carP="car"
           :deleteCarFrontend="deleteCarFrontend"
           :isUser="isUser"
+          :dateCheckOut = "new Date(dateCheckOut)"
+          :dateDropOff = "new Date(dateDropOff)"
+          :checkOutLocation = "checkOutLocation"
+          :dropOffLocation = "dropOffLocation"
         />
-        <hr />
+      
       </v-container>
     </div>
   </div>
@@ -736,6 +724,9 @@ export default {
     timeDropOff: null,
 
     modalDropOffTime: false,
+
+    checkOutLocation: "",
+    dropOffLocation: ""
   }),
   components: {
     offeredCar,
