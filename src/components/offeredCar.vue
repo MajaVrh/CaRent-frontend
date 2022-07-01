@@ -3,28 +3,33 @@
     <hr />
     <v-container class="justify-center px-10">
       <v-row
-        class="text-h4 black--text ml-0"
+        class="text-h4 black--text justify-center marginTitle"
         style="font-family: 'Jockey One', sans-serif !important"
       >
-        {{ car.make }}{{ car.name }} </v-row
-      >
+        <v-col sm="4" md="3" xs="12" lg="3" class="titleMargins"
+          > {{ car.make }} {{ car.name }}
+        </v-col>
+        <v-col sm="4" md="3" xs="12" lg="2"></v-col>
+        <v-col sm="4" md="3" xs="12" lg="2"></v-col>
+        <v-col sm="4" md="3" xs="12" lg="2"></v-col>
+      </v-row>
       <v-row class="justify-center align-center">
-        <v-col sm="4" md="3" xs="12">
+        <v-col sm="4" md="3" xs="12" lg="2">
           <p>Doors: {{ car.doors }}</p>
-          <p>Places: {{ car.places }}</p>
+          <p>Seats: {{ car.seats }}</p>
           <p>Body type: {{ car.bodyType }}</p>
           <p>Transmission: {{ car.transmission }}</p>
           <p>Power: {{ car.power }}</p>
         </v-col>
-        <v-col sm="4" md="3" xs="12">
+        <v-col sm="4" md="3" xs="12" lg="2">
           <p>Fuel: {{ car.fuel }}</p>
           <p>Luggage Capacity: {{ car.luggageCapacity }}</p>
           <p>Min driver age: {{ car.minDriversAge }}</p>
           <p>Production year: {{ car.productionYear }}</p>
           <p>Current station: {{ car.currentStation }}</p>
         </v-col>
-        <v-col :cols="12" sm="4" md="3" xs="12">
-          <v-row class="mt-n4 justify-center">
+        <v-col :cols="12" sm="4" md="3" xs="12" lg="3">
+          <v-row class="justify-center">
             <v-img
               :src="car.imageURL"
               max-width="255"
@@ -32,9 +37,17 @@
             ></v-img
           ></v-row>
         </v-col>
-        <v-col cols="12" sm="4" md="" xs="12" class="text-center mx-8">
+        <v-col cols="12" sm="4" md="" xs="12" lg="2" class="text-center mx-8">
           <v-row
-            class="text-h5 black--text mb-2 justify-center text-center mt-n8 priceText"
+            class="
+              text-h5
+              black--text
+              mb-2
+              justify-center
+              text-center
+              mt-n8
+              priceText
+            "
             style="font-family: 'Jockey One', sans-serif !important"
           >
             {{ car.price }}€ per Day</v-row
@@ -45,7 +58,7 @@
               class="white--text px-10 text-capitalize text-h6"
               v-if="isUser"
               style="font-family: 'Jockey One', sans-serif !important"
-              @click = "rentCar"
+              @click="sendDataPayment"
             >
               Rent it
             </v-btn></v-row
@@ -67,7 +80,14 @@
                 <v-card class="pt-12">
                   <v-card-text class="mt-n12 pt-12 px-12">
                     <v-row
-                      class="text-h4 mt-2 black--text d-flex ml-0 justify-center"
+                      class="
+                        text-h4
+                        mt-2
+                        black--text
+                        d-flex
+                        ml-0
+                        justify-center
+                      "
                       style="font-family: 'Jockey One', sans-serif !important"
                     >
                       Edit car information
@@ -178,7 +198,13 @@
                         :md="3"
                         :sm="12"
                         color="#153040"
-                        class="white--text mb-3 px-8 text-capitalize text-h6 mx-3"
+                        class="
+                          white--text
+                          mb-3
+                          px-8
+                          text-capitalize text-h6
+                          mx-3
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                         min-width="8.2rem"
                         @click="dialog.value = false"
@@ -263,6 +289,7 @@
 
 <script scoped>
 import axios from "axios";
+import { mapMutations } from "vuex";
 export default {
   name: "offeredCar",
   data: () => ({
@@ -295,7 +322,7 @@ export default {
     dateCheckOut: Date,
     dateDropOff: Date,
     dropOffLocation: String,
-    checkOutLocation: String
+    checkOutLocation: String,
   },
   mounted() {
     this.setCarInfo();
@@ -306,6 +333,20 @@ export default {
       try {
         await axios.delete(`http://localhost:8000/car/delete/${this.car._id}`);
         this.deleteCarFrontend(this.car._id);
+        this.$toast.success(`${this.car.make} ${this.car.name} was deleted sucesfully!`, {
+          position: "bottom-right",
+          timeout: 4369,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 1.08,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        });
       } catch (error) {
         console.log(error);
       }
@@ -319,9 +360,8 @@ export default {
           checkOutLocation: this.checkOutLocation,
           checkOut: this.dateCheckOut,
           dropOff: this.dateDropOff,
-
         });
-        console.log(res)
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -348,6 +388,17 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    sendDataPayment() {
+      if (!this.dropOffLocation || !this.checkOutLocation) return; //stavit alert
+      const checkDrop = {
+        dropOffLocation: this.dropOffLocation,
+        checkOutLocation: this.checkOutLocation,
+        checkOutDate: this.dateCheckOut,
+        dropOffDate: this.dateDropOff,
+      };
+      this.setCheckDrop(checkDrop);
+      this.$router.push({ name: "payIt", params: { id: this.car._id } });
     },
     openUploadModal() {
       this.image = "";
@@ -407,6 +458,7 @@ export default {
         console.log(error);
       }
     },
+    ...mapMutations({ setCheckDrop: "setCheckDrop" }),
   },
 };
 </script>
@@ -419,6 +471,16 @@ export default {
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
+  }
+}
+@media only screen and (min-width: 1264px) {
+  .titleMargins {
+    margin-left: -4rem !important;
+  }
+}
+@media only screen and (min-width: 1900px) {
+  .offeredCarImg {
+    max-width: 80% !important;
   }
 }
 hr {

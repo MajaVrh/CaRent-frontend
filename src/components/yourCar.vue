@@ -22,7 +22,7 @@
       <v-col sm="5" md="4" xs="12" align="center">
         <v-img
           :src= "carInfo.car.imageURL"
-          max-width="250"
+          max-width="300"
           contain
         ></v-img>
       </v-col>
@@ -66,8 +66,9 @@
         <p
           class="orange--text text-h5"
           style="font-family: 'Jockey One', sans-serif !important"
+          v-if="daysRent"
         >
-          Remaining time: 00:05:24:03
+          Remaining time: {{ daysRent }}
         </p>
       </v-col>
     </v-row>
@@ -91,15 +92,35 @@
 <script scoped>
 
 
-
 export default {
   name: "yourCar",
   props: {
     isLast: Boolean,
     carName: Number,
-    carInfo: Object
+    carInfo: Object,
+    
   },
-
+  data(){
+    return{
+      daysRent: null,
+      dateDropOff: new Date(this.carInfo.dropOff),
+      dateCheckOut: new Date(this.carInfo.checkOut)
+    }
+  },
+  methods: {
+    calcTimeDiff() {
+      const dateDif = Math.abs(
+       this.dateDropOff - this.dateCheckOut
+      );
+      const daysRent = Math.ceil(dateDif / (1000 * 60 * 60 * 24));
+      this.daysRent = daysRent;
+      console.log(daysRent)
+      
+    },
+  },
+  mounted() {
+    this.calcTimeDiff()
+  }
 };
 </script>
 

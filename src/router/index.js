@@ -54,6 +54,12 @@ const routes = [
     meta: { loginNeeded: true },
     component: () => import("../views/RentIt.vue"),
   },
+  {
+    path: "/payIt/:id",
+    name: "payIt",
+    meta: { loginNeeded: true },
+    component: () => import("../views/payIt.vue"),
+  },
 ];
 
 const router = new VueRouter({

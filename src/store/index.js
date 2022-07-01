@@ -10,6 +10,8 @@ export default new Vuex.Store({
     currentUser: "",
     isAuth: false,
     loading: true,
+    checkDrop: null
+
   },
   mutations: {
     setCurrentUser(state, payload) {
@@ -33,6 +35,9 @@ export default new Vuex.Store({
       state.currentUser = null;
       state.isAuth = false;
     },
+    setCheckDrop(state, payload){
+      state.checkDrop = payload
+    }
   },
   getters: {
     currentUser(state) {
@@ -43,6 +48,9 @@ export default new Vuex.Store({
     },
     isAuth(state) {
       return state.isAuth;
+    },
+    checkDrop(state) {
+      return state.checkDrop;
     },
   },
   actions: {

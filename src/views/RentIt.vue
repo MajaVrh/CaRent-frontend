@@ -1,19 +1,13 @@
 <template>
   <div>
     <v-container class="pr-8 pl-8 mt-12 mb-12">
-      <v-row
-        v-if="this.user.isAdmin"
-        class="text-h4 black--text d-flex ml-0"
-        style="font-family: 'Jockey One', sans-serif !important"
-      >
-        Rent it</v-row
-      >
+     
 
-      <v-row class="justify-space-around align-center text-center px-10 mt-8">
-        <v-col :cols="12" :xs="12" :md="6" :sm="12" class="my-n4"
+      <v-row class="justify-center align-center text-center  mt-8">  
+        <v-col :cols="12" :xs="12" :md="5" :sm="12" class="my-n4 mx-n8"
           ><filter1 v-if="this.user.isAdmin"
         /></v-col>
-        <v-col :cols="12" :xs="12" :md="6" :sm="12" class="my-n4">
+        <v-col :cols="12" :xs="12" :md="5" :sm="12" class="my-n4 mx-n8">
           <template>
             <div v-if="this.user.isAdmin">
               <v-dialog transition="dialog-top-transition " max-width="78%">
@@ -61,7 +55,7 @@
                             ><b>Body type: </b>{{ bodyType }}</v-row
                           >
                           <v-row class="mb-2"
-                            ><b>Places: </b>{{ places }}</v-row
+                            ><b>Seats: </b>{{ seats }}</v-row
                           >
                           <v-row class="mb-0"><b>Doors: </b>{{ doors }}</v-row>
                         </v-col>
@@ -126,8 +120,8 @@
                             color="orange"
                           ></v-text-field>
                           <v-text-field
-                            v-model="places"
-                            label="Places"
+                            v-model="seats"
+                            label="seats"
                             color="orange"
                           ></v-text-field>
                           <v-text-field
@@ -572,7 +566,7 @@
               ></v-col>
               <v-col :cols="12" :xs="12" :md="3" :sm="3" class="topMarginEach">
                 <v-text-field
-                  label="Places"
+                  label="seats"
                   outlined
                   dense
                   color="#153040"
@@ -641,6 +635,7 @@
 
       <v-container class="mt-n8 mb-8">
         <offeredCar
+          class="justify-center"
           v-for="car in cars"
           :key="car._id"
           :id="car._id"
@@ -651,6 +646,7 @@
           :dateDropOff = "new Date(dateDropOff)"
           :checkOutLocation = "checkOutLocation"
           :dropOffLocation = "dropOffLocation"
+          
         />
       
       </v-container>
@@ -671,7 +667,7 @@ export default {
     make: "",
     name: "",
     bodyType: "",
-    places: "",
+    seats: "",
     power: "",
     doors: "",
     luggageCapacity: "",
@@ -762,7 +758,7 @@ export default {
           make: this.make,
           name: this.name,
           bodyType: this.bodyType,
-          places: this.places,
+          seats: this.seats,
           power: this.power,
           doors: this.doors,
           luggageCapacity: this.luggageCapacity,
@@ -795,7 +791,7 @@ export default {
       (this.make = ""),
         (this.name = ""),
         (this.bodyType = ""),
-        (this.places = ""),
+        (this.seats = ""),
         (this.power = ""),
         (this.doors = ""),
         (this.luggageCapacity = ""),
@@ -879,4 +875,6 @@ hr {
 .fontSize {
   font-size: 17px;
 }
+
+
 </style>
