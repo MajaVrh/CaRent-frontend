@@ -1,9 +1,10 @@
 <template>
   <v-container v-if="rentInfo && rentInfo.carInfo.length > 0">
-    
+     
       <div v-for="(rent, i) in rentInfo.carInfo" :key="rent._id">
         <your-car :carName="rent.car.carName" :isLast="i == rentInfo.carInfo.length - 1" :carInfo="rent"/>
       </div>
+    
   </v-container>
   <v-container v-else>
     no cars :)

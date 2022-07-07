@@ -1,64 +1,95 @@
 <template>
-  <v-container class="m-6 mt-7" v-if="car">
-    <v-row
-      class="text-h4 black--text d-flex ml-0 mb-2"
-      style="font-family: 'Jockey One', sans-serif !important"
-    >
-      {{ car.name }} {{ car.make }}</v-row
-    >
-    <v-row>
-      <v-col>
-        <p>Doors: {{ car.doors }}</p>
-        <p>Seats: {{ car.seats }}</p>
-        <p>Luggage Capacity: {{ car.luggageCapacity }}</p>
-        <p>Transmission: {{ car.transmission }}</p>
-      </v-col>
-      <v-col>
-        <p>Fuel: {{ car.fuel }}</p>
-        <p>Body type: {{ car.bodyType }}</p>
-        <p>Experience Driving: {{ car.minDriversAge }}</p>
-        <p>Air conditioning: yes</p>
-      </v-col>
-      <v-col sm="5" md="4" xs="12" align="center">
-        <v-img :src="car.imageURL" max-width="250" contain></v-img>
-      </v-col>
-    </v-row>
+  <v-container class="m-6 mt-7 skew"  v-if="car">
+ 
+    <v-form @submit.prevent="rentCar()">
+      <v-row
+        class="text-h4 black--text d-flex ml-0 mb-2"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        {{ car.name }} {{ car.make }}</v-row
+      >
+      <v-row class="justify-space-between">
+        <v-col lg="2" sm="5" md="3" xs="12">
+          <p>Doors: {{ car.doors }}</p>
+          <p>Seats: {{ car.seats }}</p>
+          <p>Luggage Capacity: {{ car.luggageCapacity }}</p>
+          <p>Transmission: {{ car.transmission }}</p>
+        </v-col>
+        <v-col lg="2" sm="6" md="4" xs="12">
+          <p>Fuel: {{ car.fuel }}</p>
+          <p>Body type: {{ car.bodyType }}</p>
+          <p>Experience Driving: {{ car.minDriversAge }}</p>
+          <p>Air conditioning: yes</p>
+        </v-col>
+        <v-col lg="8" sm="12" md="5" xs="12" no-gutters align="center">
+          <v-img
+            class="mt-n5"
+            :src="car.imageURL"
+            max-width="350"
+            contain
+          ></v-img>
+        </v-col>
+      </v-row>
 
-    <v-row>
-      <v-col sm="9" md="8">
-        <table>
-          <tr>
-            <th>Check-Out</th>
-            <th>Location</th>
-            <th>Date</th>
-          </tr>
-          <tr>
-            <td align="center"></td>
-            <td align="center">{{ checkDrop.checkOutLocation }}</td>
-            <td align="center">
-              {{ moment(checkDrop.checkOutDate).format("DD.MM.YYYY") }}
-            </td>
-          </tr>
+      <v-row>
+        <v-col sm="12" md="8" lg="6">
+          <table>
+            <tr>
+              <th>Check-Out</th>
+              <th>Location</th>
+              <th>Date</th>
+            </tr>
+            <tr>
+              <td align="center"></td>
+              <td align="center">{{ checkDrop.checkOutLocation }}</td>
+              <td align="center">
+                {{ moment(checkDrop.checkOutDate).format("DD.MM.YYYY") }}
+              </td>
+            </tr>
 
-          <tr>
-            <th>Drop Off</th>
-            <th>Company</th>
-            <th>Contact</th>
-          </tr>
-          <tr>
-            <td></td>
-            <td>{{ checkDrop.dropOffLocation }}</td>
-            <td>{{ moment(checkDrop.dropOffDate).format("DD.MM.YYYY") }}</td>
-          </tr>
-        </table>
-      </v-col>
+            <tr>
+              <th>Drop Off</th>
+              <th>Company</th>
+              <th>Contact</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td>{{ checkDrop.dropOffLocation }}</td>
+              <td>{{ moment(checkDrop.dropOffDate).format("DD.MM.YYYY") }}</td>
+            </tr>
+          </table>
+        </v-col>
+        <v-col
+          style="margin-top: 2rem;"
+          class="text-center justify-center align-center"
+          xs="12"
+          sm="3"
+          md="4"
+          v-if="windowWidth >= 960"
+        >
+          <p
+            class="mt-n5 fontTotal"
+            style="font-family: 'Jockey One', sans-serif !important"
+            v-if="daysRent"
+          >
+            Total: {{ car.price * daysRent }}$
+          </p>
+          <p
+            v-else
+            class="fontTotal mt-n5"
+            style="font-family: 'Jockey One', sans-serif !important"
+          >
+            Total: {{ car.price }}$
+          </p>
+        </v-col>
+      </v-row>
       <v-col
-        style="margin-top: 2rem; text-align: center"
-        align="center"
-        xs="12"
+        style="margin-top: 2rem;"
+        class=" d-flex mx-auto text-center justify-center align-center"
+        xs="5"
         sm="3"
         md="4"
-        v-if="!(windowWidth < 700)"
+        v-if="windowWidth < 960"
       >
         <p
           class="text-h5"
@@ -75,57 +106,270 @@
           Total: {{ car.price }}$
         </p>
       </v-col>
-    </v-row>
-    <p
-      class="orange--text text-h5"
-      style="
-        font-family: 'Jockey One', sans-serif !important;
-        text-align: center;
-        margin-top: 2rem;
-        margin-left: -2.5rem;
-      "
-      v-if="windowWidth < 700"
-    >
-      Remaining time: 00:05:24:03
-    </p>
+      <hr class="my-12" color="#153040" />
+      <v-row
+        class="text-h4 black--text d-flex ml-0 mb-2"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        Personal details</v-row
+      >
+      <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
-    <hr class="my-12" color="#153040" />
-    <v-row
-      class="text-h4 black--text d-flex ml-0 mb-2"
-      style="font-family: 'Jockey One', sans-serif !important"
-    >
-      Personal details</v-row
-    >
-    <v-row class="d-flex ml-0"> Enter the required information </v-row>
+      <v-row>
+        <v-col>
+          <v-text-field
+            :rules="requiredRule"
+            color="orange"
+            label="Name"
+            v-model="Name"
+          ></v-text-field
+          ><v-text-field
+            :rules="requiredRule"
+            color="orange"
+            label="Surname"
+            v-model="Surname"
+          ></v-text-field
+          ><v-text-field
+            type="email"
+            :rules="emailRule"
+            color="orange"
+            label="Email"
+            v-model="Email"
+          ></v-text-field
+          ><v-text-field
+            type="number"
+            :rules="requiredRule"
+            color="orange"
+            label="Age"
+            v-model="Age"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            :rules="requiredRule"
+            color="orange"
+            label="Adress"
+            v-model="Adress"
+          ></v-text-field
+          ><v-text-field
+            type="number"
+            :rules="requiredRule"
+            color="orange"
+            label="Postal Code"
+            v-model="postalCode"
+          ></v-text-field
+          ><v-text-field
+            :rules="requiredRule"
+            color="orange"
+            label="City"
+            v-model="City"
+          ></v-text-field
+          ><v-text-field
+            :rules="requiredRule"
+            color="orange"
+            label="Country"
+            v-model="Country"
+          ></v-text-field>
+        </v-col>
+      </v-row>
 
-    <v-row>
-      <v-col>
-        <v-text-field label="Name"></v-text-field
-        ><v-text-field label="Surname"></v-text-field
-        ><v-text-field label="Email"></v-text-field
-        ><v-text-field label="Age"></v-text-field>
-      </v-col>
-      <v-col>
-        <v-text-field label="Adress"></v-text-field
-        ><v-text-field label="Postal Code"></v-text-field
-        ><v-text-field label="City"></v-text-field
-        ><v-text-field label="Country"></v-text-field>
-      </v-col>
-    </v-row>
+      <hr class="my-12" color="#153040" />
 
-    <hr class="my-12" color="#153040" />
+      <v-row
+        class="text-h4 black--text d-flex ml-0 mb-2"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        Payment</v-row
+      >
+      <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
-    <v-row
-      class="text-h4 black--text d-flex ml-0 mb-2"
-      style="font-family: 'Jockey One', sans-serif !important"
-    >
-      Payment</v-row
-    >
-    <v-row class="d-flex ml-0"> Enter the required information </v-row>
+      <v-container class="credContainer" v-if="windowWidth > 1285">
+        <v-card class="credBack" width="700" color="#2B6182">
+          <div class="line"></div>
+          <v-text-field
+            color="orange"
+            background-color="white"
+            label="CVV"
+            class="alignCvv"
+            filled
+            rounded
+            dense
+            :rules="requiredRule"
+            maxlength="3"
+            v-model="CVV"
+          ></v-text-field>
+        </v-card>
+        <v-card class="credFront" width="700" color="#1E445B">
+          <v-row>
+            <v-col>
+              <v-text-field
+                class="mt-4"
+                color="orange"
+                background-color="white"
+                label="Card number"
+                filled
+                rounded
+                dense
+                :rules="requiredRule"
+                maxlength="16"
+                v-model="cardNumber"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                color="orange"
+                background-color="white"
+                label="MM/YY"
+                filled
+                rounded
+                dense
+                :rules="requiredRule"
+                maxlength="5"
+                v-model="MY"
+              ></v-text-field>
+            </v-col>
+            <v-col></v-col>
 
-    <v-row align="center" justify="center">
-      <v-col align="center" justify="center"> aa </v-col>
-    </v-row>
+            <v-col>
+              <v-text-field
+                label="Zip code"
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                maxlength="5"
+                :rules="requiredRule"
+                v-model="zipCode"
+              ></v-text-field
+            ></v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
+      <v-container v-else>
+        <v-card color="#2B6182" class="px-10 py-10 mt-5">
+          <v-row>
+            <v-col align="center">
+              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              ><v-text-field
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                label="Name on card"
+                :rules="requiredRule"
+                v-model="nameOnCard"
+              ></v-text-field
+            ></v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                label="Card number"
+                :rules="requiredRule"
+                maxlength="16"
+                v-model="cardNumber"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                label="MM/YY"
+                :rules="requiredRule"
+                maxlength="5"
+                v-model="MY"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                label="CVV"
+                :rules="requiredRule"
+                maxlength="3"
+                v-model="CVV"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-text-field
+                color="orange"
+                background-color="white"
+                filled
+                rounded
+                dense
+                label="Zip code"
+                maxlength="5"
+                :rules="requiredRule"
+                v-model="zipCode"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
+      <v-row>
+        <v-col align="center" class="my-5">
+          <v-btn
+            type="submit"
+            color="orange"
+            width="170"
+            class="white--text mx-2 my-2"
+          >
+            Confirm
+          </v-btn>
+          <v-btn
+            type="button"
+            color="#153040"
+            :to="{ name: 'RentIt' }"
+            width="170"
+            class="white--text mx-2 my-2"
+          >
+            Cancel
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+
   </v-container>
 </template>
 
@@ -140,6 +384,21 @@ export default {
       id: this.$route.params.id,
       car: null,
       daysRent: null,
+      requiredRule: [(v) => !!v || "Is required"],
+      emailRule: [v => !!v || 'Is required', v => /.+@.+\..+/.test(v) || 'E-mail must be valid',],
+      Name: "",
+      Surname: "",
+      Email: "",
+      Age: "",
+      Adress: "",
+      postalCode: "",
+      City: "",
+      Country: "",
+      nameOnCard: "",
+      cardNumber: "",
+      MY: "",
+      CVV: "",
+      zipCode: "",
     };
   },
   methods: {
@@ -149,6 +408,62 @@ export default {
         this.car = res.data;
 
         console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    fieldError() {
+      this.$toast.error("All fields must be filled", {
+        position: "bottom-right",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    },
+    async rentCar() {
+      if (
+        this.Name.length < 1 &&
+        this.Surname.length < 1 &&
+        this.Age.length < 1 &&
+        this.Adress.length < 1 &&
+        this.postalCode.length < 1 &&
+        this.City.length < 1 &&
+        this.Country.length < 1 &&
+        this.nameOnCard.length < 1 &&
+        this.cardNumber.length < 1 &&
+        this.MY.length < 1 &&
+        this.CVV.length < 1 &&
+        this.zipCode.length < 1
+      ) {
+        console.log(this.Name, this.Surname, this.Email, this.Age, this.Adress, this.postalCode, this.City, this.Country, this.nameOnCard, this.cardNumber, this.MY, this.CVV, this.zipCode)
+        return this.fieldError();
+
+      }
+      try {
+        const res = await axios.post("http://localhost:8000/rent", {
+          carId: this.car._id,
+          dropOffLocation: this.checkDrop.dropOffLocation,
+          checkOutLocation: this.checkDrop.checkOutLocation,
+          checkOut: this.checkDrop.checkOutDate,
+          dropOff: this.checkDrop.dropOffDate,
+          Name: this.Name,
+          Surname: this.Surname,
+          Email: this.Email,
+          Age: this.Age,
+          Adress: this.Adress,
+          postalCode: this.postalCode,
+          City: this.City,
+          Country: this.Country,
+        });
+        console.log(res);
+        this.$router.go({ name: "RentIt" });
       } catch (error) {
         console.log(error);
       }
@@ -167,21 +482,24 @@ export default {
   },
 
   mounted() {
-    if(!this.checkDrop){this.$router.push({name: 'RentIt'})}
+    if (!this.checkDrop) {
+      return this.$router.push({ name: "RentIt" });
+    }
     this.fetchRents();
     this.calcTimeDiff();
   },
-  beforeDestroy(){
-    this.setCheckDrop(null)
-  }
+  beforeDestroy() {
+    this.setCheckDrop(null);
+  },
 };
 </script>
 
-<style lang="scss">
+<style  lang="scss" >
 td,
 th {
-  width: 12rem;
+  width: 15rem;
   text-align: center;
+  font-size: 5rem;
 }
 @media only screen and (max-width: 425px) {
   table,
@@ -199,5 +517,65 @@ th {
     font-size: 1rem !important;
     text-align: left;
   }
+}
+
+@media only screen and (max-width: 425px) {
+  table,
+  td,
+  th,
+  tr {
+    font-size: 0.9rem !important;
+  }
+}
+
+.credContainer {
+  position: relative;
+  height: 20rem;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 7rem;
+}
+.credFront {
+  padding: 2rem;
+  position: absolute;
+  width: 40%;
+  height: 100%;
+}
+.credBack {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  margin-top: 4rem;
+  margin-left: 10rem;
+
+
+  .line {
+    height: 20%;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    background-color: #c0c0c0;
+  }
+
+}
+@media only screen and (min-width: 600px) {
+.skew{
+  width: 70% !important;
+}
+}
+
+.cardIcons {
+  margin: 0.5rem;
+  margin-top: -0.8rem;
+  color: white;
+}
+.fontTotal {
+  font-size: 1.9rem;
+}
+.alignCvv{
+  width: 15% !important;
+  border-radius: 2rem !important;
+  margin-left: auto !important;
+  margin-RIGHT: 2rem !important;
+
 }
 </style>

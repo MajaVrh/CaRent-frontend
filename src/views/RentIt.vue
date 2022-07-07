@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <v-container class="pr-8 pl-8 mt-12 mb-12">
      
 
@@ -315,6 +315,7 @@
                     v-model="dateCheckOut"
                     scrollable
                     color="#153040"
+                    @change="changeDateMin"
                     :allowed-dates="allowedDates"
                     :min="currentDate"
                   >
@@ -339,6 +340,7 @@
                 <v-dialog
                   ref="dialogtime1"
                   v-model="modalCheckOutTime"
+                  
                   :return-value.sync="timeCheckOut"
                   persistent
                   width="290px"
@@ -427,7 +429,7 @@
                     scrollable
                     color="#153040"
                     :allowed-dates="allowedDates"
-                    :min="currentDate"
+                    :min="oneDayLaterString ? oneDayLaterString : oneDayLater"
                   >
                     <v-spacer></v-spacer>
                     <v-btn text color="#FDA300" @click="modalDropOff = false">
@@ -633,11 +635,10 @@
         </v-card>
       </v-container>
 
-      <v-container class="mt-n8 mb-8">
+      <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
         <offeredCar
           class="justify-center"
-          v-for="car in cars"
-          :key="car._id"
+          v-if="!car.isRented"          
           :id="car._id"
           :carP="car"
           :deleteCarFrontend="deleteCarFrontend"
@@ -659,7 +660,7 @@ import offeredCar from "@/components/offeredCar";
 import filter1 from "@/components/filter1";
 
 import axios from "axios";
-
+import moment from "moment";
 import { mapGetters } from "vuex";
 
 export default {
@@ -701,7 +702,7 @@ export default {
       "Zadar",
       "Zagreb",
     ],
-
+    
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -710,6 +711,12 @@ export default {
       .substr(0, 10),
     modalCheckOut: false,
     timeCheckOut: null,
+    
+    oneDayLater: new Date(),
+
+    oneDayLaterString: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
 
     modalCheckOutTime: false,
 
@@ -731,12 +738,27 @@ export default {
   mounted() {
     this.isAdmin();
     this.getCars();
+    this.oneDayLater = new Date()
+    this.oneDayLater.setDate(new Date(this.dateCheckOut).getDate() + 1)
+    this.oneDayLater = moment(this.oneDayLater).format("YYYY-MM-DD")
+    this.dateDropOff = this.oneDayLater
+    this.oneDayLaterString = null
   },
   computed: {
     ...mapGetters({ user: "currentUser" }),
   },
 
   methods: {
+    changeDateMin() {
+      
+      this.oneDayLater = new Date()
+    this.oneDayLater.setDate(new Date(this.dateCheckOut).getDate() + 1)
+
+    this.oneDayLater = moment(this.oneDayLater).format("YYYY-MM-DD")
+    this.dateDropOff = this.oneDayLater
+    this.oneDayLaterString = null
+  
+    },
     allowedDates: (val) => parseInt(val.split("-")[2], 10),
     funkcija(a) {
       console.log(a);

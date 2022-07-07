@@ -45,7 +45,7 @@
               mb-2
               justify-center
               text-center
-              mt-n8
+              
               priceText
             "
             style="font-family: 'Jockey One', sans-serif !important"
@@ -347,21 +347,6 @@ export default {
           icon: true,
           rtl: false,
         });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async rentCar() {
-      try {
-        const res = await axios.post("http://localhost:8000/rent", {
-          carId: this.car._id,
-          dropOffLocation: this.dropOffLocation,
-          checkOutLocation: this.checkOutLocation,
-          checkOut: this.dateCheckOut,
-          dropOff: this.dateDropOff,
-        });
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
