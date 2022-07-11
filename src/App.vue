@@ -4,7 +4,9 @@
       <v-list-item style="margin-top: 5rem">
         <v-list-item-content>
           <v-list-item-title class="text-h6"> Menu</v-list-item-title>
-          <v-list-item-subtitle> Where do you wanna go? </v-list-item-subtitle>
+          <v-list-item-subtitle class="text-subtitle-1">
+            Where do you wanna go?
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -15,23 +17,58 @@
               class="pl-5"
               link
               :to="item.link"
-              v-if="!item.loginNeeded && !user"
+              v-if="!item.loginNeeded && !user && !item.adminNeeded"
             >
               <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title
+                  class="text-subtitle-1"
+                  v-text="item.text"
+                ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-
             <v-list-item
               click:logout
-              class="pl-5"
+              class="pl-5 py-1"
+              v-else-if="item.loginNeeded && user && item.adminNeeded"
+              link
+              :to="item.link"
+              @click="actionClick(item.action)"
+            >
+              <v-list-item-content>
+                <v-list-item-title
+                  class="text-subtitle-1"
+                  v-text="item.text"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              click:logout
+              class="pl-5 py-1"
+              v-else-if="item.loginNeeded && user && !item.adminNeeded"
+              link
+              :to="item.link"
+              @click="actionClick(item.action)"
+            >
+              <v-list-item-content>
+                <v-list-item-title
+                  class="text-subtitle-1"
+                  v-text="item.text"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              click:logout
+              class="pl-5 py-1"
               v-else-if="user"
               link
               :to="item.link"
               @click="actionClick(item.action)"
             >
               <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title
+                  class="text-subtitle-1"
+                  v-text="item.text"
+                ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -99,19 +136,26 @@
                 @click="actionClick(item.action)"
               >
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                  <v-list-item-title
+                    class="text-subtitle-1"
+                    v-text="item.text"
+                  ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+
               <v-list-item
                 click:logout
-                class="pl-5"
+                class="pl-5 py-1"
                 v-else-if="item.loginNeeded && user"
                 link
                 :to="item.link"
                 @click="actionClick(item.action)"
               >
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                  <v-list-item-title
+                    class="text-subtitle-1"
+                    v-text="item.text"
+                  ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </div>
@@ -206,14 +250,36 @@ export default {
     selectedItemAccount: 1,
 
     items: [
-      { text: "Home", link: "/", loginNeeded: false },
+      {
+        text: "Home",
+        link: "/",
+        loginNeeded: false,
+        adminNeeded: false,
+      },
       {
         text: "Vehicles and stations",
         link: "/vehiclesandstations",
         loginNeeded: false,
+        adminNeeded: false,
       },
-      { text: "Rent it", link: "/rentit", loginNeeded: true },
-      { text: "Contact us", link: "/contact", loginNeeded: false },
+      {
+        text: "Rent it",
+        link: "/rentit",
+        loginNeeded: true,
+        adminNeeded: false,
+      },
+      {
+        text: "Contact us",
+        link: "/contact",
+        loginNeeded: false,
+        adminNeeded: false,
+      },
+      {
+        text: "User list",
+        link: "/userList",
+        loginNeeded: true,
+        adminNeeded: true,
+      },
     ],
     itemsAccount: [
       { text: "My rents", link: "/myrents", loginNeeded: true },

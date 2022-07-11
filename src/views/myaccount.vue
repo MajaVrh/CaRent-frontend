@@ -25,7 +25,7 @@
         <v-col :cols="10" :xs="8" :md="6" :sm="4" class="shrink">
           <v-row class="justify-end mr-2">
             <v-btn
-              color="whitw"
+              color="white"
               class="error--text text-capitalize mr-2"
               @click="isVisableDelete = !isVisableDelete"
               >Cancel

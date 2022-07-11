@@ -54,7 +54,10 @@
             Our offices are located in the centers of some of the most
             attractive cities and their airports. Find us at seven easily
             accessible locations throughout Croatia -
-            <b> Zagreb, Pula, Split, Vukovar, Dubrovnik, Rijeka, Varaždin</b>
+            <b>
+              Zagreb, Pula, Split, Vukovar, Dubrovnik, Rijeka, Varaždin,
+              Vinkovci</b
+            >
             . <br />
             Whether you are on a holiday or just passing through we are here to
             make your time easy and comfortable. Our vehicle fleet is consisted
@@ -84,6 +87,7 @@
       >
         Rental conditions</v-row
       >
+
       <v-row class="text-h6 font-weight-regular d-flex ml-6 mt-6">
         <v-card flat>
           <li>identity card or passport with a minimum age of 19 years</li>
@@ -91,6 +95,111 @@
           <li>driving license with driving experience longer than one year</li>
         </v-card></v-row
       >
+    </v-container>
+    <hr />
+
+    <v-container class="text-h6 font-weight-regular">
+      <v-row
+        class="text-h4 black--text d-flex pr-8 pl-8"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        User reviews</v-row
+      >
+
+      <v-sheet flat class="mx-auto mx-n10 reviews" min-width="100%">
+        <v-slide-group class="py-4 px-3" center-active show-arrows>
+          <v-slide-item v-for="review in reviews" :key="review._id">
+            <v-card
+              class="mx-4 my-6"
+              height="250"
+              width="246"
+              :elevation="10 - 1"
+            >
+              <v-row align="center" justify="center">
+                <review :review="review" />
+              </v-row>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>
+      <v-row style="width: 92%" class="justify-center align-center mx-auto">
+        <v-alert
+          style="width: 100%"
+          class="mb-4"
+          type="success"
+          outlined
+          text
+          v-if="isVisibleAlertSuccess"
+          >Your review has been successfully added!</v-alert
+        ></v-row
+      >
+      <v-dialog v-model="dialog" persistent max-width="60vw">
+        <template v-slot:activator="{ on, attrs }">
+          <v-row class="justify-center">
+            <v-btn
+              color="orange  "
+              class="white--text px-7 mt-6 py-1 text-capitalize text-h6 justify-center align-center align-text"
+              style="font-family: 'Jockey One', sans-serif !important"
+              v-bind="attrs"
+              v-on="on"
+              >Write review</v-btn
+            ></v-row
+          >
+        </template>
+        <v-card class="px-6 pt-4">
+          <v-card-title
+            class="text-h5"
+            style="font-family: 'Jockey One', sans-serif !important"
+          >
+            Write your review
+          </v-card-title>
+          <v-card-text style="font-size: 18px; color: black"
+            >Here you can write your review for CaRent. We appreciate your
+            opinion!</v-card-text
+          >
+          <v-card-text class="m-0 p-0">
+            <v-rating
+              class="mb-2 mt-n4"
+              v-model="rating"
+              color="yellow darken-3"
+              background-color="grey darken-1"
+              icon-label="custom icon label text {0} of {1}"
+            ></v-rating>
+            <v-textarea
+              outlined
+              name="body"
+              v-model="comment"
+              label="You can write your opinion here"
+              color="#153040"
+              min-height="200"
+              :rules="[rules.required]"
+            ></v-textarea>
+          </v-card-text>
+          <v-card-actions class="mt-n3 justify-center text-center">
+            <v-row class="mt-n6 mb-4 justify-center text-center">
+              <v-btn
+                color="#FDA300"
+                class="white--text my-1 px-10 text-capitalize text-h6 mx-2"
+                style="font-family: 'Jockey One', sans-serif !important"
+                width="8rem"
+                type="submit"
+                @click="addReview()"
+                >Comment
+              </v-btn>
+
+              <v-btn
+                color="#153040"
+                class="white--text my-1 px-10 text-capitalize text-h6 mx-2"
+                style="font-family: 'Jockey One', sans-serif !important"
+                width="8rem"
+                @click="dialog = false"
+              >
+                Cancel
+              </v-btn></v-row
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
     <hr />
     <v-container>
@@ -127,9 +236,62 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters, mapMutations } from "vuex";
+import review from "@/components/review";
 export default {
   name: "Home",
-  components: {},
+  components: { review },
+
+  data: () => ({
+    rating: 5,
+    dialog: false,
+    comment: "",
+    isVisibleAlertSuccess: false,
+    reviews: [],
+    rules: {
+      required: (value) => !!value || "Required",
+    },
+  }),
+  mounted() {
+    this.getReview();
+  },
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
+  methods: {
+    ...mapMutations({ setCurrentUser: "setCurrentUser" }),
+    async addReview() {
+      try {
+        await axios.post("http://localhost:8000/review/add", {
+          name: this.user.name,
+          surname: this.user.surname,
+          mark: this.rating,
+          comment: this.comment,
+          email: this.user.email,
+        });
+        this.getReview();
+        this.comment = "";
+        this.rating = 5;
+        this.isVisibleAlertSuccess = true;
+        this.dialog = false;
+        setTimeout(() => {
+          this.isVisibleAlertSuccess = false;
+        }, "3000");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getReview() {
+      try {
+        let res = await axios.get("http://localhost:8000/reviews");
+        this.reviews = res.data;
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
 

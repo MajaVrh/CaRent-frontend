@@ -128,7 +128,6 @@
                       text
                       color="#FDA300"
                       @click="$refs.dialogtime1.save(timeCheckOut)"
-
                     >
                       OK
                     </v-btn>

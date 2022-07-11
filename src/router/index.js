@@ -60,6 +60,12 @@ const routes = [
     meta: { loginNeeded: true },
     component: () => import("../views/payIt.vue"),
   },
+  {
+    path: "/userlist",
+    name: "userList",
+    meta: { loginNeeded: true, adminNeeded: true },
+    component: () => import("../views/userList.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -72,6 +78,10 @@ router.beforeEach((to, from, next) => {
   const user = store.getters["currentUser"];
   const isLoading = store.getters["loading"];
   if (to.meta.loginNeeded && !user && !isLoading) {
+    next("/index");
+  }
+
+  if (to.meta.adminNeeded && !user.isAdmin && !isLoading) {
     next("/index");
   }
 

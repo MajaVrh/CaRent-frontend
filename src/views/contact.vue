@@ -1,6 +1,5 @@
 <template>
   <v-container class="py-10 px-10">
-    
     <v-row align="center" justify="center">
       <v-alert
         type="success"
@@ -34,12 +33,12 @@
     </v-row>
     <v-row justify="center" align="center">
       <v-col justify="center" align="center">
-        <v-card width="1250" class="px-15 py-10 mb-15" color="grey lighten-3">
+        <v-card width="1000" class="px-15 py-10 mb-15" flat :elevation="10 - 1">
           <v-card-title
-            class="mb-10 text-h3 justify-center"
-      style="font-family: 'Jockey One', sans-serif !important"
-    >
-      Contact us
+            class="mb-4 text-h3 justify-center"
+            style="font-family: 'Jockey One', sans-serif !important"
+          >
+            Contact us
           </v-card-title>
           <v-text-field
             label="Subject"
