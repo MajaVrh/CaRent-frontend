@@ -21,16 +21,6 @@
             style="   width=20rem !important; "
           ></v-text-field
         ></v-col>
-        <v-col :cols="12" :xs="12" :md="6" :sm="12"
-          ><v-alert
-            outlined
-            type="warning"
-            prominent
-            border="left"
-            v-if="isVisibleAdminStatus"
-            >You have changed the user's admin status!</v-alert
-          ></v-col
-        >
       </v-row>
       <v-data-table
         :search="search"
@@ -69,7 +59,6 @@ export default {
   name: "userList",
   data() {
     return {
-      isVisibleAdminStatus: false,
       users: [],
       search: "",
       headers: [
@@ -96,6 +85,23 @@ export default {
     this.getUsers();
   },
   methods: {
+    alertStatus() {
+      this.$toast.warning("You have changed the user's admin status!", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+    },
+
     async getUsers() {
       try {
         let res = await axios.get("http://localhost:8000/users");
@@ -108,10 +114,7 @@ export default {
       try {
         await axios.patch(`http://localhost:8000/user/setAdmin/${email}`);
         this.getUsers();
-        this.isVisibleAdminStatus = true;
-        setTimeout(() => {
-          this.isVisibleAdminStatus = false;
-        }, "4000");
+        this.alertStatus();
       } catch (error) {
         console.log(error);
       }
@@ -120,10 +123,7 @@ export default {
       try {
         await axios.patch(`http://localhost:8000/user/revokeAdmin/${email}`);
         this.getUsers();
-        this.isVisibleAdminStatus = true;
-        setTimeout(() => {
-          this.isVisibleAdminStatus = false;
-        }, "4000");
+        this.alertStatus();
       } catch (error) {
         console.log(error);
       }

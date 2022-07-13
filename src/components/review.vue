@@ -51,10 +51,11 @@ export default {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: orange;
+  border-radius: 30px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: orange;
 }
 </style>

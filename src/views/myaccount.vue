@@ -7,9 +7,7 @@
       Personal details</v-row
     >
     <v-row class="ml-0 mb-6">You can edit your profile here</v-row>
-    <v-alert type="success" outlined text v-if="!isVisible"
-      >You have successfully made changes!</v-alert
-    >
+
     <v-alert
       v-if="!isVisableDelete"
       prominent
@@ -143,6 +141,12 @@
             >Delete account</v-btn
           >
         </v-row>
+
+        <v-row class="text-end justify-center align-center mt-12">
+          <v-icon size="300" color="grey lighten-1">
+            mdi-account-cog
+          </v-icon></v-row
+        >
       </v-col>
     </v-row>
   </v-container>
@@ -159,7 +163,7 @@ export default {
         required: (value) => !!value || "Required",
       },
       settingsON: false,
-      isVisible: true,
+
       isVisableDelete: true,
     };
   },
@@ -168,6 +172,23 @@ export default {
   },
   methods: {
     ...mapMutations({ setCurrentUser: "setCurrentUser", logOut: "logOut" }),
+
+    alertChangesSuccess() {
+      this.$toast.success("You successfully made changes!", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+    },
 
     async updateData() {
       try {
@@ -182,11 +203,7 @@ export default {
         this.setCurrentUser(res.data);
         this.settingsON = !this.settingsON;
 
-        this.isVisible = false;
-
-        setTimeout(() => {
-          this.isVisible = true;
-        }, "3000");
+        this.alertChangesSuccess();
       } catch (error) {
         console.log(error);
       }

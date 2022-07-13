@@ -29,7 +29,7 @@
             <v-list-item
               click:logout
               class="pl-5 py-1"
-              v-else-if="item.loginNeeded && user && item.adminNeeded"
+              v-else-if="item.loginNeeded && user && !item.adminNeeded"
               link
               :to="item.link"
               @click="actionClick(item.action)"
@@ -44,7 +44,9 @@
             <v-list-item
               click:logout
               class="pl-5 py-1"
-              v-else-if="item.loginNeeded && user && !item.adminNeeded"
+              v-else-if="
+                item.loginNeeded && user && item.adminNeeded && user.isAdmin
+              "
               link
               :to="item.link"
               @click="actionClick(item.action)"
@@ -72,6 +74,30 @@
               </v-list-item-content>
             </v-list-item>
           </div>
+          <v-list-item
+            class="pl-5 py-1"
+            v-if="user && user.isAdmin"
+            link
+            :to="{ name: 'userList' }"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1"
+                >Users list</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            class="pl-5 py-1"
+            v-if="user && !user.isAdmin"
+            link
+            :to="{ name: 'contact' }"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1" text="Contact us"
+                >Contact us</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -268,18 +294,6 @@ export default {
         loginNeeded: true,
         adminNeeded: false,
       },
-      {
-        text: "Contact us",
-        link: "/contact",
-        loginNeeded: false,
-        adminNeeded: false,
-      },
-      {
-        text: "User list",
-        link: "/userList",
-        loginNeeded: true,
-        adminNeeded: true,
-      },
     ],
     itemsAccount: [
       { text: "My rents", link: "/myrents", loginNeeded: true },
@@ -321,7 +335,7 @@ export default {
       }
     },
     logout() {
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
 
       this.setAuthToken(null);
       this.logOutStore();

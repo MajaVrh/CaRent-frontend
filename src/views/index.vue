@@ -9,24 +9,32 @@
           Ca<span class="orange--text lighten-1">R</span>ent
         </v-container>
         <v-btn
+          height="45"
           width="200"
-          class="mb-3 mt-5 text-capitalize"
+          class="white--text mt-4 px-15 text-capitalize text-h6"
+          style="
+            font-family: 'Jockey One', sans-serif !important;
+            background-color: white;
+          "
           outlined
           color="orange"
-          style="background-color: white"
           :to="{ name: 'Home' }"
           >Home page</v-btn
         ><br />
         <v-btn
+          height="45"
+          class="white--text mt-4 px-15 text-capitalize text-h6"
+          style="font-family: 'Jockey One', sans-serif !important"
           width="200"
-          class="mb-3 white--text text-capitalize"
           color="orange"
           :to="{ name: 'register' }"
           >Register</v-btn
         ><br />
         <v-btn
+          height="45"
+          class="white--text mt-4 px-15 text-capitalize text-h6"
+          style="font-family: 'Jockey One', sans-serif !important"
           width="200"
-          class="white--text text-capitalize"
           color="orange"
           :to="{ name: 'login' }"
           >Login</v-btn

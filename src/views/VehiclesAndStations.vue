@@ -117,6 +117,7 @@
             color="#FDA300"
             class="white--text mt-6 px-15 text-capitalize text-h6"
             style="font-family: 'Jockey One', sans-serif !important"
+            :to="{ name: 'RentIt' }"
           >
             Rent it
           </v-btn></v-col

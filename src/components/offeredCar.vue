@@ -6,48 +6,49 @@
         class="text-h4 black--text justify-center marginTitle"
         style="font-family: 'Jockey One', sans-serif !important"
       >
-        <v-col sm="4" md="3" xs="12" lg="3" class="titleMargins"
-          > {{ car.make }} {{ car.name }}
+        <v-col sm="4" md="3" xs="12" lg="3" class="titleMargins">
+          {{ car.make }} {{ car.name }}
         </v-col>
         <v-col sm="4" md="3" xs="12" lg="2"></v-col>
         <v-col sm="4" md="3" xs="12" lg="2"></v-col>
         <v-col sm="4" md="3" xs="12" lg="2"></v-col>
       </v-row>
       <v-row class="justify-center align-center">
-        <v-col sm="4" md="3" xs="12" lg="2">
-          <p>Doors: {{ car.doors }}</p>
-          <p>Seats: {{ car.seats }}</p>
-          <p>Body type: {{ car.bodyType }}</p>
-          <p>Transmission: {{ car.transmission }}</p>
-          <p>Power: {{ car.power }}</p>
+        <v-col cols="12" sm="4" md="3" xs="12" lg="2">
+          <p><b>Doors: </b> {{ car.doors }}</p>
+          <p><b>Seats: </b> {{ car.seats }}</p>
+          <p><b>Body type: </b> {{ car.bodyType }}</p>
+          <p><b>Transmission: </b> {{ car.transmission }}</p>
+          <p><b>Power: </b> {{ car.power }}</p>
         </v-col>
-        <v-col sm="4" md="3" xs="12" lg="2">
-          <p>Fuel: {{ car.fuel }}</p>
-          <p>Luggage Capacity: {{ car.luggageCapacity }}</p>
-          <p>Min driver age: {{ car.minDriversAge }}</p>
-          <p>Production year: {{ car.productionYear }}</p>
-          <p>Current station: {{ car.currentStation }}</p>
+        <v-col
+          style="min-width: 14rem !important"
+          sm="4"
+          md="3"
+          xs="12"
+          lg="2"
+          class="topMargin"
+        >
+          <p><b>Fuel: </b> {{ car.fuel }}</p>
+          <p><b>Luggage Capacity: </b> {{ car.luggageCapacity }}</p>
+          <p>
+            <b>Driver licence category: </b> {{ car.driverLicenceCategory }}
+          </p>
+          <p><b>Production year: </b> {{ car.productionYear }}</p>
+          <p><b>Current station: </b> {{ car.location }}</p>
         </v-col>
         <v-col :cols="12" sm="4" md="3" xs="12" lg="3">
           <v-row class="justify-center">
             <v-img
               :src="car.imageURL"
-              max-width="255"
+              max-width="250"
               class="offeredCarImg mb-8"
             ></v-img
           ></v-row>
         </v-col>
         <v-col cols="12" sm="4" md="" xs="12" lg="2" class="text-center mx-8">
           <v-row
-            class="
-              text-h5
-              black--text
-              mb-2
-              justify-center
-              text-center
-              
-              priceText
-            "
+            class="text-h5 black--text mb-2 justify-center text-center priceText"
             style="font-family: 'Jockey One', sans-serif !important"
           >
             {{ car.price }}€ per Day</v-row
@@ -80,14 +81,7 @@
                 <v-card class="pt-12">
                   <v-card-text class="mt-n12 pt-12 px-12">
                     <v-row
-                      class="
-                        text-h4
-                        mt-2
-                        black--text
-                        d-flex
-                        ml-0
-                        justify-center
-                      "
+                      class="text-h4 mt-2 black--text d-flex ml-0 justify-center"
                       style="font-family: 'Jockey One', sans-serif !important"
                     >
                       Edit car information
@@ -107,14 +101,17 @@
                           label="Name"
                           color="orange"
                         ></v-text-field>
-                        <v-text-field
-                          v-model="newBodyType"
-                          label="Body type"
+
+                        <v-select
                           color="orange"
-                        ></v-text-field>
+                          item-color="orange"
+                          :items="bodyTypeItems"
+                          label="Body type"
+                          v-model="newBodyType"
+                        ></v-select>
                         <v-text-field
-                          v-model="newPlaces"
-                          label="Places"
+                          v-model="newSeats"
+                          label="Seats"
                           color="orange"
                         ></v-text-field>
                         <v-text-field
@@ -133,26 +130,37 @@
                           color="orange"
                         ></v-text-field
                       ></v-col>
-                      <v-col class="mx-12" :cols="12" :xs="12" :md="4" :sm="10">
-                        <v-text-field
-                          v-model="newFuel"
+                      <v-col
+                        class="mx-12 topMargin"
+                        :cols="12"
+                        :xs="12"
+                        :md="4"
+                        :sm="10"
+                      >
+                        <v-select
+                          color="orange"
+                          item-color="orange"
+                          :item-value="newFuel"
+                          :items="fuelItems"
                           label="Fuel"
-                          class="topMargin"
+                          v-model="newFuel"
+                        ></v-select>
+                        <v-select
                           color="orange"
-                        ></v-text-field>
-                        <v-text-field
-                          v-model="newTransmission"
+                          item-color="orange"
+                          :items="transmissionItems"
                           label="Transmission"
-                          color="orange"
-                        ></v-text-field>
+                          v-model="newTransmission"
+                        ></v-select>
+
                         <v-text-field
                           v-model="newProductionYear"
                           label="Production Year"
                           color="orange"
                         ></v-text-field>
                         <v-text-field
-                          v-model="newMinDriversAge"
-                          label="Min Drivee Age"
+                          v-model="newDriverLicenceCategory"
+                          label="Driver licence category"
                           color="orange"
                         >
                         </v-text-field>
@@ -161,13 +169,15 @@
                           label="Price"
                           color="orange"
                         ></v-text-field>
-
-                        <v-text-field
-                          v-model="newCurrentStation"
-                          label="Current station"
+                        <v-select
                           color="orange"
-                        ></v-text-field>
-                        <v-row class="d-flex text-start jutify-start">
+                          item-color="orange"
+                          :items="items"
+                          label="Current station"
+                          v-model="newLocation"
+                        ></v-select>
+
+                        <v-row class="d-flex text-start justify-space-between">
                           <v-col :xs="12" :md="5" :sm="5">
                             <v-btn
                               @click="openUploadModal"
@@ -198,13 +208,7 @@
                         :md="3"
                         :sm="12"
                         color="#153040"
-                        class="
-                          white--text
-                          mb-3
-                          px-8
-                          text-capitalize text-h6
-                          mx-3
-                        "
+                        class="white--text mb-3 px-8 text-capitalize text-h6 mx-3"
                         style="font-family: 'Jockey One', sans-serif !important"
                         min-width="8.2rem"
                         @click="dialog.value = false"
@@ -275,14 +279,6 @@
           </v-col>
         </v-row>
       </v-alert>
-      <v-alert
-        class="mt-8"
-        type="success"
-        outlined
-        text
-        v-if="isVisibleAlertSuccess"
-        >You have successfully made changes!</v-alert
-      >
     </v-container>
   </div>
 </template>
@@ -293,10 +289,32 @@ import { mapMutations } from "vuex";
 export default {
   name: "offeredCar",
   data: () => ({
+    bodyTypeItems: [
+      "Sedan",
+      "Station wagon",
+      "Crossover",
+      "SUV",
+      "Van",
+      "Other",
+    ],
+    items: [
+      "Pula",
+      "Rijeka",
+      "Split",
+      "Varaždin",
+      "Vukovar",
+      "Zadar",
+      "Zagreb",
+    ],
+
+    transmissionItems: ["Manual", "Automatic"],
+
+    fuelItems: ["Diesel", "Petrol", "LPG", "Electric", "Hybrid"],
+
     newMake: "",
     newName: "",
     newBodyType: "",
-    newPlaces: "",
+    newSeats: "",
     newPower: "",
     newDoors: "",
     newLuggageCapacity: "",
@@ -306,11 +324,10 @@ export default {
     newImgURL: "",
     newTransmission: "",
     newProductionYear: "",
-    newMinDriversAge: "",
+    newDriverLicenceCategory: "",
     newPrice: "",
-    newCurrentStation: "",
+    newLocation: "",
 
-    isVisibleAlertSuccess: false,
     isVisableDelete: false,
     car: null,
   }),
@@ -321,32 +338,51 @@ export default {
     isUser: Boolean,
     dateCheckOut: Date,
     dateDropOff: Date,
-    dropOffLocation: String,
-    checkOutLocation: String,
+    location: String,
   },
   mounted() {
     this.setCarInfo();
   },
 
   methods: {
+    changeAlert() {
+      this.$toast.success("You have successfully made changes!", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+    },
+
     async deleteCar() {
       try {
         await axios.delete(`http://localhost:8000/car/delete/${this.car._id}`);
         this.deleteCarFrontend(this.car._id);
-        this.$toast.success(`${this.car.make} ${this.car.name} was deleted sucesfully!`, {
-          position: "bottom-right",
-          timeout: 4369,
-          closeOnClick: true,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 1.08,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: true,
-          rtl: false,
-        });
+        this.$toast.success(
+          `${this.car.make} ${this.car.name} was deleted sucesfully!`,
+          {
+            position: "top-center",
+            timeout: 4369,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 1.08,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          }
+        );
       } catch (error) {
         console.log(error);
       }
@@ -358,7 +394,7 @@ export default {
         this.newMake = this.car.make;
         this.newName = this.car.name;
         this.newBodyType = this.car.bodyType;
-        this.newPlaces = this.car.places;
+        this.newSeats = this.car.seats;
         this.newPower = this.car.power;
         this.newDoors = this.car.doors;
         this.newLuggageCapacity = this.car.luggageCapacity;
@@ -367,18 +403,17 @@ export default {
         this.newImgURL = this.car.imageURL;
         this.newTransmission = this.car.transmission;
         this.newProductionYear = this.car.productionYear;
-        this.newMinDriversAge = this.car.minDriversAge;
+        this.newDriverLicenceCategory = this.car.driverLicenceCategory;
         this.newPrice = this.car.price;
-        this.newCurrentStation = this.car.currentStation;
+        this.newLocation = this.car.location;
       } catch (error) {
         console.log(error);
       }
     },
     sendDataPayment() {
-      if (!this.dropOffLocation || !this.checkOutLocation) return; //stavit alert
+      if (!this.location) return; //stavit alert
       const checkDrop = {
-        dropOffLocation: this.dropOffLocation,
-        checkOutLocation: this.checkOutLocation,
+        location: this.location,
         checkOutDate: this.dateCheckOut,
         dropOffDate: this.dateDropOff,
       };
@@ -417,7 +452,7 @@ export default {
             newMake: this.newMake,
             newName: this.newName,
             newBodyType: this.newBodyType,
-            newPlaces: this.newPlaces,
+            newSeats: this.newSeats,
             newPower: this.newPower,
             newDoors: this.newDoors,
             newLuggageCapacity: this.newLuggageCapacity,
@@ -426,18 +461,15 @@ export default {
             newImgURL: this.newImgURL,
             newTransmission: this.newTransmission,
             newProductionYear: this.newProductionYear,
-            newMinDriversAge: this.newMinDriversAge,
-            newCurrentStation: this.newCurrentStation,
+            newDriverLicenceCategory: this.newDriverLicenceCategory,
+            newLocation: this.newLocation,
             newPrice: this.newPrice,
           }
         );
         console.log(res.data);
 
         this.car = res.data;
-        this.isVisibleAlertSuccess = true;
-        setTimeout(() => {
-          this.isVisibleAlertSuccess = false;
-        }, "3000");
+        this.changeAlert();
         //    window.location.reload();
       } catch (error) {
         console.log(error);

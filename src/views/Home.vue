@@ -122,26 +122,20 @@
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
-      <v-row style="width: 92%" class="justify-center align-center mx-auto">
-        <v-alert
-          style="width: 100%"
-          class="mb-4"
-          type="success"
-          outlined
-          text
-          v-if="isVisibleAlertSuccess"
-          >Your review has been successfully added!</v-alert
-        ></v-row
+
+      <v-row class="ml-12" v-if="user && !user.isAdmin">
+        Write your review for CaRent!</v-row
       >
-      <v-dialog v-model="dialog" persistent max-width="60vw">
+      <v-dialog v-model="dialog" persistent max-width="800">
         <template v-slot:activator="{ on, attrs }">
-          <v-row class="justify-center">
+          <v-row class="ml-12">
             <v-btn
-              color="orange  "
-              class="white--text px-7 mt-6 py-1 text-capitalize text-h6 justify-center align-center align-text"
+              color="#153040"
+              class="white--text px-7 mt-6 py-2 text-capitalize text-h6 justify-center align-center align-text"
               style="font-family: 'Jockey One', sans-serif !important"
               v-bind="attrs"
               v-on="on"
+              v-if="user && !user.isAdmin"
               >Write review</v-btn
             ></v-row
           >
@@ -169,12 +163,13 @@
               outlined
               name="body"
               v-model="comment"
-              label="You can write your opinion here"
+              placeholder="You can write your opinion here!"
+              label="You can write your opinion here!"
               color="#153040"
               min-height="200"
-              :rules="[rules.required]"
             ></v-textarea>
           </v-card-text>
+
           <v-card-actions class="mt-n3 justify-center text-center">
             <v-row class="mt-n6 mb-4 justify-center text-center">
               <v-btn
@@ -223,6 +218,7 @@
             color="#FDA300"
             class="white--text mt-6 px-15 text-capitalize text-h6"
             style="font-family: 'Jockey One', sans-serif !important"
+            :to="{ name: 'RentIt' }"
           >
             Rent it
           </v-btn></v-col
@@ -247,11 +243,8 @@ export default {
     rating: 5,
     dialog: false,
     comment: "",
-    isVisibleAlertSuccess: false,
+
     reviews: [],
-    rules: {
-      required: (value) => !!value || "Required",
-    },
   }),
   mounted() {
     this.getReview();
@@ -263,25 +256,64 @@ export default {
     ...mapMutations({ setCurrentUser: "setCurrentUser" }),
     async addReview() {
       try {
-        await axios.post("http://localhost:8000/review/add", {
-          name: this.user.name,
-          surname: this.user.surname,
-          mark: this.rating,
-          comment: this.comment,
-          email: this.user.email,
-        });
-        this.getReview();
-        this.comment = "";
-        this.rating = 5;
-        this.isVisibleAlertSuccess = true;
-        this.dialog = false;
-        setTimeout(() => {
-          this.isVisibleAlertSuccess = false;
-        }, "3000");
+        if (this.comment) {
+          await axios.post("http://localhost:8000/review/add", {
+            name: this.user.name,
+            surname: this.user.surname,
+            mark: this.rating,
+            comment: this.comment,
+            email: this.user.email,
+          });
+          this.getReview();
+          this.comment = "";
+          this.rating = 5;
+
+          this.dialog = false;
+          this.alertReviewSuccess();
+        } else {
+          this.alertCommentNeeded();
+        }
       } catch (error) {
         console.log(error);
       }
     },
+
+    alertCommentNeeded() {
+      this.$toast.error("You need to write a comment!", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+    },
+    alertReviewSuccess() {
+      this.$toast.success(
+        "Your review has been successfully added. Thank you!",
+        {
+          position: "top-center",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        }
+      );
+    },
+
     async getReview() {
       try {
         let res = await axios.get("http://localhost:8000/reviews");

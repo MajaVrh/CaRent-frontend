@@ -1,6 +1,5 @@
 <template>
-  <v-container class="m-6 mt-7 skew"  v-if="car">
- 
+  <v-container class="m-6 mt-7 skew" v-if="car">
     <v-form @submit.prevent="rentCar()">
       <v-row
         class="text-h4 black--text d-flex ml-0 mb-2"
@@ -18,7 +17,7 @@
         <v-col lg="2" sm="6" md="4" xs="12">
           <p>Fuel: {{ car.fuel }}</p>
           <p>Body type: {{ car.bodyType }}</p>
-          <p>Experience Driving: {{ car.minDriversAge }}</p>
+          <p>Experience Driving: {{ car.driverLicenceCategory }}</p>
           <p>Air conditioning: yes</p>
         </v-col>
         <v-col lg="8" sm="12" md="5" xs="12" no-gutters align="center">
@@ -35,32 +34,21 @@
         <v-col sm="12" md="8" lg="6">
           <table>
             <tr>
-              <th>Check-Out</th>
-              <th>Location</th>
-              <th>Date</th>
+              <th>Check-Out location</th>
+              <th>Checkout date</th>
+              <th>DropOff date</th>
             </tr>
             <tr>
-              <td align="center"></td>
-              <td align="center">{{ checkDrop.checkOutLocation }}</td>
+              <td align="center">{{ checkDrop.location }}</td>
               <td align="center">
                 {{ moment(checkDrop.checkOutDate).format("DD.MM.YYYY") }}
               </td>
-            </tr>
-
-            <tr>
-              <th>Drop Off</th>
-              <th>Company</th>
-              <th>Contact</th>
-            </tr>
-            <tr>
-              <td></td>
-              <td>{{ checkDrop.dropOffLocation }}</td>
               <td>{{ moment(checkDrop.dropOffDate).format("DD.MM.YYYY") }}</td>
             </tr>
           </table>
         </v-col>
         <v-col
-          style="margin-top: 2rem;"
+          style="margin-top: 2rem"
           class="text-center justify-center align-center"
           xs="12"
           sm="3"
@@ -84,8 +72,8 @@
         </v-col>
       </v-row>
       <v-col
-        style="margin-top: 2rem;"
-        class=" d-flex mx-auto text-center justify-center align-center"
+        style="margin-top: 2rem"
+        class="d-flex mx-auto text-center justify-center align-center"
         xs="5"
         sm="3"
         md="4"
@@ -183,102 +171,109 @@
       >
       <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
-      <v-container class="credContainer" v-if="windowWidth > 1285">
-        <v-card class="credBack" width="700" color="#2B6182">
+      <v-container class="credContainer white-text" v-if="windowWidth > 1285">
+        <v-card
+          class="credBack"
+          width="600"
+          color="black"
+          style="border: 2px solid black !important"
+        >
           <div class="line"></div>
+
           <v-text-field
-            color="orange"
-            background-color="white"
+            color="white"
+            background-color="#f4f4f496"
             label="CVV"
             class="alignCvv"
-            filled
-            rounded
+            outlined
             dense
             :rules="requiredRule"
             maxlength="3"
             v-model="CVV"
           ></v-text-field>
         </v-card>
-        <v-card class="credFront" width="700" color="#1E445B">
+        <v-card
+          class="credFront px-10"
+          width="600"
+          style="border: 2px solid black !important"
+        >
           <v-row>
             <v-col>
               <v-text-field
-                class="mt-4"
-                color="orange"
-                background-color="white"
+                color="white"
+                background-color="#f4f4f496"
                 label="Card number"
-                filled
-                rounded
+                outlined
                 dense
                 :rules="requiredRule"
                 maxlength="16"
                 v-model="cardNumber"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                color="orange"
-                background-color="white"
-                label="MM/YY"
-                filled
-                rounded
-                dense
-                :rules="requiredRule"
-                maxlength="5"
-                v-model="MY"
-              ></v-text-field>
-            </v-col>
-            <v-col></v-col>
-
-            <v-col>
-              <v-text-field
-                label="Zip code"
-                color="orange"
-                background-color="white"
-                filled
-                rounded
-                dense
-                maxlength="5"
-                :rules="requiredRule"
-                v-model="zipCode"
               ></v-text-field
             ></v-col>
           </v-row>
           <v-row>
             <v-col>
-              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
+              <v-text-field
+                color="white"
+                background-color="#f4f4f496"
+                outlined
+                dense
+                label="Name on card"
+                :rules="requiredRule"
+                v-model="nameOnCard"
+                style="width: 12rem !important"
+                class="mb-n8"
+              ></v-text-field
+            ></v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                class=""
+                color="white"
+                background-color="#f4f4f496"
+                label="MM/YY"
+                outlined
+                dense
+                :rules="requiredRule"
+                maxlength="5"
+                v-model="MY"
+                style="width: 12rem !important"
+              ></v-text-field
+            ></v-col>
+            <v-col>
+              <v-img
+                style="margin-left: 10rem !important; position: absolute"
+                class="mb-12"
+                src="../assets/chip.png"
+                max-width="80"
+              ></v-img
+            ></v-col>
+          </v-row>
+          <v-row class="ml-n2">
+            <i class="fa-brands fa-cc-visa cardIcons fa-3x white--text"></i>
 
-              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
+            <i
+              class="fa-brands fa-cc-mastercard cardIcons fa-3x white--text"
+            ></i>
 
-              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
+            <i class="fa-brands fa-cc-amex cardIcons fa-3x white--text"></i>
 
-              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
-            </v-col>
+            <i
+              class="fa-brands fa-cc-diners-club cardIcons fa-3x white--text"
+            ></i>
           </v-row>
         </v-card>
       </v-container>
       <v-container v-else>
-        <v-card color="#2B6182" class="px-10 py-10 mt-5">
-          <v-row>
-            <v-col align="center">
-              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
-
-              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
-
-              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
-
-              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
-            </v-col>
-          </v-row>
+        <v-card color="#2B6182" class="px-10 py-10 mt-5 cardSmall">
           <v-row>
             <v-col
               ><v-text-field
                 color="orange"
-                background-color="white"
+                background-color="#f4f4f496"
                 filled
-                rounded
+                outlined
                 dense
                 label="Name on card"
                 :rules="requiredRule"
@@ -290,9 +285,9 @@
             <v-col>
               <v-text-field
                 color="orange"
-                background-color="white"
+                background-color="#f4f4f496"
                 filled
-                rounded
+                outlined
                 dense
                 label="Card number"
                 :rules="requiredRule"
@@ -305,9 +300,9 @@
             <v-col>
               <v-text-field
                 color="orange"
-                background-color="white"
+                background-color="#f4f4f496"
                 filled
-                rounded
+                outlined
                 dense
                 label="MM/YY"
                 :rules="requiredRule"
@@ -318,9 +313,9 @@
             <v-col>
               <v-text-field
                 color="orange"
-                background-color="white"
+                background-color="#f4f4f496"
                 filled
-                rounded
+                outlined
                 dense
                 label="CVV"
                 :rules="requiredRule"
@@ -329,20 +324,15 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
           <v-row>
-            <v-col>
-              <v-text-field
-                color="orange"
-                background-color="white"
-                filled
-                rounded
-                dense
-                label="Zip code"
-                maxlength="5"
-                :rules="requiredRule"
-                v-model="zipCode"
-              ></v-text-field>
+            <v-col align="center">
+              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
+
+              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
             </v-col>
           </v-row>
         </v-card>
@@ -353,7 +343,8 @@
             type="submit"
             color="orange"
             width="170"
-            class="white--text mx-2 my-2"
+            class="white--text mt-4 px-15 text-capitalize text-h6 mx-2"
+            style="font-family: 'Jockey One', sans-serif !important"
           >
             Confirm
           </v-btn>
@@ -362,14 +353,14 @@
             color="#153040"
             :to="{ name: 'RentIt' }"
             width="170"
-            class="white--text mx-2 my-2"
+            class="white--text mt-4 px-15 text-capitalize text-h6 mx-2"
+            style="font-family: 'Jockey One', sans-serif !important"
           >
             Cancel
           </v-btn>
         </v-col>
       </v-row>
     </v-form>
-
   </v-container>
 </template>
 
@@ -385,7 +376,10 @@ export default {
       car: null,
       daysRent: null,
       requiredRule: [(v) => !!v || "Is required"],
-      emailRule: [v => !!v || 'Is required', v => /.+@.+\..+/.test(v) || 'E-mail must be valid',],
+      emailRule: [
+        (v) => !!v || "Is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
       Name: "",
       Surname: "",
       Email: "",
@@ -442,15 +436,12 @@ export default {
         this.CVV.length < 1 &&
         this.zipCode.length < 1
       ) {
-        console.log(this.Name, this.Surname, this.Email, this.Age, this.Adress, this.postalCode, this.City, this.Country, this.nameOnCard, this.cardNumber, this.MY, this.CVV, this.zipCode)
         return this.fieldError();
-
       }
       try {
         const res = await axios.post("http://localhost:8000/rent", {
           carId: this.car._id,
-          dropOffLocation: this.checkDrop.dropOffLocation,
-          checkOutLocation: this.checkDrop.checkOutLocation,
+          location: this.checkDrop.location,
           checkOut: this.checkDrop.checkOutDate,
           dropOff: this.checkDrop.dropOffDate,
           Name: this.Name,
@@ -494,7 +485,11 @@ export default {
 };
 </script>
 
-<style  lang="scss" >
+<style lang="scss">
+.text-field-label-top {
+  color: white !important;
+}
+
 td,
 th {
   width: 15rem;
@@ -540,6 +535,9 @@ th {
   position: absolute;
   width: 40%;
   height: 100%;
+
+  background: url("../assets/kartica.jpg");
+  background-size: cover;
 }
 .credBack {
   position: absolute;
@@ -548,19 +546,17 @@ th {
   margin-top: 4rem;
   margin-left: 10rem;
 
-
   .line {
     height: 20%;
     margin-top: 3rem;
     margin-bottom: 2rem;
     background-color: #c0c0c0;
   }
-
 }
 @media only screen and (min-width: 600px) {
-.skew{
-  width: 70% !important;
-}
+  .skew {
+    width: 70% !important;
+  }
 }
 
 .cardIcons {
@@ -571,11 +567,15 @@ th {
 .fontTotal {
   font-size: 1.9rem;
 }
-.alignCvv{
+.alignCvv {
   width: 15% !important;
   border-radius: 2rem !important;
   margin-left: auto !important;
-  margin-RIGHT: 2rem !important;
+  margin-right: 2rem !important;
+}
 
+.cardSmall {
+  background: url("../assets/kartica.jpg");
+  background-size: cover;
 }
 </style>
