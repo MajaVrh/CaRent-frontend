@@ -33,7 +33,15 @@
                 <v-card>
                   <v-card-text class="pt-12 px-12">
                     <v-row
-                      class="text-h4 mt-2 black--text d-flex ml-0 justify-center mb-6"
+                      class="
+                        text-h4
+                        mt-2
+                        black--text
+                        d-flex
+                        ml-0
+                        justify-center
+                        mb-6
+                      "
                       style="font-family: 'Jockey One', sans-serif !important"
                     >
                       Find your car</v-row
@@ -398,7 +406,13 @@
                     <v-row class="justify-center text-center mb-6">
                       <v-btn
                         color="#153040"
-                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
+                        class="
+                          white--text
+                          px-10
+                          text-capitalize text-h6
+                          my-2
+                          mx-2
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="dialog.value = false"
                       >
@@ -406,7 +420,13 @@
                       </v-btn>
                       <v-btn
                         color="#153040"
-                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
+                        class="
+                          white--text
+                          px-10
+                          text-capitalize text-h6
+                          my-2
+                          mx-2
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="emptyData()"
                       >
@@ -414,7 +434,13 @@
                       </v-btn>
                       <v-btn
                         color="#FDA300"
-                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
+                        class="
+                          white--text
+                          px-10
+                          text-capitalize text-h6
+                          my-2
+                          mx-2
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="getCars(), (dialog.value = false)"
                       >
@@ -462,7 +488,14 @@
                       class="mt-n12 pt-12"
                     >
                       <v-row
-                        class="text-h4 mt-2 black--text d-flex mb-4 justify-center"
+                        class="
+                          text-h4
+                          mt-2
+                          black--text
+                          d-flex
+                          mb-4
+                          justify-center
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         New car</v-row
@@ -523,7 +556,14 @@
                     </v-card-text>
                     <v-card-text v-if="!isVisableSuccesModal">
                       <v-row
-                        class="text-h4 mt-2 black--text d-flex ml-0 justify-center"
+                        class="
+                          text-h4
+                          mt-2
+                          black--text
+                          d-flex
+                          ml-0
+                          justify-center
+                        "
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         Add new car</v-row
@@ -644,7 +684,13 @@
                           :md="3"
                           :sm="12"
                           color="#153040"
-                          class="white--text mb-3 px-8 text-capitalize text-h6 mx-3"
+                          class="
+                            white--text
+                            mb-3
+                            px-8
+                            text-capitalize text-h6
+                            mx-3
+                          "
                           style="
                             font-family: 'Jockey One', sans-serif !important;
                           "
@@ -1028,7 +1074,7 @@ import offeredCar from "@/components/offeredCar";
 
 import axios from "axios";
 import moment from "moment";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => ({
@@ -1064,6 +1110,7 @@ export default {
       "Crossover",
       "SUV",
       "Van",
+      "Hatchback",
       "Other",
     ],
     items: [
@@ -1111,6 +1158,7 @@ export default {
     offeredCar,
   },
   mounted() {
+    this.rentSuccessful();
     this.isAdmin();
     this.getCars();
     this.oneDayLater = new Date();
@@ -1120,7 +1168,7 @@ export default {
     this.oneDayLaterString = null;
   },
   computed: {
-    ...mapGetters({ user: "currentUser" }),
+    ...mapGetters({ user: "currentUser", isRented: "isRented" }),
   },
 
   methods: {
@@ -1145,6 +1193,24 @@ export default {
       if (str == "") {
         return false;
       } else return true;
+    },
+    rentSuccessful() {
+      if (this.isRented) {
+        this.$toast.success("Rented succesfully", {
+          position: "top-center",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        });
+      }
     },
 
     alertEmptyFiled() {
@@ -1282,6 +1348,10 @@ export default {
         console.log(error);
       }
     },
+    ...mapMutations({ setRentedState: "setRentedState" }),
+  },
+  beforeDestroy() {
+    this.setRentedState(false);
   },
 };
 </script>

@@ -75,6 +75,7 @@
             </v-list-item>
           </div>
           <v-list-item
+          style="margin: 0px !important"
             class="pl-5 py-1"
             v-if="user && user.isAdmin"
             link
@@ -83,6 +84,18 @@
             <v-list-item-content>
               <v-list-item-title class="text-subtitle-1"
                 >Users list</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            class="pl-5 py-1"
+            v-if="user && user.isAdmin"
+            link
+            :to="{ name: 'userRents' }"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1"
+                >Users' rents</v-list-item-title
               >
             </v-list-item-content>
           </v-list-item>
@@ -194,7 +207,14 @@
     <v-footer dark padless color="#153040" v-if="exist">
       <v-container
         :cols="12"
-        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
+        class="
+          text-h4
+          white--text
+          text-no-wrap
+          d-flex
+          justify-space-around
+          mt-15
+        "
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
@@ -294,6 +314,8 @@ export default {
         loginNeeded: true,
         adminNeeded: false,
       },
+
+  
     ],
     itemsAccount: [
       { text: "My rents", link: "/myrents", loginNeeded: true },
@@ -306,12 +328,13 @@ export default {
   }),
 
   computed: {
-    ...mapGetters({ user: "currentUser" }),
+    ...mapGetters({ user: "currentUser", loading: "loading" }),
   },
 
   methods: {
     ...mapMutations({ setAuthToken: "setAuthToken", logOutStore: "logOut" }),
     ...mapActions({ loadUser: "loadUser" }),
+    
     closeDrawer() {
       if (this.drawerAccount == true) {
         this.drawerAccount = !this.drawerAccount;
@@ -346,9 +369,9 @@ export default {
   updated() {
     this.ExisElement();
   },
-  mounted() {
+  async mounted() {
     this.ExisElement();
-    this.loadUser();
+    await this.loadUser();
   },
 };
 </script>

@@ -10,7 +10,8 @@ export default new Vuex.Store({
     currentUser: "",
     isAuth: false,
     loading: true,
-    checkDrop: null
+    checkDrop: null,
+    isRented: false,
 
   },
   mutations: {
@@ -37,8 +38,12 @@ export default new Vuex.Store({
     },
     setCheckDrop(state, payload){
       state.checkDrop = payload
+    },
+    setRentedState(state, payload){
+      state.isRented = payload
     }
   },
+  
   getters: {
     currentUser(state) {
       return state.currentUser;
@@ -52,6 +57,9 @@ export default new Vuex.Store({
     checkDrop(state) {
       return state.checkDrop;
     },
+    isRented(state){
+      return state.isRented
+    }
   },
   actions: {
     //context -> commit za pozivanje mutacija, state-ovo gore, ------ cotext.commit

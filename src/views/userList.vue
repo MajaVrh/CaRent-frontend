@@ -28,7 +28,10 @@
         :items="users"
         class="elevation-1 mt-8"
         hide-default-footer
-        ><template v-slot:item.makeAdmin="{ item }">
+        >
+        
+        {{ /* eslint-disable-next-line */ }}
+        <template v-slot:item.makeAdmin="{ item }">
           <v-btn
             color="orange"
             class="white--text text-capitalize text-subtitle-2"
@@ -55,6 +58,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   name: "userList",
   data() {
@@ -81,10 +85,23 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters({user: 'currentUser', loading: 'loading'})
+  },
   mounted() {
+    this.handleNav() 
     this.getUsers();
   },
   methods: {
+    handleNav() {
+      const loginNeeded = this.$route.meta.loginNeeded
+      const adminNeeded = this.$route.meta.adminNeeded
+      if(loginNeeded && adminNeeded && !this.user && !this.loading){
+        this.$router.replace('/index')
+      }else if(loginNeeded && adminNeeded && this.user && !this.user.isAdmin && !this.loading) {
+        this.$router.replace('/')
+      }
+    },
     alertStatus() {
       this.$toast.warning("You have changed the user's admin status!", {
         position: "top-center",

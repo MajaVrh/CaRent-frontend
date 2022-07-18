@@ -58,16 +58,8 @@
           <p
             class="mt-n5 fontTotal"
             style="font-family: 'Jockey One', sans-serif !important"
-            v-if="daysRent"
           >
-            Total: {{ car.price * daysRent }}$
-          </p>
-          <p
-            v-else
-            class="fontTotal mt-n5"
-            style="font-family: 'Jockey One', sans-serif !important"
-          >
-            Total: {{ car.price }}$
+            Total: {{ totalPrice }}$
           </p>
         </v-col>
       </v-row>
@@ -82,17 +74,10 @@
         <p
           class="text-h5"
           style="font-family: 'Jockey One', sans-serif !important"
-          v-if="daysRent"
         >
-          Total: {{ car.price * daysRent }}$
+          Total: {{ totalPrice }}$
         </p>
-        <p
-          v-else
-          class="text-h5"
-          style="font-family: 'Jockey One', sans-serif !important"
-        >
-          Total: {{ car.price }}$
-        </p>
+
       </v-col>
       <hr class="my-12" color="#153040" />
       <v-row
@@ -175,7 +160,7 @@
         <v-card
           class="credBack"
           width="600"
-          color="black"
+          color="blue-grey darken-4"
           style="border: 2px solid black !important"
         >
           <div class="line"></div>
@@ -393,6 +378,7 @@ export default {
       MY: "",
       CVV: "",
       zipCode: "",
+      totalPrice: null, 
     };
   },
   methods: {
@@ -400,7 +386,9 @@ export default {
       try {
         const res = await axios.get(`http://localhost:8000/car/${this.id}`);
         this.car = res.data;
-
+        if(this.daysRent)
+          this.totalPrice = res.data.price * this.daysRent
+        else this.totalPrice = res.data.price
         console.log(res.data);
       } catch (error) {
         console.log(error);
@@ -408,7 +396,7 @@ export default {
     },
     fieldError() {
       this.$toast.error("All fields must be filled", {
-        position: "bottom-right",
+        position: "top-center",
         timeout: 5000,
         closeOnClick: true,
         pauseOnFocusLoss: true,
@@ -421,6 +409,7 @@ export default {
         icon: true,
       });
     },
+
     async rentCar() {
       if (
         this.Name.length < 1 &&
@@ -452,9 +441,11 @@ export default {
           postalCode: this.postalCode,
           City: this.City,
           Country: this.Country,
+          totalPrice: this.totalPrice
         });
         console.log(res);
-        this.$router.go({ name: "RentIt" });
+        this.setRentedState(true)
+        this.$router.push({ name: "RentIt" });
       } catch (error) {
         console.log(error);
       }
@@ -466,19 +457,21 @@ export default {
       const daysRent = Math.ceil(dateDif / (1000 * 60 * 60 * 24));
       this.daysRent = daysRent;
     },
-    ...mapMutations({ setCheckDrop: "setCheckDrop" }),
+    ...mapMutations({ setCheckDrop: "setCheckDrop", setRentedState: "setRentedState" }),
   },
   computed: {
-    ...mapGetters({ checkDrop: "checkDrop" }),
+    ...mapGetters({ checkDrop: "checkDrop"}),
   },
 
-  mounted() {
+   mounted() {
     if (!this.checkDrop) {
       return this.$router.push({ name: "RentIt" });
     }
-    this.fetchRents();
+   this.fetchRents();
     this.calcTimeDiff();
-  },
+     
+},
+  
   beforeDestroy() {
     this.setCheckDrop(null);
   },
@@ -569,7 +562,6 @@ th {
 }
 .alignCvv {
   width: 15% !important;
-  border-radius: 2rem !important;
   margin-left: auto !important;
   margin-right: 2rem !important;
 }

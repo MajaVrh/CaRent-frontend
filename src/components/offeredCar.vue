@@ -410,8 +410,26 @@ export default {
         console.log(error);
       }
     },
+
     sendDataPayment() {
-      if (!this.location) return; //stavit alert
+      if (!this.location){ 
+        this.$toast.error("Choose a rent location", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false
+      });
+
+        return;
+      } //stavit alert
       const checkDrop = {
         location: this.location,
         checkOutDate: this.dateCheckOut,
@@ -491,6 +509,11 @@ export default {
   }
 }
 @media only screen and (min-width: 1264px) {
+  .titleMargins {
+    margin-left: -7rem !important;
+  }
+}
+@media only screen and (min-width: 1900px) {
   .titleMargins {
     margin-left: -4rem !important;
   }

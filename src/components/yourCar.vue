@@ -4,7 +4,7 @@
       class="text-h4 black--text d-flex ml-0 mb-2"
       style="font-family: 'Jockey One', sans-serif !important"
     >
-      {{ carInfo.car.name }}</v-row
+     {{ carInfo.car.make }} {{ carInfo.car.name }}</v-row
     >
     <v-row class="justify-space-between">
       <v-col lg="2" sm="5" md="3" xs="12">
@@ -96,6 +96,7 @@ export default {
     isLast: Boolean,
     carName: Number,
     carInfo: Object,
+    
   },
   data() {
     return {
@@ -108,7 +109,7 @@ export default {
     calcTimeDiff() {
       const dateDif = Math.abs(this.dateDropOff - this.dateCheckOut);
       const daysRent = Math.ceil(dateDif / (1000 * 60 * 60 * 24));
-      this.daysRent = daysRent;
+      this.daysRent = daysRent - 1;
       console.log(daysRent);
     },
   },

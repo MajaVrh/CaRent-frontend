@@ -25,23 +25,22 @@ components: {
     yourCar
 },
 methods: {
+
   async fetchRents(){
     try {
-      const res = await axios.get("http://localhost:8000/rent")
+      const res = await axios.get("http://localhost:8000/user/rent")
       this.rentInfo = res.data
       console.log(res.data)
     } catch (error) {
       console.log(error)
     }
-  }
+  },
 },
 
 mounted(){
   this.fetchRents()
   
 }
-
-
 
 }
 </script>
