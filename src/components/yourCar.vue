@@ -23,7 +23,7 @@
         <v-img
           :src="carInfo.car.imageURL"
           max-width="350"
-          class="mt-n5"
+   
           contain
           no-gutters
         ></v-img>
@@ -59,7 +59,6 @@
         </table>
       </v-col>
       <v-col
-        class="mt-2"
         align="center"
         xs="12"
         sm="4"
@@ -67,23 +66,18 @@
         lg="4"
         v-if="windowWidth > 960"
       >
-        <p
-          class="text-h5"
-          style="font-family: 'Jockey One', sans-serif !important"
-          v-if="daysRent != null"
-        >
-          Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent) }}
-        </p>
+        <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-if="(daysRent) != 0">  Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent+1) }} </div>
+    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-else>  Your rent is expiering, return the car as soon as posible</div>
       </v-col>
     </v-row>
-    <p
-      class="text-h5 mt-10"
+    <div
+      class="mb-auto d-flex"
       align="center"
-      style="font-family: 'Jockey One', sans-serif !important"
       v-if="windowWidth < 960"
     >
-      Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent) }}
-    </p>
+    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-if="(daysRent) != 0">  Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent+1) }} </div>
+    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-else>  Your rent is expiering, return the car as soon as posible</div>
+    </div>
     <hr v-if="!isLast" class="my-12" color="#153040" />
     <hr v-else class="my-12" color="white" />
   </v-container>

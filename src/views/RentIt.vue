@@ -29,7 +29,8 @@
                   </v-btn></v-col
                 >
               </template>
-              <template v-slot:default="dialog">
+              <template v-slot:default="dialog"> 
+              
                 <v-card>
                   <v-card-text class="pt-12 px-12">
                     <v-row
@@ -442,7 +443,7 @@
                           mx-2
                         "
                         style="font-family: 'Jockey One', sans-serif !important"
-                        @click="getCars(), (dialog.value = false)"
+                        @click="getCars(), (dialog.value = false), isSearched = true"
                       >
                         Search
                       </v-btn>
@@ -1031,7 +1032,7 @@
                 color="#FDA300"
                 class="white--text text-capitalize text-h6 my-2 mx-2"
                 style="font-family: 'Jockey One', sans-serif !important"
-                @click="getCars()"
+                @click="getCars(), isSearched = true"
                 min-width="8rem"
                 max-width="8rem"
               >
@@ -1052,8 +1053,9 @@
           </v-card-actions>
         </v-card>
       </v-container>
-
+      <div v-if="isSearched">
       <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
+  
         <offeredCar
           class="justify-center"
           :id="car._id"
@@ -1063,8 +1065,11 @@
           :dateCheckOut="new Date(dateCheckOut)"
           :dateDropOff="new Date(dateDropOff)"
           :location="location"
+          
         />
+     
       </v-container>
+      </div>
     </div>
   </div>
 </template>
@@ -1084,8 +1089,8 @@ export default {
     seats: "",
     power: "",
     doors: "",
+    isSearched: false,
     luggageCapacity: "",
-
     fuel: "",
     price: 1000,
     transmission: "",
@@ -1130,7 +1135,7 @@ export default {
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
-    dateCheckOut: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      dateCheckOut: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
     modalCheckOut: false,
@@ -1158,6 +1163,7 @@ export default {
     offeredCar,
   },
   mounted() {
+    if(this.user.isAdmin){this.isSearched=true}
     this.rentSuccessful();
     this.isAdmin();
     this.getCars();

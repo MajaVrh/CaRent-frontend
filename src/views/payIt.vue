@@ -89,7 +89,9 @@
       <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
       <v-row>
-        <v-col>
+        <v-col class=""
+        cols="12" sm="12" md="6" xs="12" lg="6"
+        >
           <v-text-field
             :rules="requiredRule"
             color="orange"
@@ -117,7 +119,9 @@
             v-model="Age"
           ></v-text-field>
         </v-col>
-        <v-col>
+        <v-col
+        cols="12" sm="12" md="6" xs="12" lg="6"
+        >
           <v-text-field
             :rules="requiredRule"
             color="orange"

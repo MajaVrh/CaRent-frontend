@@ -1,13 +1,22 @@
 <template>
-  <v-container v-if="rentInfo && rentInfo.carInfo.length > 0">
+  <v-container v-if="rentInfo && rentInfo.carInfo.length > 0 && hasRents">
      
       <div v-for="(rent, i) in rentInfo.carInfo" :key="rent._id">
-        <your-car :carName="rent.car.carName" :isLast="i == rentInfo.carInfo.length - 1" :carInfo="rent"/>
+        <your-car :carName="rent.car.carName" :isLast="i == rentInfo.carInfo.length - 1" :carInfo="rent" v-if="!rent.hasReturned"/>
       </div>
     
   </v-container>
   <v-container v-else>
-    no cars :)
+      <v-col align="center" >
+         <p class="text-h4 mt-12 black--text"
+            style="font-family: 'Jockey One', sans-serif !important"> You haven't rented a single car yet. You need a car?</p>
+         <v-btn color="#FDA300"
+            class="white--text mt-6 text-capitalize text-h5"
+            width="300"
+            height="50"
+            style="font-family: 'Jockey One', sans-serif !important"
+            :to="{ name: 'RentIt' }">Rent it!</v-btn>
+      </v-col>
   </v-container>
 </template>
 
@@ -18,7 +27,8 @@ export default {
 name: "myRents",
 data(){
   return {
-    rentInfo: null
+    rentInfo: null,
+    hasRents: true
   }
 },
 components: {
@@ -35,10 +45,19 @@ methods: {
       console.log(error)
     }
   },
-},
+   checkForUserRents() {
+      let vibeCheck = [];
+      this.rentInfo.carInfo.forEach(element => {
+        vibeCheck.push(element.hasReturned)        
+      });
+      if(!vibeCheck.includes(false)) this.hasRents = false
+        
+      }
+    },
 
-mounted(){
-  this.fetchRents()
+async mounted(){
+  await this.fetchRents()
+  this.checkForUserRents()
   
 }
 

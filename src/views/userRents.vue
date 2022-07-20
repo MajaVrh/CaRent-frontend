@@ -3,7 +3,7 @@
     <v-tabs color="orange">
       <v-tab @click="isActiveRents = true">Active rents</v-tab>
       <v-tab-item>
-        <v-card heigth="fit-content" class="ma-8 pa-2">
+        <v-card heigth="fit-content" class="ma-8 pa-2" v-if="areRents">
           <v-expansion-panels flat>
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
               <v-expansion-panel-header
@@ -23,10 +23,12 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
+        <div v-else> <p class="mt-5">not a single vehicle was rented. Please try to check again later 🚗</p> </div>
+
       </v-tab-item>
       <v-tab @click="isActiveRents = false">All rents</v-tab>
       <v-tab-item>
-        <v-card heigth="fit-content" class="ma-8 pa-2">
+        <v-card heigth="fit-content" class="ma-8 pa-2" v-if="rentInfo">
           <v-expansion-panels flat>
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
               <v-expansion-panel-header class="text-capitalize">
@@ -43,6 +45,7 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
+        <div v-else> <p class="mt-5">not a single vehicle was rented. Please try to check again later 🚗</p> </div>
       </v-tab-item>
     </v-tabs>
   </v-container>
@@ -60,19 +63,14 @@ export default {
       rentInfo: null,
       isActiveRents: true,
       badIndexes: [],
+      areRents: true
     };
   },
   computed: {
     ...mapGetters({ user: "currentUser", loading: "loading" }),
   },
   methods: {
-    handleNav() {
-      const loginNeeded = this.$route.meta.loginNeeded;
-      const adminNeeded = this.$route.meta.adminNeeded;
-      if (loginNeeded && adminNeeded && !this.user && !this.loading) {
-        this.$router.replace("/index");
-      }
-    },
+
     
     async fetchRents() {
       try {
@@ -96,11 +94,22 @@ export default {
         vibeCheck = false;
       }
     },
+     checkForAnyRents() {
+      let vibeCheck = [];
+      for (let i in this.rentInfo) {
+        for (let o in this.rentInfo[i].carInfo) {
+          vibeCheck.push(this.rentInfo[i].carInfo[o].hasReturned)
+        }
+      }
+      if(!vibeCheck.includes(false)){
+        this.areRents = false
+      }
+    },
   },
   async mounted() {
-    this.handleNav();
     await this.fetchRents();
     this.checkForUserRents();
+    this.checkForAnyRents()
     console.log(this.rentInfo)
     
   },

@@ -17,7 +17,7 @@
               class="pl-5"
               link
               :to="item.link"
-              v-if="!item.loginNeeded && !user && !item.adminNeeded"
+              v-if="item.logedOut && !user"
             >
               <v-list-item-content>
                 <v-list-item-title
@@ -41,23 +41,7 @@
                 ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item
-              click:logout
-              class="pl-5 py-1"
-              v-else-if="
-                item.loginNeeded && user && item.adminNeeded && user.isAdmin
-              "
-              link
-              :to="item.link"
-              @click="actionClick(item.action)"
-            >
-              <v-list-item-content>
-                <v-list-item-title
-                  class="text-subtitle-1"
-                  v-text="item.text"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+
             <v-list-item
               click:logout
               class="pl-5 py-1"
@@ -88,6 +72,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item
+          style="margin: 0px !important"
             class="pl-5 py-1"
             v-if="user && user.isAdmin"
             link
@@ -101,8 +86,32 @@
           </v-list-item>
           <v-list-item
             class="pl-5 py-1"
-            v-if="user && !user.isAdmin"
+            v-if="user && user.isAdmin"
             link
+            :to="{ name: 'Reports' }"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1"
+                >Reports</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            class="pl-5 py-1"
+            link
+            v-if="!user"
+            :to="{ name: 'contact' }"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1" text="Contact us"
+                >Contact us</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            class="pl-5 py-1"
+            link
+            v-else-if="user && !user.isAdmin"
             :to="{ name: 'contact' }"
           >
             <v-list-item-content>
@@ -165,11 +174,12 @@
             color="orange"
             class="p-0"
           >
+          <!-- user -->
             <div v-for="(item, i) in itemsAccount" :key="i">
               <v-list-item
                 click:logout
                 class="pl-5"
-                v-if="!item.loginNeeded && !user"
+                v-if="item.logedIn && user && !user.isAdmin"
                 link
                 :to="item.link"
                 @click="actionClick(item.action)"
@@ -181,11 +191,27 @@
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-
+            <!-- logoutan -->
               <v-list-item
                 click:logout
                 class="pl-5 py-1"
-                v-else-if="item.loginNeeded && user"
+                v-else-if="item.logedOut && !user"
+                link
+                :to="item.link"
+                @click="actionClick(item.action)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="text-subtitle-1"
+                    v-text="item.text"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <!-- admin -->
+              <v-list-item
+                click:logout
+                class="pl-5 py-1"
+                v-else-if="user && user.isAdmin && item.Admin "
                 link
                 :to="item.link"
                 @click="actionClick(item.action)"
@@ -290,6 +316,7 @@ export default {
   data: () => ({
     falsePages: ["/login", "/index", "/register"],
     exist: true,
+    contactCheck: false,
     drawer: false,
     drawerAccount: false,
     selectedItem: 1,
@@ -299,30 +326,27 @@ export default {
       {
         text: "Home",
         link: "/",
-        loginNeeded: false,
-        adminNeeded: false,
+        logedOut: true
       },
       {
         text: "Vehicles and stations",
         link: "/vehiclesandstations",
-        loginNeeded: false,
-        adminNeeded: false,
+        logedOut: true
       },
       {
         text: "Rent it",
         link: "/rentit",
-        loginNeeded: true,
-        adminNeeded: false,
+        logedIn: true,
       },
 
   
     ],
     itemsAccount: [
-      { text: "My rents", link: "/myrents", loginNeeded: true },
-      { text: "My account", link: "/myaccount", loginNeeded: true },
-      { text: "Log out", action: "logout", loginNeeded: true },
-      { text: "Create account", link: "/register", loginNeeded: false },
-      { text: "Login", link: "/login", loginNeeded: false },
+      { text: "My rents", link: "/myrents", logedIn: true },
+      { text: "My account", link: "/myaccount", logedIn: true, Admin: true },
+      { text: "Log out", action: "logout", logedIn: true, Admin: true },
+      { text: "Create account", link: "/register", logedOut: true },
+      { text: "Login", link: "/login", logedOut: true },
     ],
     icons: ["mdi-facebook", "mdi-instagram"],
   }),
@@ -365,6 +389,7 @@ export default {
       this.$router.push("/index");
       console.log("User removed");
     },
+  
   },
   updated() {
     this.ExisElement();

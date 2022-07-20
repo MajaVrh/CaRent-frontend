@@ -72,6 +72,12 @@ const routes = [
     meta: { loginNeeded: true, adminNeeded: true },
     component: () => import("../views/userRents.vue"),
   },
+  {
+    path: "/reports",
+    name: "Reports",
+    meta: { loginNeeded: true, adminNeeded: true },
+    component: () => import("../views/reports.vue"),
+  },
   
 ];
 
@@ -81,16 +87,18 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeResolve((to, from, next) => {
+  
   const user = store.getters.currentUser
   const isLoading = store.getters["loading"]
+  console.log('user',user)
   if (to.meta.loginNeeded && !user && !isLoading) {
-    next("/index");
+    next("/");
     console.log(user)
   }
 
-  if (to.meta.adminNeeded && !user && !user.isAdmin && !isLoading ) {
-    next("/index");
+  if (to.meta.adminNeeded && user && !user.isAdmin && !isLoading ) {
+    next("/");
   }
 
   next();
