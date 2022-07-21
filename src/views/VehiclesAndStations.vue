@@ -5,7 +5,28 @@
         class="text-h4 black--text d-flex justify-strart pr-8 pl-8"
         style="font-family: 'Jockey One', sans-serif !important"
       >
-        Rental conditions</v-row
+        Rent a car</v-row
+      >
+
+      <v-row class="text-h6 font-weight-regular ml-6 mt-6">
+        <v-card flat>
+          Discover all regions of Croatia with ease, safety and confidence! Rent
+          a car in Croatia in an affordable way! We offer you the easiest way to
+          explore Croatia. With our car rentals, you'll find one of the best
+          rental solutions for your business, pleasure or private needs. Choose
+          a car from our fleet of the latest models of vehicles at the most
+          economical price available.
+        </v-card></v-row
+      >
+    </v-container>
+
+    <hr />
+    <v-container mt-12>
+      <v-row
+        class="text-h4 black--text d-flex justify-strart pr-8 pl-8"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        Our fleet</v-row
       >
       <v-row class="text-h6 font-weight-regular ml-6 mt-6">
         <v-card flat>
@@ -29,6 +50,7 @@
         >
           <v-card justify="center" align="center" flat>
             <v-img
+              loading="lazy"
               class="img-home mb-5"
               :src="require(`@/assets/${carPic.filename}`)"
               contain
@@ -95,6 +117,33 @@
         >
       </v-row>
     </v-container>
+    <hr />
+    <v-container mt-12>
+      <v-row
+        class="text-h4 black--text d-flex justify-strart pr-8 pl-8"
+        style="font-family: 'Jockey One', sans-serif !important"
+      >
+        How to rent a vehicle.</v-row
+      >
+      <v-row class="text-h6 font-weight-regular ml-6 mt-6">
+        <v-card flat>
+          <li>go to the Rent it page</li>
+          <li>choose the station/location where you want to rent a vehicle</li>
+          <li>select the dates when you want to rent the vehicle</li>
+          <li>find the vehicle you want</li>
+          <li>fill in the necessary fields and pay via internet banking</li>
+          <li>
+            pick up the vehicle on the day you chose (you need to have your
+            driver's license with you)
+          </li>
+          <li>
+            return the vehicle on the day your rental expires (the employee will
+            check if there is any damage on the vehicle)
+          </li>
+        </v-card></v-row
+      >
+    </v-container>
+
     <hr />
     <v-container>
       <v-row class="justify-center text-center align-center margina">
@@ -210,6 +259,7 @@ hr {
   margin-bottom: 4%;
   padding: 0.2rem 0 !important;
   background-color: rgb(219, 219, 219);
+  border: none;
 }
 
 a {

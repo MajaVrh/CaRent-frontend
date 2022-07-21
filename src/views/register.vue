@@ -1,8 +1,8 @@
 <template>
-  <v-container style="margin-top: -4.4rem" fill-height>
+  <v-container class="animacija" style="margin-top: -2.4rem" fill-height>
     <v-row align="center" justify="center">
       <v-col align="center" justify="center">
-        <v-card width="500" class="py-5 px-5">
+        <v-card width="500" class="py-5 px-5 animacija">
           <v-card-title
             class="text-h1 justify-center"
             style="
@@ -71,8 +71,9 @@
                 <v-btn
                   type="submit"
                   color="orange"
-                  class="white--text"
-                  width="250"
+                  class="text-h6 text-capitalize white--text d-flex pr-8 pl-8"
+                  style="font-family: 'Jockey One', sans-serif !important"
+                  width="200"
                   height="40"
                   >Register</v-btn
                 >
@@ -150,4 +151,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.animacija {
+  animation-name: animacija;
+  animation-duration: 0.4s;
+  animation-direction: normal;
+  animation-timing-function: ease-in;
+}
+
+@keyframes animacija {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+    transition: all 1s cubic-bezier(0.36, 0.69, 0.3, 0.64);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

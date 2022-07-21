@@ -21,7 +21,7 @@
             >
               <v-list-item-content>
                 <v-list-item-title
-                  class="text-subtitle-1"
+                  style="font-size: 16px"
                   v-text="item.text"
                 ></v-list-item-title>
               </v-list-item-content>
@@ -36,7 +36,7 @@
             >
               <v-list-item-content>
                 <v-list-item-title
-                  class="text-subtitle-1"
+                  style="font-size: 16px"
                   v-text="item.text"
                 ></v-list-item-title>
               </v-list-item-content>
@@ -52,34 +52,34 @@
             >
               <v-list-item-content>
                 <v-list-item-title
-                  class="text-subtitle-1"
+                  style="font-size: 16px"
                   v-text="item.text"
                 ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
           <v-list-item
-          style="margin: 0px !important"
+            style="margin: 0px !important"
             class="pl-5 py-1"
             v-if="user && user.isAdmin"
             link
             :to="{ name: 'userList' }"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1"
-                >Users list</v-list-item-title
-              >
+              <v-list-item-title style="font-size: 16px"
+                >Users
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item
-          style="margin: 0px !important"
+            style="margin: 0px !important"
             class="pl-5 py-1"
             v-if="user && user.isAdmin"
             link
             :to="{ name: 'userRents' }"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1"
+              <v-list-item-title style="font-size: 16px"
                 >Users' rents</v-list-item-title
               >
             </v-list-item-content>
@@ -91,7 +91,7 @@
             :to="{ name: 'Reports' }"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1"
+              <v-list-item-title style="font-size: 16px"
                 >Reports</v-list-item-title
               >
             </v-list-item-content>
@@ -103,7 +103,7 @@
             :to="{ name: 'contact' }"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1" text="Contact us"
+              <v-list-item-title style="font-size: 16px" text="Contact us"
                 >Contact us</v-list-item-title
               >
             </v-list-item-content>
@@ -115,7 +115,7 @@
             :to="{ name: 'contact' }"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1" text="Contact us"
+              <v-list-item-title style="font-size: 16px" text="Contact us"
                 >Contact us</v-list-item-title
               >
             </v-list-item-content>
@@ -174,7 +174,7 @@
             color="orange"
             class="p-0"
           >
-          <!-- user -->
+            <!-- user -->
             <div v-for="(item, i) in itemsAccount" :key="i">
               <v-list-item
                 click:logout
@@ -186,12 +186,12 @@
               >
                 <v-list-item-content>
                   <v-list-item-title
-                    class="text-subtitle-1"
+                    style="font-size: 16px"
                     v-text="item.text"
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-            <!-- logoutan -->
+              <!-- logoutan -->
               <v-list-item
                 click:logout
                 class="pl-5 py-1"
@@ -202,7 +202,7 @@
               >
                 <v-list-item-content>
                   <v-list-item-title
-                    class="text-subtitle-1"
+                    style="font-size: 16px"
                     v-text="item.text"
                   ></v-list-item-title>
                 </v-list-item-content>
@@ -211,14 +211,14 @@
               <v-list-item
                 click:logout
                 class="pl-5 py-1"
-                v-else-if="user && user.isAdmin && item.Admin "
+                v-else-if="user && user.isAdmin && item.Admin"
                 link
                 :to="item.link"
                 @click="actionClick(item.action)"
               >
                 <v-list-item-content>
                   <v-list-item-title
-                    class="text-subtitle-1"
+                    style="font-size: 16px"
                     v-text="item.text"
                   ></v-list-item-title>
                 </v-list-item-content>
@@ -233,14 +233,7 @@
     <v-footer dark padless color="#153040" v-if="exist">
       <v-container
         :cols="12"
-        class="
-          text-h4
-          white--text
-          text-no-wrap
-          d-flex
-          justify-space-around
-          mt-15
-        "
+        class="text-h4 white--text text-no-wrap d-flex justify-space-around mt-15"
         style="font-family: 'Jockey One', sans-serif !important"
         ><div>Ca<span class="orange--text lighten-1">R</span>ent</div>
       </v-container>
@@ -292,12 +285,13 @@
           <v-card-text>
             <v-btn
               v-for="icon in icons"
-              :key="icon"
+              :key="icon.id"
               class="mx-4 white--text"
               icon
+              :href="icon.link"
             >
               <v-icon large>
-                {{ icon }}
+                {{ icon.icon }}
               </v-icon>
             </v-btn>
           </v-card-text>
@@ -326,20 +320,18 @@ export default {
       {
         text: "Home",
         link: "/",
-        logedOut: true
+        logedOut: true,
       },
       {
         text: "Vehicles and stations",
         link: "/vehiclesandstations",
-        logedOut: true
+        logedOut: true,
       },
       {
         text: "Rent it",
         link: "/rentit",
         logedIn: true,
       },
-
-  
     ],
     itemsAccount: [
       { text: "My rents", link: "/myrents", logedIn: true },
@@ -348,7 +340,10 @@ export default {
       { text: "Create account", link: "/register", logedOut: true },
       { text: "Login", link: "/login", logedOut: true },
     ],
-    icons: ["mdi-facebook", "mdi-instagram"],
+    icons: [
+      { id: 1, icon: "mdi-facebook", link: "https://www.facebook.com/" },
+      { id: 2, icon: "mdi-instagram", link: "https://www.instagram.com/" },
+    ],
   }),
 
   computed: {
@@ -358,7 +353,7 @@ export default {
   methods: {
     ...mapMutations({ setAuthToken: "setAuthToken", logOutStore: "logOut" }),
     ...mapActions({ loadUser: "loadUser" }),
-    
+
     closeDrawer() {
       if (this.drawerAccount == true) {
         this.drawerAccount = !this.drawerAccount;
@@ -389,7 +384,6 @@ export default {
       this.$router.push("/index");
       console.log("User removed");
     },
-  
   },
   updated() {
     this.ExisElement();

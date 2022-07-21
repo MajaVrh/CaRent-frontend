@@ -9,16 +9,16 @@
       >
       <v-row class="justify-space-between">
         <v-col lg="2" sm="5" md="3" xs="12">
-          <p>Doors: {{ car.doors }}</p>
-          <p>Seats: {{ car.seats }}</p>
-          <p>Luggage Capacity: {{ car.luggageCapacity }}</p>
-          <p>Transmission: {{ car.transmission }}</p>
+          <p><b>Doors:</b> {{ car.doors }}</p>
+          <p><b>Seats: </b> {{ car.seats }}</p>
+          <p><b>Luggage Capacity:</b> {{ car.luggageCapacity }}</p>
+          <p><b>Transmission:</b> {{ car.transmission }}</p>
         </v-col>
         <v-col lg="2" sm="6" md="4" xs="12">
-          <p>Fuel: {{ car.fuel }}</p>
-          <p>Body type: {{ car.bodyType }}</p>
-          <p>Experience Driving: {{ car.driverLicenceCategory }}</p>
-          <p>Air conditioning: yes</p>
+          <p><b> Fuel:</b> {{ car.fuel }}</p>
+          <p><b>Body type:</b> {{ car.bodyType }}</p>
+          <p><b>Experience Driving:</b> {{ car.driverLicenseCategory }}</p>
+          <p><b>Air conditioning:</b> yes</p>
         </v-col>
         <v-col lg="8" sm="12" md="5" xs="12" no-gutters align="center">
           <v-img
@@ -31,7 +31,7 @@
       </v-row>
 
       <v-row>
-        <v-col sm="12" md="8" lg="6">
+        <v-col sm="12" md="8" lg="6" xs="12">
           <table>
             <tr>
               <th>Check-Out location</th>
@@ -51,7 +51,7 @@
           style="margin-top: 2rem"
           class="text-center justify-center align-center"
           xs="12"
-          sm="3"
+          sm="12"
           md="4"
           v-if="windowWidth >= 960"
         >
@@ -77,7 +77,6 @@
         >
           Total: {{ totalPrice }}$
         </p>
-
       </v-col>
       <hr class="my-12" color="#153040" />
       <v-row
@@ -89,9 +88,7 @@
       <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
       <v-row>
-        <v-col class=""
-        cols="12" sm="12" md="6" xs="12" lg="6"
-        >
+        <v-col class="" cols="12" sm="12" md="6" xs="12" lg="6">
           <v-text-field
             :rules="requiredRule"
             color="orange"
@@ -119,9 +116,7 @@
             v-model="Age"
           ></v-text-field>
         </v-col>
-        <v-col
-        cols="12" sm="12" md="6" xs="12" lg="6"
-        >
+        <v-col cols="12" sm="12" md="6" xs="12" lg="6" class="topMargin">
           <v-text-field
             :rules="requiredRule"
             color="orange"
@@ -149,7 +144,15 @@
           ></v-text-field>
         </v-col>
       </v-row>
-
+      <v-row>
+        <v-checkbox
+          v-model="license"
+          :label="`I have a category ${car.driverLicenseCategory} driver's license `"
+          color="orange"
+          :rules="requiredRule"
+          hide-details
+        ></v-checkbox
+      ></v-row>
       <hr class="my-12" color="#153040" />
 
       <v-row
@@ -160,7 +163,11 @@
       >
       <v-row class="d-flex ml-0"> Enter the required information </v-row>
 
-      <v-container class="credContainer white-text" v-if="windowWidth > 1285">
+      <v-container
+        style="width: 100%; margin-left: 10%"
+        class="credContainer align-center"
+        v-if="windowWidth > 1285"
+      >
         <v-card
           class="credBack"
           width="600"
@@ -259,7 +266,7 @@
           <v-row>
             <v-col
               ><v-text-field
-                color="orange"
+                color="white"
                 background-color="#f4f4f496"
                 filled
                 outlined
@@ -273,7 +280,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                color="orange"
+                color="white"
                 background-color="#f4f4f496"
                 filled
                 outlined
@@ -288,7 +295,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                color="orange"
+                color="white"
                 background-color="#f4f4f496"
                 filled
                 outlined
@@ -301,7 +308,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                color="orange"
+                color="white"
                 background-color="#f4f4f496"
                 filled
                 outlined
@@ -315,13 +322,13 @@
           </v-row>
           <v-row>
             <v-col align="center">
-              <i class="fa-brands fa-cc-visa cardIcons fa-3x"></i>
+              <i class="fa-brands fa-cc-visa cardIcons fa-2x"></i>
 
-              <i class="fa-brands fa-cc-mastercard cardIcons fa-3x"></i>
+              <i class="fa-brands fa-cc-mastercard cardIcons fa-2x"></i>
 
-              <i class="fa-brands fa-cc-amex cardIcons fa-3x"></i>
+              <i class="fa-brands fa-cc-amex cardIcons fa-2x"></i>
 
-              <i class="fa-brands fa-cc-diners-club cardIcons fa-3x"></i>
+              <i class="fa-brands fa-cc-diners-club cardIcons fa-2x"></i>
             </v-col>
           </v-row>
         </v-card>
@@ -382,7 +389,8 @@ export default {
       MY: "",
       CVV: "",
       zipCode: "",
-      totalPrice: null, 
+      totalPrice: null,
+      license: false,
     };
   },
   methods: {
@@ -390,9 +398,8 @@ export default {
       try {
         const res = await axios.get(`http://localhost:8000/car/${this.id}`);
         this.car = res.data;
-        if(this.daysRent)
-          this.totalPrice = res.data.price * this.daysRent
-        else this.totalPrice = res.data.price
+        if (this.daysRent) this.totalPrice = res.data.price * this.daysRent;
+        else this.totalPrice = res.data.price;
         console.log(res.data);
       } catch (error) {
         console.log(error);
@@ -416,19 +423,36 @@ export default {
 
     async rentCar() {
       if (
-        this.Name.length < 1 &&
-        this.Surname.length < 1 &&
-        this.Age.length < 1 &&
-        this.Adress.length < 1 &&
-        this.postalCode.length < 1 &&
-        this.City.length < 1 &&
-        this.Country.length < 1 &&
-        this.nameOnCard.length < 1 &&
-        this.cardNumber.length < 1 &&
-        this.MY.length < 1 &&
-        this.CVV.length < 1 &&
-        this.zipCode.length < 1
+        this.Name.length < 1 ||
+        this.Surname.length < 1 ||
+        this.Email.length < 1 ||
+        this.Age.length < 1 ||
+        this.Adress.length < 1 ||
+        this.postalCode.length < 1 ||
+        this.City.length < 1 ||
+        this.Country.length < 1 ||
+        this.nameOnCard.length < 1 ||
+        this.cardNumber.length < 1 ||
+        this.MY.length < 1 ||
+        this.CVV.length < 1 ||
+        this.license != true
       ) {
+        console.log(
+          this.Name,
+          this.Surname,
+          this.Email,
+          this.Age,
+          this.Adress,
+          this.postalCode,
+          this.City,
+          this.Country,
+          this.nameOnCard,
+          this.cardNumber,
+          this.MY,
+          this.CVV,
+          this.zipCode,
+          this.license
+        );
         return this.fieldError();
       }
       try {
@@ -445,10 +469,10 @@ export default {
           postalCode: this.postalCode,
           City: this.City,
           Country: this.Country,
-          totalPrice: this.totalPrice
+          totalPrice: this.totalPrice,
         });
         console.log(res);
-        this.setRentedState(true)
+        this.setRentedState(true);
         this.$router.push({ name: "RentIt" });
       } catch (error) {
         console.log(error);
@@ -461,21 +485,23 @@ export default {
       const daysRent = Math.ceil(dateDif / (1000 * 60 * 60 * 24));
       this.daysRent = daysRent;
     },
-    ...mapMutations({ setCheckDrop: "setCheckDrop", setRentedState: "setRentedState" }),
+    ...mapMutations({
+      setCheckDrop: "setCheckDrop",
+      setRentedState: "setRentedState",
+    }),
   },
   computed: {
-    ...mapGetters({ checkDrop: "checkDrop"}),
+    ...mapGetters({ checkDrop: "checkDrop" }),
   },
 
-   mounted() {
+  mounted() {
     if (!this.checkDrop) {
       return this.$router.push({ name: "RentIt" });
     }
-   this.fetchRents();
+    this.fetchRents();
     this.calcTimeDiff();
-     
-},
-  
+  },
+
   beforeDestroy() {
     this.setCheckDrop(null);
   },
@@ -573,5 +599,11 @@ th {
 .cardSmall {
   background: url("../assets/kartica.jpg");
   background-size: cover;
+}
+
+@media only screen and (max-width: 959px) {
+  .topMargin {
+    margin-top: -1.5rem !important;
+  }
 }
 </style>

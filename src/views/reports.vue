@@ -1,9 +1,9 @@
 <template>
   <v-container class="skew">
-    <v-row>
-      <v-col>
+    <v-row class="mt-4">
+      <v-col :cols="12" sm="12" xs="12" md="6" lg="6">
         <div
-          class="text-h6 black--text mb-2"
+          class="text-h6 black--text"
           style="font-family: 'Jockey One', sans-serif !important"
         >
           Rents from
@@ -50,12 +50,12 @@
         </v-dialog>
       </v-col>
 
-      <v-col>
+      <v-col :cols="12" sm="12" xs="12" md="6" lg="6">
         <div
-          class="text-h6 black--text mb-2"
+          class="text-h6 black--text topMargin"
           style="font-family: 'Jockey One', sans-serif !important"
         >
-          Rents to
+          Rents until
         </div>
         <v-dialog
           ref="dialogdate2"
@@ -117,18 +117,24 @@
         style="font-family: 'Jockey One', sans-serif !important"
         min-width="8rem"
         max-width="8rem"
-        @click="filterResults = null, totalPrice = 0"
+        @click="(filterResults = null), (totalPrice = 0)"
       >
         Clear
       </v-btn>
     </v-row>
     <v-card width="1000" class="mb-5 mx-auto">
-      <v-card-title>Total earnings: {{totalPrice}}</v-card-title>
+      <v-card-title>Total earnings: {{ totalPrice }}$</v-card-title>
       <div v-for="(filterResult, i) in filterResults" :key="i">
-      <div v-for="detailedFilterResult in filterResult.carInfo" :key="detailedFilterResult._id">
-      <hr class="mb-8 mt-2" />
-      <report-results :filterResult="filterResult" :detailedFilterResult="detailedFilterResult" />
-      </div>
+        <div
+          v-for="detailedFilterResult in filterResult.carInfo"
+          :key="detailedFilterResult._id"
+        >
+          <hr class="mb-8 mt-2" />
+          <report-results
+            :filterResult="filterResult"
+            :detailedFilterResult="detailedFilterResult"
+          />
+        </div>
       </div>
     </v-card>
   </v-container>
@@ -164,7 +170,7 @@ export default {
         .substr(0, 10),
 
       filterResults: null,
-      totalPrice: 0
+      totalPrice: 0,
     };
   },
   components: {
@@ -204,19 +210,19 @@ export default {
             rtl: false,
           });
         }
-        for(let users in this.filterResults){
-          for(let cars in this.filterResults[users].carInfo){
-            this.totalPrice += this.filterResults[users].carInfo[cars].car.price
+        for (let users in this.filterResults) {
+          for (let cars in this.filterResults[users].carInfo) {
+            this.totalPrice +=
+              this.filterResults[users].carInfo[cars].car.price;
           }
         }
       } catch (error) {
         console.log(error);
       }
     },
-    changeRentsTo(){
+    changeRentsTo() {
       this.dateRentsTo = this.dateRentsFrom;
-    
-    }
+    },
   },
   mounted() {
     this.oneDayLater = new Date();
@@ -232,6 +238,12 @@ export default {
 @media only screen and (min-width: 600px) {
   .skew {
     width: 55% !important;
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  .topMargin {
+    margin-top: -1.5rem !important;
   }
 }
 </style>

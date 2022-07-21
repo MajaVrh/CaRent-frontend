@@ -8,36 +8,6 @@
     >
     <v-row class="ml-0 mb-6">You can edit your profile here</v-row>
 
-    <v-alert
-      v-if="!isVisableDelete"
-      prominent
-      outlined
-      text
-      type="error"
-      class="mt-6"
-    >
-      <v-row align="center">
-        <v-col :cols="12" :xs="12" :md="6" :sm="12" class="grow"
-          >Your account will be deleted!</v-col
-        >
-        <v-col :cols="10" :xs="8" :md="6" :sm="4" class="shrink">
-          <v-row class="justify-end mr-2">
-            <v-btn
-              color="white"
-              class="error--text text-capitalize mr-2"
-              @click="isVisableDelete = !isVisableDelete"
-              >Cancel
-            </v-btn>
-            <v-btn
-              color="error"
-              class="text-capitalize ml-1"
-              @click="deleteUser"
-              >Take action</v-btn
-            ></v-row
-          >
-        </v-col>
-      </v-row>
-    </v-alert>
     <v-row class="text-center justify-center mx-0 mt-0">
       <v-col
         :cols="10"
@@ -98,11 +68,11 @@
           :disabled="!settingsON"
           v-model="user.country"
         ></v-text-field>
-        <v-row class="justify-center">
+        <v-row class="justify-center mt-2">
           <v-btn
             width="180"
             color="orange"
-            class="white--text text-capitalize mt-2 mr-2"
+            class="white--text text-capitalize mt-2 mx-2"
             v-if="settingsON"
             @click="updateData"
             >done
@@ -111,7 +81,7 @@
           <v-btn
             width="180"
             color="#153040"
-            class="white--text text-capitalize mt-2 ml-1"
+            class="white--text text-capitalize mt-2 mx-2"
             v-if="settingsON"
             @click="settingsON = !settingsON"
             >cancel
@@ -142,8 +112,40 @@
           >
         </v-row>
 
+        <v-alert
+          v-if="!isVisableDelete"
+          prominent
+          outlined
+          text
+          type="error"
+          class="mt-6"
+        >
+          <v-row align="center">
+            <v-col :cols="12" :xs="12" :md="6" :sm="6" class="grow"
+              >Your account will be deleted!</v-col
+            >
+            <v-col :cols="10" :xs="12" :md="6" :sm="6" class="shrink">
+              <v-row class="justify-end mr-2">
+                <v-btn
+                  width="7rem"
+                  color="white"
+                  class="error--text text-capitalize mx-1 my-1"
+                  @click="isVisableDelete = !isVisableDelete"
+                  >Cancel
+                </v-btn>
+                <v-btn
+                  width="7rem"
+                  color="error"
+                  class="text-capitalize mx-1 my-1"
+                  @click="deleteUser"
+                  >Take action</v-btn
+                ></v-row
+              >
+            </v-col>
+          </v-row>
+        </v-alert>
         <v-row class="text-end justify-center align-center mt-12">
-          <v-icon size="300" color="grey lighten-1">
+          <v-icon size="200" color="grey lighten-1">
             mdi-account-cog
           </v-icon></v-row
         >

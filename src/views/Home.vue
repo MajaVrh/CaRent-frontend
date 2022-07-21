@@ -74,7 +74,12 @@
           class="justify-center text-center align-center"
         >
           <v-card flat>
-            <v-img class="img-home-car" src="../assets/auto1.png" fill />
+            <v-img
+              loading="lazy"
+              class="img-home-car"
+              src="../assets/auto1.png"
+              fill
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -90,9 +95,12 @@
 
       <v-row class="text-h6 font-weight-regular d-flex ml-6 mt-6">
         <v-card flat>
-          <li>identity card or passport with a minimum age of 19 years</li>
-          <li>full rent in cash or by payment to a transaction account</li>
-          <li>driving license with driving experience longer than one year</li>
+          <li>identity card or passport with a minimum age of 18 years</li>
+          <li>full rent by payment to a transaction account</li>
+          <li>
+            driving license required, the category depends on the vehicle you
+            rent
+          </li>
         </v-card></v-row
       >
     </v-container>
@@ -110,13 +118,16 @@
         <v-slide-group class="py-4 px-3" center-active show-arrows>
           <v-slide-item v-for="review in reviews" :key="review._id">
             <v-card
-              class="mx-4 my-6"
+              class="mx-4 my-6 animacija"
               height="250"
               width="246"
               :elevation="10 - 1"
             >
               <v-row align="center" justify="center">
-                <review :review="review" />
+                <review
+                  :review="review"
+                  :deleteReviewFrontend="deleteReviewFrontend"
+                />
               </v-row>
             </v-card>
           </v-slide-item>
@@ -205,7 +216,7 @@
           :xs="12"
           :md="4"
           :sm="4"
-          ><v-img class="rentit" src="../assets/auto2.png" fill
+          ><v-img loading="lazy" class="rentit" src="../assets/auto2.png" fill
         /></v-col>
         <v-col :cols="12" :xs="10" :md="4" :sm="4">
           <v-row
@@ -224,7 +235,11 @@
           </v-btn></v-col
         >
         <v-col :cols="12" :xs="12" :md="4" :sm="4"
-          ><v-img class="mb-3 rentit" src="../assets/auto3.png" fill
+          ><v-img
+            loading="lazy"
+            class="mb-3 rentit"
+            src="../assets/auto3.png"
+            fill
         /></v-col>
       </v-row>
     </v-container>
@@ -276,6 +291,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    deleteReviewFrontend(id) {
+      this.reviews = this.reviews.filter((x) => x._id !== id);
     },
 
     alertCommentNeeded() {
@@ -342,6 +360,7 @@ body {
 hr {
   margin-top: 4%;
   margin-bottom: 4%;
+  border: none;
   padding: 0.2rem 0 !important;
   background-color: rgb(219, 219, 219);
 }
@@ -411,5 +430,24 @@ a {
 
 .margina {
   margin-bottom: 3rem !important;
+}
+
+.animacija {
+  animation-name: animacija;
+  animation-duration: 0.5s;
+  animation-direction: normal;
+  animation-timing-function: ease-in;
+}
+
+@keyframes animacija {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+    transition: all 1s cubic-bezier(0.36, 0.69, 0.3, 0.64);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

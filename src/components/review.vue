@@ -5,8 +5,20 @@
     height="200"
   >
     <v-row>
-      <b>{{ review.name }} {{ review.surname }}</b></v-row
-    >
+      <v-col xs="9" md="9" sm="9" lg="9">
+        <b>{{ review.name }} {{ review.surname }}</b></v-col
+      >
+      <v-col xs="3" md="3" sm="3" lg="3">
+        <v-icon
+          @click="deleteReview"
+          v-if="review.email == user.email"
+          size="30"
+          color="error"
+        >
+          mdi-delete-circle
+        </v-icon></v-col
+      >
+    </v-row>
     <v-row>
       <v-rating
         v-model="review.mark"
@@ -22,12 +34,45 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return { rating: 4.5 };
   },
   props: {
     review: Object,
+    deleteReviewFrontend: Function,
+  },
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
+  methods: {
+    ...mapMutations({ setCurrentUser: "setCurrentUser" }),
+    async deleteReview() {
+      try {
+        await axios.delete(
+          `http://localhost:8000/review/delete/${this.review._id}`
+        );
+        this.deleteReviewFrontend(this.review._id);
+        this.$toast.success("Review was deleted sucesfully!", {
+          position: "top-center",
+          timeout: 4369,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 1.08,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>

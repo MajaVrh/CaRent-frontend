@@ -1,5 +1,5 @@
 <template>
-  <v-container style="margin-top: -4.4rem" fill-height>
+  <v-container class="animacija" style="margin-top: -4.4rem" fill-height>
     <v-row align="center" justify="center">
       <v-col align="center" justify="center">
         <v-container
@@ -66,5 +66,24 @@ export default {
 <style>
 .v-btn::before {
   background-color: transparent;
+}
+
+.animacija {
+  animation-name: animacija;
+  animation-duration: 0.4s;
+  animation-direction: normal;
+  animation-timing-function: ease-in;
+}
+
+@keyframes animacija {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+    transition: all 1s cubic-bezier(0.36, 0.69, 0.3, 0.64);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

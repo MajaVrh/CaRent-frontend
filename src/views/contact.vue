@@ -17,7 +17,7 @@
             style="margin-right: 8%; margin-left: 8%"
           ></v-text-field>
           <v-text-field
-            label="Email"
+            label="Your email"
             v-model="email"
             name="email"
             color="#153040"

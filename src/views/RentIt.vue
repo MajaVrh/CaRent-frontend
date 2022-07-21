@@ -29,20 +29,11 @@
                   </v-btn></v-col
                 >
               </template>
-              <template v-slot:default="dialog"> 
-              
+              <template v-slot:default="dialog">
                 <v-card>
                   <v-card-text class="pt-12 px-12">
                     <v-row
-                      class="
-                        text-h4
-                        mt-2
-                        black--text
-                        d-flex
-                        ml-0
-                        justify-center
-                        mb-6
-                      "
+                      class="text-h4 mt-2 black--text d-flex ml-0 justify-center mb-6"
                       style="font-family: 'Jockey One', sans-serif !important"
                     >
                       Find your car</v-row
@@ -116,7 +107,7 @@
                               color="#FDA300"
                               @click="modalCheckOut = false"
                             >
-                              Close
+                              Cancel
                             </v-btn>
                             <v-btn
                               text
@@ -230,7 +221,7 @@
 
                     <hr class="mt-2 mb-n12" v-if="moreFilterVisible" />
                   </v-card-text>
-                  <v-card-text v-if="moreFilterVisible">
+                  <v-card-text class="animacija" v-if="moreFilterVisible">
                     <v-row class="justify-center px-6">
                       <v-col
                         :cols="12"
@@ -295,12 +286,13 @@
                         :sm="4"
                         class="topMargin"
                         ><v-select
+                          color="#153040"
+                          item-color="orange"
                           v-model="bodyType"
                           label="Body type"
                           :items="bodyTypeItems"
                           outlined
                           dense
-                          color="#153040"
                         ></v-select
                       ></v-col>
                     </v-row>
@@ -330,7 +322,7 @@
                         class="topMargin"
                         ><v-text-field
                           v-model="power"
-                          label="Power"
+                          label="Power (Hp)"
                           outlined
                           dense
                           color="#153040"
@@ -351,6 +343,7 @@
                           dense
                           :items="fuelItems"
                           color="#153040"
+                          item-color="orange"
                         ></v-select
                       ></v-col>
                     </v-row>
@@ -364,7 +357,7 @@
                       >
                         <v-text-field
                           v-model="luggageCapacity"
-                          label="Luggage capacity"
+                          label="Luggage capacity (l)"
                           outlined
                           dense
                           color="#153040"
@@ -399,6 +392,7 @@
                           dense
                           :items="transmissionItems"
                           color="#153040"
+                          item-color="orange"
                         ></v-select
                       ></v-col>
                     </v-row>
@@ -407,27 +401,15 @@
                     <v-row class="justify-center text-center mb-6">
                       <v-btn
                         color="#153040"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="dialog.value = false"
                       >
-                        Cancel
+                        Close
                       </v-btn>
                       <v-btn
                         color="#153040"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="emptyData()"
                       >
@@ -435,15 +417,11 @@
                       </v-btn>
                       <v-btn
                         color="#FDA300"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
-                        @click="getCars(), (dialog.value = false), isSearched = true"
+                        @click="
+                          getCars(), (dialog.value = false), (isSearched = true)
+                        "
                       >
                         Search
                       </v-btn>
@@ -489,14 +467,7 @@
                       class="mt-n12 pt-12"
                     >
                       <v-row
-                        class="
-                          text-h4
-                          mt-2
-                          black--text
-                          d-flex
-                          mb-4
-                          justify-center
-                        "
+                        class="text-h4 mt-2 black--text d-flex mb-4 justify-center"
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         New car</v-row
@@ -505,7 +476,7 @@
                         class="black--text fontSize justify-center"
                         style="padding: 2% 8%"
                       >
-                        <v-col :cols="12" :xs="12" :md="3" :sm="4" class="mx-2">
+                        <v-col :cols="12" :xs="12" :md="3" :sm="5" class="mx-2">
                           <v-row class="mb-2">
                             <p><b>Make: </b> {{ make }}</p></v-row
                           >
@@ -522,19 +493,19 @@
                             <p><b>Doors: </b> {{ doors }}</p></v-row
                           >
                         </v-col>
-                        <v-col :cols="12" :xs="7" :md="3" :sm="4" class="mx-2">
+                        <v-col :cols="12" :xs="7" :md="4" :sm="5" class="mx-2">
                           <v-row class="mb-2">
                             <p>
-                              <b>Luggage Capacity: </b> {{ luggageCapacity }}
+                              <b>Luggage Capacity: </b> {{ luggageCapacity }} l
                             </p></v-row
                           >
                           <v-row class="mb-2">
-                            <p><b>Power: </b> {{ power }}</p>
+                            <p><b>Power : </b> {{ power }} Hp</p>
                           </v-row>
                           <v-row class="mb-2">
                             <p>
                               <b>Driver licence category: </b>
-                              {{ driverLicenceCategory }}
+                              {{ driverLicenseCategory }}
                             </p></v-row
                           >
                           <v-row class="mb-2">
@@ -546,25 +517,22 @@
                             <p><b>Current station: </b> {{ location }}</p>
                           </v-row>
                         </v-col>
-                        <v-col :cols="12" :xs="12" :md="3" :sm="6">
-                          <v-img
-                            :src="imageURL"
-                            max-width="250"
-                            class="offeredCarImg ml-2"
-                          ></v-img
+
+                        <v-col :cols="12" :xs="12" :md="4" :sm="10">
+                          <v-row
+                            class="justify-center align-center text-center"
+                          >
+                            <v-img
+                              :src="imageURL"
+                              max-width="250"
+                              class="offeredCarImg ml-2 justify-center align-center text-center"
+                            ></v-img></v-row
                         ></v-col>
                       </v-row>
                     </v-card-text>
                     <v-card-text v-if="!isVisableSuccesModal">
                       <v-row
-                        class="
-                          text-h4
-                          mt-2
-                          black--text
-                          d-flex
-                          ml-0
-                          justify-center
-                        "
+                        class="text-h4 mt-2 black--text d-flex ml-0 justify-center"
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         Add new car</v-row
@@ -583,7 +551,7 @@
                             color="orange"
                           ></v-text-field>
                           <v-select
-                            color="#153040"
+                            color="orange"
                             item-color="orange"
                             :items="bodyTypeItems"
                             label="Body type"
@@ -597,12 +565,12 @@
                           ></v-text-field>
                           <v-text-field
                             v-model="luggageCapacity"
-                            label="Luggage Capacity"
+                            label="Luggage Capacity (l)"
                             color="orange"
                           ></v-text-field>
 
                           <v-select
-                            color="#153040"
+                            color="orange"
                             item-color="orange"
                             :items="transmissionItems"
                             label="Transmission"
@@ -610,17 +578,18 @@
                           ></v-select>
                           <v-text-field
                             v-model="power"
-                            label="Power (hp)"
+                            label="Power (Hp)"
                             color="orange"
                           ></v-text-field
                         ></v-col>
                         <v-col :cols="12" :xs="12" :md="5" :sm="12">
                           <v-select
-                            color="#153040"
+                            color="orange"
                             item-color="orange"
                             :items="fuelItems"
                             label="Fuel"
                             v-model="fuel"
+                            class="topMarginSmallScreen"
                           ></v-select>
                           <v-text-field
                             v-model="doors"
@@ -634,13 +603,13 @@
                             color="orange"
                           ></v-text-field>
                           <v-text-field
-                            v-model="driverLicenceCategory"
+                            v-model="driverLicenseCategory"
                             label="Driver licence category"
                             color="orange"
                           ></v-text-field>
 
                           <v-select
-                            color="#153040"
+                            color="orange"
                             item-color="orange"
                             :items="items"
                             label="Current station"
@@ -685,20 +654,14 @@
                           :md="3"
                           :sm="12"
                           color="#153040"
-                          class="
-                            white--text
-                            mb-3
-                            px-8
-                            text-capitalize text-h6
-                            mx-3
-                          "
+                          class="white--text mb-3 px-8 text-capitalize text-h6 mx-3"
                           style="
                             font-family: 'Jockey One', sans-serif !important;
                           "
                           min-width="8.2rem"
                           @click="emptyData(), (dialog.value = false)"
                         >
-                          Close
+                          Cancel
                         </v-btn>
 
                         <v-btn
@@ -811,7 +774,7 @@
                   >
                     <v-spacer></v-spacer>
                     <v-btn text color="#FDA300" @click="modalCheckOut = false">
-                      Close
+                      Cancel
                     </v-btn>
                     <v-btn
                       text
@@ -867,7 +830,7 @@
                   >
                     <v-spacer></v-spacer>
                     <v-btn text color="#FDA300" @click="modalDropOff = false">
-                      Cancel
+                      Close
                     </v-btn>
                     <v-btn
                       text
@@ -914,7 +877,7 @@
 
             <hr class="mt-2 mb-n12" v-if="moreFilterVisible" />
           </v-card-text>
-          <v-card-text v-if="moreFilterVisible">
+          <v-card-text v-if="moreFilterVisible" class="animacija">
             <v-row class="justify-center px-6">
               <v-col :cols="12" :xs="12" :md="12" :sm="12" class="mt-12">
                 <v-slider
@@ -959,6 +922,7 @@
                   outlined
                   dense
                   color="#153040"
+                  item-color="orange"
                 ></v-select
               ></v-col>
             </v-row>
@@ -977,7 +941,7 @@
               <v-col :cols="12" :xs="12" :md="4" :sm="4" class="topMargin"
                 ><v-text-field
                   v-model="power"
-                  label="Power"
+                  label="Power (Hp)"
                   outlined
                   dense
                   color="#153040"
@@ -992,6 +956,7 @@
                   dense
                   :items="fuelItems"
                   color="#153040"
+                  item-color="orange"
                 ></v-select
               ></v-col>
             </v-row>
@@ -999,7 +964,7 @@
               <v-col :cols="12" :xs="12" :md="4" :sm="4" class="topMargin">
                 <v-text-field
                   v-model="luggageCapacity"
-                  label="Luggage capacity"
+                  label="Luggage capacity (l)"
                   outlined
                   dense
                   color="#153040"
@@ -1022,6 +987,7 @@
                   dense
                   :items="transmissionItems"
                   color="#153040"
+                  item-color="orange"
                 ></v-select
               ></v-col>
             </v-row>
@@ -1032,7 +998,7 @@
                 color="#FDA300"
                 class="white--text text-capitalize text-h6 my-2 mx-2"
                 style="font-family: 'Jockey One', sans-serif !important"
-                @click="getCars(), isSearched = true"
+                @click="getCars(), (isSearched = true)"
                 min-width="8rem"
                 max-width="8rem"
               >
@@ -1054,21 +1020,18 @@
         </v-card>
       </v-container>
       <div v-if="isSearched">
-      <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
-  
-        <offeredCar
-          class="justify-center"
-          :id="car._id"
-          :carP="car"
-          :deleteCarFrontend="deleteCarFrontend"
-          :isUser="isUser"
-          :dateCheckOut="new Date(dateCheckOut)"
-          :dateDropOff="new Date(dateDropOff)"
-          :location="location"
-          
-        />
-     
-      </v-container>
+        <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
+          <offeredCar
+            class="justify-center animacija"
+            :id="car._id"
+            :carP="car"
+            :deleteCarFrontend="deleteCarFrontend"
+            :isUser="isUser"
+            :dateCheckOut="new Date(dateCheckOut)"
+            :dateDropOff="new Date(dateDropOff)"
+            :location="location"
+          />
+        </v-container>
       </div>
     </div>
   </div>
@@ -1095,7 +1058,7 @@ export default {
     price: 1000,
     transmission: "",
     productionYear: "",
-    driverLicenceCategory: "",
+    driverLicenseCategory: "",
     location: "",
 
     imageURL: "",
@@ -1123,8 +1086,8 @@ export default {
       "Rijeka",
       "Split",
       "Varaždin",
-      "Vukovar",
-      "Zadar",
+      "Vinkovci",
+      "Dubrovnik",
       "Zagreb",
     ],
 
@@ -1135,7 +1098,7 @@ export default {
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
-      dateCheckOut: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    dateCheckOut: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
     modalCheckOut: false,
@@ -1163,7 +1126,9 @@ export default {
     offeredCar,
   },
   mounted() {
-    if(this.user.isAdmin){this.isSearched=true}
+    if (this.user.isAdmin) {
+      this.isSearched = true;
+    }
     this.rentSuccessful();
     this.isAdmin();
     this.getCars();
@@ -1268,7 +1233,7 @@ export default {
           imageURL: this.imageURL,
           transmission: this.transmission,
           productionYear: this.productionYear,
-          driverLicenceCategory: this.driverLicenceCategory,
+          driverLicenseCategory: this.driverLicenseCategory,
           location: this.location,
           price: this.price,
         });
@@ -1297,7 +1262,7 @@ export default {
         (this.imageURL = "");
       this.transmission = "";
       this.productionYear = "";
-      this.driverLicenceCategory = "";
+      this.driverLicenseCategory = "";
       this.price = 1000;
       this.location = "";
     },
@@ -1340,7 +1305,7 @@ export default {
           imageURL: this.imageURL,
           transmission: this.transmission,
           productionYear: this.productionYear,
-          driverLicenceCategory: this.driverLicenceCategory,
+          driverLicenseCategory: this.driverLicenseCategory,
           location: this.location,
           price: Number(this.price),
           dateCheckOut: this.dateCheckOut,
@@ -1376,6 +1341,9 @@ export default {
 }
 
 @media only screen and (max-width: 959px) {
+  .topMarginSmallScreen {
+    margin-top: -1.5rem !important;
+  }
   .topMargin {
     margin-top: -1.5rem !important;
   }
@@ -1401,5 +1369,24 @@ hr {
 
 .fontSize {
   font-size: 17px;
+}
+
+.animacija {
+  animation-name: animacija;
+  animation-duration: 0.2s;
+  animation-direction: normal;
+  animation-timing-function: ease-in;
+}
+
+@keyframes animacija {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+    transition: all 1s cubic-bezier(0.36, 0.69, 0.3, 0.64);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

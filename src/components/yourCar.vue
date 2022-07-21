@@ -4,7 +4,7 @@
       class="text-h4 black--text d-flex ml-0 mb-2"
       style="font-family: 'Jockey One', sans-serif !important"
     >
-     {{ carInfo.car.make }} {{ carInfo.car.name }}</v-row
+      {{ carInfo.car.make }} {{ carInfo.car.name }}</v-row
     >
     <v-row class="justify-space-between">
       <v-col lg="2" sm="5" md="3" xs="12">
@@ -23,7 +23,6 @@
         <v-img
           :src="carInfo.car.imageURL"
           max-width="350"
-   
           contain
           no-gutters
         ></v-img>
@@ -66,17 +65,37 @@
         lg="4"
         v-if="windowWidth > 960"
       >
-        <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-if="(daysRent) != 0">  Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent+1) }} </div>
-    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-else>  Your rent is expiering, return the car as soon as posible</div>
+        <div
+          style="font-family: 'Jockey One', sans-serif !important"
+          class="text-h5 mt-4"
+          v-if="daysRent != 0"
+        >
+          Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent + 1) }}
+        </div>
+        <div
+          style="font-family: 'Jockey One', sans-serif !important"
+          class="text-h5 mt-4"
+          v-else
+        >
+          Your rent is expiering, return the car as soon as posible
+        </div>
       </v-col>
     </v-row>
-    <div
-      class="mb-auto d-flex"
-      align="center"
-      v-if="windowWidth < 960"
-    >
-    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-if="(daysRent) != 0">  Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent+1) }} </div>
-    <div style="font-family: 'Jockey One', sans-serif !important"  class="text-h5 mt-4" v-else>  Your rent is expiering, return the car as soon as posible</div>
+    <div class="mb-auto d-flex" align="center" v-if="windowWidth < 960">
+      <div
+        style="font-family: 'Jockey One', sans-serif !important"
+        class="text-h5 mt-4"
+        v-if="daysRent != 0"
+      >
+        Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent + 1) }}
+      </div>
+      <div
+        style="font-family: 'Jockey One', sans-serif !important"
+        class="text-h5 mt-4"
+        v-else
+      >
+        Your rent is expiering, return the car as soon as posible
+      </div>
     </div>
     <hr v-if="!isLast" class="my-12" color="#153040" />
     <hr v-else class="my-12" color="white" />
@@ -90,7 +109,6 @@ export default {
     isLast: Boolean,
     carName: Number,
     carInfo: Object,
-    
   },
   data() {
     return {

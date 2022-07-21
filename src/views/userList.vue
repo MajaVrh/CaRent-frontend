@@ -28,10 +28,7 @@
         :items="users"
         class="elevation-1 mt-8"
         hide-default-footer
-        >
-        
-        {{ /* eslint-disable-next-line */ }}
-        <template v-slot:item.makeAdmin="{ item }">
+        ><template v-slot:item.makeAdmin="{ item }">
           <v-btn
             color="orange"
             class="white--text text-capitalize text-subtitle-2"
@@ -58,7 +55,6 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
 export default {
   name: "userList",
   data() {
@@ -71,22 +67,30 @@ export default {
           align: "start",
           sortable: false,
           value: "name",
-          class: "black--text text-subtitle-1",
+          class: "black--text text-subtitle-1 font-weight-bold",
         },
         {
           text: "Surname",
           value: "surname",
-          class: "black--text text-subtitle-1",
+          sortable: false,
+          class: "black--text text-subtitle-1 font-weight-bold",
         },
-        { text: "Email", value: "email", class: "black--text text-subtitle-1" },
-        { text: "Age", value: "age", class: "black--text text-subtitle-1" },
+        {
+          text: "Email",
+          value: "email",
+          sortable: false,
+          class: "black--text text-subtitle-1 font-weight-bold ",
+        },
 
-        { text: "", value: "makeAdmin", width: "8rem" },
+        {
+          text: "Admin status",
+          value: "makeAdmin",
+          sortable: false,
+          width: "8rem",
+          class: " black--text text-subtitle-1  font-weight-bold",
+        },
       ],
     };
-  },
-  computed: {
-    ...mapGetters({user: 'currentUser', loading: 'loading'})
   },
   mounted() {
     this.getUsers();
@@ -139,7 +143,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-data-table.row-height-50 td {
   height: 18px !important;
 }

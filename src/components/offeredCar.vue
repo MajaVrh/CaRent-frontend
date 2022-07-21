@@ -19,7 +19,7 @@
           <p><b>Seats: </b> {{ car.seats }}</p>
           <p><b>Body type: </b> {{ car.bodyType }}</p>
           <p><b>Transmission: </b> {{ car.transmission }}</p>
-          <p><b>Power: </b> {{ car.power }}</p>
+          <p><b>Power: </b> {{ car.power }} Hp</p>
         </v-col>
         <v-col
           style="min-width: 14rem !important"
@@ -30,9 +30,9 @@
           class="topMargin"
         >
           <p><b>Fuel: </b> {{ car.fuel }}</p>
-          <p><b>Luggage Capacity: </b> {{ car.luggageCapacity }}</p>
+          <p><b>Luggage Capacity: </b> {{ car.luggageCapacity }} l</p>
           <p>
-            <b>Driver licence category: </b> {{ car.driverLicenceCategory }}
+            <b>Driver license category: </b> {{ car.driverLicenseCategory }}
           </p>
           <p><b>Production year: </b> {{ car.productionYear }}</p>
           <p><b>Current station: </b> {{ car.location }}</p>
@@ -40,6 +40,7 @@
         <v-col :cols="12" sm="4" md="3" xs="12" lg="3">
           <v-row class="justify-center">
             <v-img
+              loading="lazy"
               :src="car.imageURL"
               max-width="250"
               class="offeredCarImg mb-8"
@@ -121,12 +122,12 @@
                         ></v-text-field>
                         <v-text-field
                           v-model="newLuggageCapacity"
-                          label="Luggage Capacity"
+                          label="Luggage Capacity (l)"
                           color="orange"
                         ></v-text-field>
                         <v-text-field
                           v-model="newPower"
-                          label="Power"
+                          label="Power (Hp)"
                           color="orange"
                         ></v-text-field
                       ></v-col>
@@ -159,14 +160,14 @@
                           color="orange"
                         ></v-text-field>
                         <v-text-field
-                          v-model="newDriverLicenceCategory"
-                          label="Driver licence category"
+                          v-model="newDriverLicenseCategory"
+                          label="Driver license category"
                           color="orange"
                         >
                         </v-text-field>
                         <v-text-field
                           v-model="newPrice"
-                          label="Price"
+                          label="Price (€)"
                           color="orange"
                         ></v-text-field>
                         <v-select
@@ -324,7 +325,7 @@ export default {
     newImgURL: "",
     newTransmission: "",
     newProductionYear: "",
-    newDriverLicenceCategory: "",
+    newDriverLicenseCategory: "",
     newPrice: "",
     newLocation: "",
 
@@ -403,7 +404,7 @@ export default {
         this.newImgURL = this.car.imageURL;
         this.newTransmission = this.car.transmission;
         this.newProductionYear = this.car.productionYear;
-        this.newDriverLicenceCategory = this.car.driverLicenceCategory;
+        this.newDriverLicenseCategory = this.car.driverLicenseCategory;
         this.newPrice = this.car.price;
         this.newLocation = this.car.location;
       } catch (error) {
@@ -412,21 +413,21 @@ export default {
     },
 
     sendDataPayment() {
-      if (!this.location){ 
+      if (!this.location) {
         this.$toast.error("Choose a rent location", {
-        position: "top-center",
-        timeout: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: true,
-        rtl: false
-      });
+          position: "top-center",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        });
 
         return;
       } //stavit alert
@@ -479,7 +480,7 @@ export default {
             newImgURL: this.newImgURL,
             newTransmission: this.newTransmission,
             newProductionYear: this.newProductionYear,
-            newDriverLicenceCategory: this.newDriverLicenceCategory,
+            newDriverLicenseCategory: this.newDriverLicenseCategory,
             newLocation: this.newLocation,
             newPrice: this.newPrice,
           }
@@ -538,5 +539,12 @@ hr {
   .topMargin {
     margin-top: -1.5rem !important;
   }
+}
+
+.animacija {
+  animation-name: animacija;
+  animation-duration: 1s;
+  animation-direction: normal;
+  animation-timing-function: ease-in;
 }
 </style>
