@@ -125,10 +125,8 @@
     <v-card width="1000" class="mb-5 mx-auto">
       <v-card-title>Total earnings: {{ totalPrice }}$</v-card-title>
       <div v-for="(filterResult, i) in filterResults" :key="i">
-          <hr class="mb-8 mt-2" />
-          <report-results
-            :filterResult="filterResult"
-          />
+        <hr class="mb-8 mt-2" />
+        <report-results :filterResult="filterResult" />
       </div>
     </v-card>
   </v-container>
@@ -174,7 +172,6 @@ export default {
     changeDateMin() {
       this.oneDayLater = new Date();
       this.oneDayLater.setDate(new Date(this.dateRentsFrom).getDate() + 1);
-
       this.oneDayLater = moment(this.oneDayLater).format("YYYY-MM-DD");
       this.dateRentsTo = this.oneDayLater;
       this.oneDayLaterString = null;
@@ -186,7 +183,7 @@ export default {
           dateRentsTo: this.dateRentsTo,
           dateRentsFrom: this.dateRentsFrom,
         });
-        console.log('res data',res.data);
+        console.log("res data", res.data);
         this.filterResults = res.data;
         if (this.filterResults.length == 0) {
           this.$toast.error("No cars have been rented at this time", {
@@ -204,14 +201,11 @@ export default {
             rtl: false,
           });
         }
-        let sum = 0
+        let sum = 0;
         for (let carInfo in this.filterResults) {
-         
-            sum +=
-              this.filterResults[carInfo].totalPrice;
-          
+          sum += this.filterResults[carInfo].totalPrice;
         }
-        this.totalPrice = sum
+        this.totalPrice = sum;
       } catch (error) {
         console.log(error);
       }
