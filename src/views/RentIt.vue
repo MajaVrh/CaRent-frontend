@@ -33,15 +33,7 @@
                 <v-card>
                   <v-card-text class="pt-12 px-12">
                     <v-row
-                      class="
-                        text-h4
-                        mt-2
-                        black--text
-                        d-flex
-                        ml-0
-                        justify-center
-                        mb-6
-                      "
+                      class="text-h4 mt-2 black--text d-flex ml-0 justify-center mb-6"
                       style="font-family: 'Jockey One', sans-serif !important"
                     >
                       Find your car</v-row
@@ -409,13 +401,7 @@
                     <v-row class="justify-center text-center mb-6">
                       <v-btn
                         color="#153040"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="dialog.value = false"
                       >
@@ -423,13 +409,7 @@
                       </v-btn>
                       <v-btn
                         color="#153040"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="emptyData()"
                       >
@@ -437,13 +417,7 @@
                       </v-btn>
                       <v-btn
                         color="#FDA300"
-                        class="
-                          white--text
-                          px-10
-                          text-capitalize text-h6
-                          my-2
-                          mx-2
-                        "
+                        class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
                         @click="getCars(), (dialog.value = false)"
                       >
@@ -491,14 +465,7 @@
                       class="mt-n12 pt-12"
                     >
                       <v-row
-                        class="
-                          text-h4
-                          mt-2
-                          black--text
-                          d-flex
-                          mb-4
-                          justify-center
-                        "
+                        class="text-h4 mt-2 black--text d-flex mb-4 justify-center"
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         New car</v-row
@@ -556,27 +523,14 @@
                             <v-img
                               :src="imageURL"
                               max-width="250"
-                              class="
-                                offeredCarImg
-                                ml-2
-                                justify-center
-                                align-center
-                                text-center
-                              "
+                              class="offeredCarImg ml-2 justify-center align-center text-center"
                             ></v-img></v-row
                         ></v-col>
                       </v-row>
                     </v-card-text>
                     <v-card-text v-if="!isVisableSuccesModal">
                       <v-row
-                        class="
-                          text-h4
-                          mt-2
-                          black--text
-                          d-flex
-                          ml-0
-                          justify-center
-                        "
+                        class="text-h4 mt-2 black--text d-flex ml-0 justify-center"
                         style="font-family: 'Jockey One', sans-serif !important"
                       >
                         Add new car</v-row
@@ -698,13 +652,7 @@
                           :md="3"
                           :sm="12"
                           color="#153040"
-                          class="
-                            white--text
-                            mb-3
-                            px-8
-                            text-capitalize text-h6
-                            mx-3
-                          "
+                          class="white--text mb-3 px-8 text-capitalize text-h6 mx-3"
                           style="
                             font-family: 'Jockey One', sans-serif !important;
                           "
@@ -1194,8 +1142,8 @@ export default {
 
   methods: {
     changeDateMin() {
-      this.oneDayLater = new Date();
-      this.oneDayLater.setDate(new Date(this.dateCheckOut).getDate() + 1);
+      this.oneDayLater = new Date(this.dateCheckOut);
+      this.oneDayLater.setDate(this.oneDayLater.getDate() + 1);
 
       this.oneDayLater = moment(this.oneDayLater).format("YYYY-MM-DD");
       this.dateDropOff = this.oneDayLater;
@@ -1399,8 +1347,8 @@ export default {
         });
         console.log("this.make", this.make);
         this.cars = res.data;
-        if(isSearch) {
-          this.isSearchedCars()
+        if (isSearch) {
+          this.isSearchedCars();
         }
 
         console.log("this.car", this.cars);

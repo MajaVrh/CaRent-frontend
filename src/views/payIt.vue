@@ -361,6 +361,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
 export default {
@@ -470,6 +471,18 @@ export default {
           City: this.City,
           Country: this.Country,
           totalPrice: this.totalPrice,
+        });
+        await axios.post("http://localhost:8000/rent/contact", {
+          email: this.Email,
+          userName: this.Name,
+          userSurname: this.Surname,
+
+          carName: this.car.name,
+          carLocation: this.checkDrop.location,
+          carMake: this.car.make,
+
+          rentedFrom: moment(this.checkDrop.checkOutDate).format("YYYY-MM-DD"),
+          rentedUntil: moment(this.checkDrop.dropOffDate).format("YYYY-MM-DD"),
         });
         console.log(res);
         this.setRentedState(true);
