@@ -12,7 +12,7 @@
       <v-col
         :cols="10"
         :xs="8"
-        :md="7"
+        :md="6"
         :sm="12"
         class="text-center justify-center align-center"
       >
@@ -89,7 +89,7 @@
         >
       </v-col>
 
-      <v-col :cols="12" :xs="12" :md="5" :sm="12">
+      <v-col :cols="12" :xs="12" :md="6" :sm="12">
         <v-row class="text-center justify-center align-center mt-2"> </v-row>
         <v-row class="text-center justify-center align-center">
           <v-btn

@@ -1,11 +1,5 @@
 <template>
-  <v-container v-if="rentInfo && rentInfo.carInfo.length > 0 && hasRents">
-    <v-row
-      class="text-h4 black--text d-flex mt-12"
-      style="font-family: 'Jockey One', sans-serif !important"
-    >
-      My rents</v-row
-    >
+  <v-container v-if="rentInfo && rentInfo.carInfo.length > 0 && hasRents" class="mt-12 skew">
     <div
       v-for="(rent, i) in rentInfo.carInfo"
       :key="rent._id"
@@ -97,6 +91,11 @@ export default {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@media only screen and (min-width: 600px) {
+  .skew {
+    width: 70% !important;
   }
 }
 </style>

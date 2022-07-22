@@ -26,7 +26,7 @@
         :search="search"
         :headers="headers"
         :items="users"
-        class="elevation-1 mt-8"
+        class="elevation-1 mt-8 justify-space-between "
         hide-default-footer
         ><template v-slot:item.makeAdmin="{ item }">
           <v-btn

@@ -37,14 +37,14 @@
           >
             <v-spacer></v-spacer>
             <v-btn text color="#FDA300" @click="modalRentsFrom = false">
-              Close
+              CLOSE
             </v-btn>
             <v-btn
               text
               color="#FDA300"
               @click="$refs.dialogdate1.save(dateRentsFrom)"
             >
-              I accept
+              OK
             </v-btn>
           </v-date-picker>
         </v-dialog>
@@ -86,14 +86,14 @@
           >
             <v-spacer></v-spacer>
             <v-btn text color="#FDA300" @click="modalRentsTo = false">
-              Close
+              CLOSE
             </v-btn>
             <v-btn
               text
               color="#FDA300"
               @click="$refs.dialogdate2.save(dateRentsTo)"
             >
-              I accept
+              OK
             </v-btn>
           </v-date-picker>
         </v-dialog>
@@ -125,16 +125,10 @@
     <v-card width="1000" class="mb-5 mx-auto">
       <v-card-title>Total earnings: {{ totalPrice }}$</v-card-title>
       <div v-for="(filterResult, i) in filterResults" :key="i">
-        <div
-          v-for="detailedFilterResult in filterResult.carInfo"
-          :key="detailedFilterResult._id"
-        >
           <hr class="mb-8 mt-2" />
           <report-results
             :filterResult="filterResult"
-            :detailedFilterResult="detailedFilterResult"
           />
-        </div>
       </div>
     </v-card>
   </v-container>
@@ -192,7 +186,7 @@ export default {
           dateRentsTo: this.dateRentsTo,
           dateRentsFrom: this.dateRentsFrom,
         });
-        console.log(res.data);
+        console.log('res data',res.data);
         this.filterResults = res.data;
         if (this.filterResults.length == 0) {
           this.$toast.error("No cars have been rented at this time", {
@@ -210,12 +204,14 @@ export default {
             rtl: false,
           });
         }
-        for (let users in this.filterResults) {
-          for (let cars in this.filterResults[users].carInfo) {
-            this.totalPrice +=
-              this.filterResults[users].carInfo[cars].car.price;
-          }
+        let sum = 0
+        for (let carInfo in this.filterResults) {
+         
+            sum +=
+              this.filterResults[carInfo].totalPrice;
+          
         }
+        this.totalPrice = sum
       } catch (error) {
         console.log(error);
       }

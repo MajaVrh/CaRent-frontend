@@ -3,6 +3,7 @@
     class="px-12 black--text my-8"
     style="font-size: 16px"
     height="200"
+   
   >
     <v-row>
       <v-col xs="9" md="9" sm="9" lg="9">
@@ -11,7 +12,7 @@
       <v-col xs="3" md="3" sm="3" lg="3">
         <v-icon
           @click="deleteReview"
-          v-if="review.email == user.email"
+          v-if="user && review.email == user.email"
           size="30"
           color="error"
         >
