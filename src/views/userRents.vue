@@ -8,7 +8,7 @@
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
               <v-expansion-panel-header
                 class="text-capitalize"
-                v-if="!badIndexes.includes(i)"
+                v-if="!badIndexes.includes(i) && userInfo.user"
               >
                 {{ userInfo.user.name }} {{ userInfo.user.surname }} ({{
                   userInfo.user.email
@@ -31,12 +31,15 @@
         <v-card heigth="fit-content" class="ma-8 pa-2" v-if="rentInfo">
           <v-expansion-panels flat>
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
-              <v-expansion-panel-header class="text-capitalize">
+              <v-expansion-panel-header class="text-capitalize" v-if="userInfo.user">
                 {{ userInfo.user.name }} {{ userInfo.user.surname }} ({{
                   userInfo.user.email
                 }})
               </v-expansion-panel-header>
-              <v-expansion-panel-content v-if="userInfo && userInfo.user">
+              <v-expansion-panel-header class="text-capitalize" v-else-if="!userInfo.user">
+                DELETED USER
+              </v-expansion-panel-header>
+              <v-expansion-panel-content v-if="userInfo">
                 <usersRentInfo
                   :userInfo="userInfo"
                   :isActiveRents="isActiveRents"
@@ -85,14 +88,16 @@ export default {
       let vibeCheck = false;
       for (let i in this.rentInfo) {
         for (let o in this.rentInfo[i].carInfo) {
-          if (this.rentInfo[i].carInfo[o].hasReturned == false) {vibeCheck = false; break;}
+          if (this.rentInfo[i].carInfo[o].hasReturned == false && this.rentInfo[i].user) {vibeCheck = false; break;}
           vibeCheck = true; 
         }
         if (vibeCheck) {
           this.badIndexes.push(parseInt(i));
         }
         vibeCheck = false;
+        
       }
+      console.log('bad indexes', this.badIndexes)
     },
      checkForAnyRents() {
       let vibeCheck = [];

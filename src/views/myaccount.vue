@@ -189,6 +189,7 @@ export default {
         closeButton: "button",
         icon: true,
         rtl: false,
+        rentInfo: null,
       });
     },
 
@@ -210,16 +211,57 @@ export default {
         console.log(error);
       }
     },
-    async deleteUser() {
+    async fetchRents() {
       try {
-        const res = await axios.delete("http://localhost:8000/user/delete");
-        this.setCurrentUser(res.data);
-        this.logOut();
-        this.$router.push("/index");
+        const res = await axios.get("http://localhost:8000/user/rent");
+        this.rentInfo = res.data;
+        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
     },
+    async deleteUser() {
+      if (this.hasRentsNotReturned()) {
+        this.$toast.error(
+          "Please return your rented vehicles before deleteing your account",
+          {
+            position: "top-center",
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          }
+        );
+      } else {
+        try {
+          const res = await axios.delete("http://localhost:8000/user/delete");
+          this.setCurrentUser(res.data);
+          this.logOut();
+          this.$router.push("/index");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    hasRentsNotReturned() {
+      let check = [];
+      for (let i in this.rentInfo.carInfo) {
+        check.push(this.rentInfo.carInfo[i].hasReturned);
+      }
+      if (check.includes(false)) {
+        return true;
+      }
+    },
+  },
+  mounted() {
+    this.fetchRents();
   },
 };
 </script>
