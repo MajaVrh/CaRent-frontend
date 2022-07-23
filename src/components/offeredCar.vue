@@ -58,7 +58,7 @@
             <v-btn
               color="#FDA300"
               class="white--text px-10 text-capitalize text-h6"
-              v-if="isUser"
+              v-if="user && !user.isAdmin"
               style="font-family: 'Jockey One', sans-serif !important"
               @click="sendDataPayment"
             >
@@ -71,7 +71,7 @@
                 <v-icon
                   class="text-center justify-center align-center mx-2"
                   color="orange"
-                  v-if="!isUser"
+                  v-if="user && user.isAdmin"
                   x-large
                   v-bind="attrs"
                   v-on="on"
@@ -241,7 +241,7 @@
               class="mx-2"
               x-large
               @click="isVisableDelete = !isVisableDelete"
-              v-if="!isUser"
+              v-if="user && user.isAdmin"
               >mdi-delete-circle</v-icon
             ></v-row
           ></v-col
@@ -286,7 +286,7 @@
 
 <script scoped>
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "offeredCar",
   data: () => ({
@@ -336,7 +336,6 @@ export default {
     carName: Number,
     carP: Object,
     deleteCarFrontend: Function,
-    isUser: Boolean,
     dateCheckOut: Date,
     dateDropOff: Date,
     location: String,
@@ -344,24 +343,12 @@ export default {
   mounted() {
     this.setCarInfo();
   },
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
 
   methods: {
-    changeAlert() {
-      this.$toast.success("You have successfully made changes!", {
-        position: "top-center",
-        timeout: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: true,
-        rtl: false,
-      });
-    },
+   
 
     async deleteCar() {
       try {
@@ -488,8 +475,21 @@ export default {
         console.log(res.data);
 
         this.car = res.data;
-        this.changeAlert();
-        //    window.location.reload();
+        this.$toast.success("You have successfully made changes!", {
+        position: "top-center",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+        
       } catch (error) {
         console.log(error);
       }

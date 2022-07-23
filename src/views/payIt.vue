@@ -59,7 +59,7 @@
             class="mt-n5 fontTotal"
             style="font-family: 'Jockey One', sans-serif !important"
           >
-            Total: {{ totalPrice }}$
+            Total: {{ totalPrice }} €
           </p>
         </v-col>
       </v-row>

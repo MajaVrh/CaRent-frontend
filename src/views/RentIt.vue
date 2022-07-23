@@ -419,7 +419,7 @@
                         color="#FDA300"
                         class="white--text px-10 text-capitalize text-h6 my-2 mx-2"
                         style="font-family: 'Jockey One', sans-serif !important"
-                        @click="getCars(), (dialog.value = false)"
+                        @click="getCars(true), (dialog.value = false)"
                       >
                         Search
                       </v-btn>
@@ -1017,7 +1017,7 @@
           </v-card-actions>
         </v-card>
       </v-container>
-      <div v-if="isSearched">
+      <div v-if="isSearched || user.isAdmin">
         <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
           <offeredCar
             class="justify-center animacija"

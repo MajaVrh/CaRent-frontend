@@ -123,7 +123,7 @@
       </v-btn>
     </v-row>
     <v-card width="1000" class="mb-5 mx-auto">
-      <v-card-title>Total earnings: {{ totalPrice }}$</v-card-title>
+      <v-card-title>Total earnings: {{ totalPrice }}€</v-card-title>
       <div v-for="(filterResult, i) in filterResults" :key="i">
         <hr class="mb-8 mt-2" />
         <report-results :filterResult="filterResult" />
