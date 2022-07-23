@@ -1,5 +1,8 @@
 <template>
-  <v-container v-if="rentInfo && rentInfo.carInfo.length > 0 && hasRents" class="mt-12 skew">
+  <v-container
+    v-if="rentInfo && rentInfo.carInfo.length > 0 && hasRents"
+    class="mt-12 skew"
+  >
     <div
       v-for="(rent, i) in rentInfo.carInfo"
       :key="rent._id"
@@ -16,7 +19,7 @@
   <v-container v-else>
     <v-col align="center">
       <p
-        class="text-h4 mt-12 black--text"
+        class="text-h6 mt-12 black--text"
         style="font-family: 'Jockey One', sans-serif !important"
       >
         You haven't rented a single car yet. You need a car?

@@ -26,7 +26,7 @@
         :search="search"
         :headers="headers"
         :items="users"
-        class="elevation-1 mt-8 justify-space-between "
+        class="elevation-1 mt-8 justify-space-between"
         hide-default-footer
         ><template v-slot:item.makeAdmin="{ item }">
           <v-btn
@@ -44,7 +44,7 @@
             width="8rem"
             color="#153040 "
             @click="revokeAdmin(item.email)"
-            v-else
+            v-if="item._id != user._id && item.isAdmin"
             >Revoke admin</v-btn
           >
         </template></v-data-table
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 export default {
   name: "userList",
@@ -92,10 +93,15 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters({ user: "currentUser" }),
+  },
   mounted() {
     this.getUsers();
   },
   methods: {
+    ...mapMutations({ setCurrentUser: "setCurrentUser" }),
+
     alertStatus() {
       this.$toast.warning("You have changed the user's admin status!", {
         position: "top-center",

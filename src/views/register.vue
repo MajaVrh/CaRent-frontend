@@ -2,12 +2,13 @@
   <v-container class="animacija" style="margin-top: -2.4rem" fill-height>
     <v-row align="center" justify="center">
       <v-col align="center" justify="center">
-        <v-card width="500" class="py-5 px-5 animacija">
+        <v-card width="500" class="py-5 animacija">
           <v-card-title
-            class="text-h1 justify-center"
+            class="justify-center titleCarent"
             style="
               font-family: 'Jockey One', sans-serif !important;
               color: #153040;
+              font-size: 5.5rem;
             "
           >
             Ca<span class="orange--text lighten-1">R</span>ent
@@ -168,6 +169,18 @@ export default {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .titleCarent {
+    font-size: 4rem !important;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .titleCarent {
+    font-size: 3.8rem !important;
   }
 }
 </style>

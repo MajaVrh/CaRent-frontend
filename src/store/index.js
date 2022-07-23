@@ -12,7 +12,6 @@ export default new Vuex.Store({
     loading: true,
     checkDrop: null,
     isRented: false,
-
   },
   mutations: {
     setCurrentUser(state, payload) {
@@ -36,14 +35,14 @@ export default new Vuex.Store({
       state.currentUser = null;
       state.isAuth = false;
     },
-    setCheckDrop(state, payload){
-      state.checkDrop = payload
+    setCheckDrop(state, payload) {
+      state.checkDrop = payload;
     },
-    setRentedState(state, payload){
-      state.isRented = payload
-    }
+    setRentedState(state, payload) {
+      state.isRented = payload;
+    },
   },
-  
+
   getters: {
     currentUser(state) {
       return state.currentUser;
@@ -57,9 +56,9 @@ export default new Vuex.Store({
     checkDrop(state) {
       return state.checkDrop;
     },
-    isRented(state){
-      return state.isRented
-    }
+    isRented(state) {
+      return state.isRented;
+    },
   },
   actions: {
     //context -> commit za pozivanje mutacija, state-ovo gore, ------ cotext.commit
@@ -78,7 +77,6 @@ export default new Vuex.Store({
         commit("setIsAuth", false);
         commit("setCurrentUser", null);
         commit("setIsLoading", false);
-        console.log(error);
       }
     },
   },

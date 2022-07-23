@@ -229,11 +229,11 @@
             color="#FDA300"
             class="white--text mt-6 px-15 text-capitalize text-h6"
             style="font-family: 'Jockey One', sans-serif !important"
-            :to="{ name: 'RentIt' }"
+            @click="goTo()"
           >
             Rent it
-          </v-btn></v-col
-        >
+          </v-btn>
+        </v-col>
         <v-col :cols="12" :xs="12" :md="4" :sm="4"
           ><v-img
             loading="lazy"
@@ -269,6 +269,17 @@ export default {
   },
   methods: {
     ...mapMutations({ setCurrentUser: "setCurrentUser" }),
+
+    goTo() {
+      try {
+        if (this.user) {
+          this.$router.push("/RentIt");
+        } else this.$router.push("/index");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async addReview() {
       try {
         if (this.comment) {

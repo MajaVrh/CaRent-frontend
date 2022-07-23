@@ -8,7 +8,7 @@
         Rent a car</v-row
       >
 
-      <v-row class="text-h6 font-weight-regular ml-6 mt-6">
+      <v-row class="text-h6 font-weight-regular ml-6 mt-6 pr-3">
         <v-card flat>
           Discover all regions of Croatia with ease, safety and confidence! Rent
           a car in Croatia in an affordable way! We offer you the easiest way to
@@ -28,7 +28,7 @@
       >
         Our fleet</v-row
       >
-      <v-row class="text-h6 font-weight-regular ml-6 mt-6">
+      <v-row class="text-h6 font-weight-regular ml-6 mt-6 pr-3">
         <v-card flat>
           We offer 6 car categories: sedan, station-wagon, SUV , crossover, van,
           other.You can find a vehicle that suits you. Choose the type of
@@ -66,11 +66,9 @@
       <v-row class="text-h6 font-weight-regular ml-6 mt-6">
         <v-card flat>
           Go to the
-          <router-link to="/">
-            <span class="orange--text lighten-1 dec"
-              ><b> Rent It </b>
-            </span> </router-link
-          >page where you can filter vehicles by various categories and prices
+
+          <b> Rent It </b>
+          page where you can filter vehicles by various categories and prices
           and make a vehicle reservation
         </v-card></v-row
       >
@@ -125,7 +123,7 @@
       >
         How to rent a vehicle.</v-row
       >
-      <v-row class="text-h6 font-weight-regular ml-6 mt-6">
+      <v-row class="text-h6 font-weight-regular ml-6 mt-6 pr-3">
         <v-card flat>
           <li>go to the Rent it page</li>
           <li>choose the station/location where you want to rent a vehicle</li>
@@ -166,7 +164,7 @@
             color="#FDA300"
             class="white--text mt-6 px-15 text-capitalize text-h6"
             style="font-family: 'Jockey One', sans-serif !important"
-            :to="{ name: 'RentIt' }"
+            @click="goTo()"
           >
             Rent it
           </v-btn></v-col
@@ -245,7 +243,17 @@ export default {
       return [this.iconSize / 2, this.iconSize * 1.15];
     },
   },
-  methods: {},
+  methods: {
+    goTo() {
+      try {
+        if (this.user) {
+          this.$router.push("/RentIt");
+        } else this.$router.push("/index");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
 
