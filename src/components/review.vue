@@ -53,7 +53,7 @@ export default {
     async deleteReview() {
       try {
         await axios.delete(
-          `http://localhost:8000/review/delete/${this.review._id}`
+          `https://carentbackend.herokuapp.com/review/delete/${this.review._id}`
         );
         this.deleteReviewFrontend(this.review._id);
         this.$toast.success("Review was deleted sucesfully!", {

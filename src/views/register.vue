@@ -123,7 +123,7 @@ export default {
     ...mapActions({ loadUser: "loadUser" }),
     async register() {
       try {
-        const res = await axios.post("http://localhost:8000/user/register", {
+        const res = await axios.post("https://carentbackend.herokuapp.com/user/register", {
           name: this.name,
           surname: this.surname,
           password: this.password,

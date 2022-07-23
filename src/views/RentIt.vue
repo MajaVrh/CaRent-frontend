@@ -1221,7 +1221,7 @@ export default {
     async addCar() {
       try {
         console.log("-------------------------");
-        const res = await axios.post("http://localhost:8000/car/add", {
+        const res = await axios.post("https://carentbackend.herokuapp.com/car/add", {
           make: this.make,
           name: this.name,
           bodyType: this.bodyType,
@@ -1329,7 +1329,7 @@ export default {
 
     async getCars(isSearch = false) {
       try {
-        let res = await axios.post("http://localhost:8000/car", {
+        let res = await axios.post("https://carentbackend.herokuapp.com/car", {
           make: this.make,
           name: this.name,
           bodyType: this.bodyType,

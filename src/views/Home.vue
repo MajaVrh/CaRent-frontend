@@ -283,7 +283,7 @@ export default {
     async addReview() {
       try {
         if (this.comment) {
-          await axios.post("http://localhost:8000/review/add", {
+          await axios.post("https://carentbackend.herokuapp.com/review/add", {
             name: this.user.name,
             surname: this.user.surname,
             mark: this.rating,
@@ -345,7 +345,7 @@ export default {
 
     async getReview() {
       try {
-        let res = await axios.get("http://localhost:8000/reviews");
+        let res = await axios.get("https://carentbackend.herokuapp.com/reviews");
         this.reviews = res.data;
         console.log(res);
       } catch (error) {

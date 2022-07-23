@@ -67,7 +67,7 @@ export default new Vuex.Store({
         commit("setAuthToken", localStorage.token);
       }
       try {
-        const res = await axios.get("http://localhost:8000/auth");
+        const res = await axios.get("https://carentbackend.herokuapp.com/auth");
 
         commit("setIsAuth", true);
         commit("setCurrentUser", res.data);
