@@ -179,7 +179,7 @@ export default {
     allowedDates: (val) => parseInt(val.split("-")[2], 10),
     async getReports() {
       try {
-        const res = await axios.post("http://localhost:8000/rent/reports", {
+        const res = await axios.post("https://carentbackend.herokuapp.com/rent/reports", {
           dateRentsTo: this.dateRentsTo,
           dateRentsFrom: this.dateRentsFrom,
         });

@@ -115,7 +115,7 @@ export default {
 
     async getUsers() {
       try {
-        let res = await axios.get("http://localhost:8000/users");
+        let res = await axios.get("https://carentbackend.herokuapp.com/users");
         this.users = res.data;
       } catch (error) {
         console.log(error);
@@ -123,7 +123,7 @@ export default {
     },
     async setAdmin(email) {
       try {
-        await axios.patch(`http://localhost:8000/user/setAdmin/${email}`);
+        await axios.patch(`https://carentbackend.herokuapp.com/user/setAdmin/${email}`);
         this.getUsers();
         this.alertStatus();
       } catch (error) {
@@ -132,7 +132,7 @@ export default {
     },
     async revokeAdmin(email) {
       try {
-        await axios.patch(`http://localhost:8000/user/revokeAdmin/${email}`);
+        await axios.patch(`https://carentbackend.herokuapp.com/user/revokeAdmin/${email}`);
         this.getUsers();
         this.alertStatus();
       } catch (error) {

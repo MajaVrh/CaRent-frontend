@@ -115,7 +115,7 @@ export default {
         this.text != "" &&
         this.email.includes(".", "@")
       ) {
-        await axios.post("http://localhost:8000/contact", {
+        await axios.post("https://carentbackend.herokuapp.com/contact", {
           subject: this.subject,
           from: this.email,
           text: this.text,

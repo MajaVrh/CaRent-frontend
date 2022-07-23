@@ -195,7 +195,7 @@ export default {
 
     async updateData() {
       try {
-        const res = await axios.post("http://localhost:8000/user/update", {
+        const res = await axios.post("https://carentbackend.herokuapp.com/user/update", {
           newName: this.user.name,
           newSurname: this.user.surname,
           newAdress: this.user.adress,
@@ -213,7 +213,7 @@ export default {
     },
     async fetchRents() {
       try {
-        const res = await axios.get("http://localhost:8000/user/rent");
+        const res = await axios.get("https://carentbackend.herokuapp.com/user/rent");
         this.rentInfo = res.data;
         console.log(res.data);
       } catch (error) {
@@ -241,7 +241,7 @@ export default {
         );
       } else {
         try {
-          const res = await axios.delete("http://localhost:8000/user/delete");
+          const res = await axios.delete("https://carentbackend.herokuapp.com/user/delete");
           this.setCurrentUser(res.data);
           this.logOut();
           this.$router.push("/index");

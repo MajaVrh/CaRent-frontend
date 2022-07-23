@@ -397,7 +397,7 @@ export default {
   methods: {
     async fetchRents() {
       try {
-        const res = await axios.get(`http://localhost:8000/car/${this.id}`);
+        const res = await axios.get(`https://carentbackend.herokuapp.com/car/${this.id}`);
         this.car = res.data;
         if (this.daysRent) this.totalPrice = res.data.price * this.daysRent;
         else this.totalPrice = res.data.price;
@@ -457,7 +457,7 @@ export default {
         return this.fieldError();
       }
       try {
-        const res = await axios.post("http://localhost:8000/rent", {
+        const res = await axios.post("https://carentbackend.herokuapp.com/rent", {
           carId: this.car._id,
           location: this.checkDrop.location,
           checkOut: this.checkDrop.checkOutDate,
@@ -472,7 +472,7 @@ export default {
           Country: this.Country,
           totalPrice: this.totalPrice,
         });
-        await axios.post("http://localhost:8000/rent/contact", {
+        await axios.post("https://carentbackend.herokuapp.com/rent/contact", {
           email: this.Email,
           userName: this.Name,
           userSurname: this.Surname,

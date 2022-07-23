@@ -77,7 +77,7 @@ export default {
     
     async fetchRents() {
       try {
-        const res = await axios.get("http://localhost:8000/rent");
+        const res = await axios.get("https://carentbackend.herokuapp.com/rent");
         this.rentInfo = res.data;
         console.log("rents", res.data);
       } catch (error) {
