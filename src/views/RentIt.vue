@@ -451,7 +451,9 @@
                       v-bind="attrs"
                       v-on="on"
                       @click="
-                        (searchVisible = !searchVisible), (addVisible = false)
+                        (searchVisible = !searchVisible),
+                          (addVisible = false),
+                          (price = null)
                       "
                     >
                       Add new car

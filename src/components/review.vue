@@ -3,13 +3,12 @@
     class="px-12 black--text my-8"
     style="font-size: 16px"
     height="200"
-   
   >
-    <v-row>
-      <v-col xs="9" md="9" sm="9" lg="9">
+    <v-row style="width: 100% !important">
+      <v-col cols="10" xs="11" md="9" sm="9" lg="9">
         <b>{{ review.name }} {{ review.surname }}</b></v-col
       >
-      <v-col xs="3" md="3" sm="3" lg="3">
+      <v-col cols="2" xs="2" md="3" sm="3" lg="3">
         <v-icon
           @click="deleteReview"
           v-if="user && review.email == user.email"
@@ -22,6 +21,7 @@
     </v-row>
     <v-row>
       <v-rating
+        class="pt-n2"
         v-model="review.mark"
         color="yellow darken-3"
         background-color="grey darken-1"
@@ -81,7 +81,7 @@ export default {
 <style>
 .scrollable {
   overflow-y: scroll;
-  max-height: 140px !important;
+  max-height: 105px !important;
 }
 
 /* width */
