@@ -179,7 +179,7 @@
 
 <script>
 import { LMap, LTileLayer, LMarker, LIcon, LTooltip } from "vue2-leaflet";
-
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "Vehiclesandstations",
   components: {
@@ -242,8 +242,11 @@ export default {
     dynamicAnchor() {
       return [this.iconSize / 2, this.iconSize * 1.15];
     },
+    ...mapGetters({ user: "currentUser" }),
   },
   methods: {
+    ...mapMutations({ setCurrentUser: "setCurrentUser" }),
+
     goTo() {
       try {
         if (this.user) {
