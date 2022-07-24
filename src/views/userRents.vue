@@ -7,7 +7,6 @@
           <v-expansion-panels flat>
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
               <v-expansion-panel-header
-                class="text-capitalize"
                 v-if="!badIndexes.includes(i) && userInfo.user"
               >
                 {{ userInfo.user.name }} {{ userInfo.user.surname }} ({{
