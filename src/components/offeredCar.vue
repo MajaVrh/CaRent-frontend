@@ -352,7 +352,7 @@ export default {
 
     async deleteCar() {
       try {
-        await axios.delete(`https://carentbackend.herokuapp.com/${this.car._id}`);
+        await axios.delete(`https://carentbackend.herokuapp.com/car/delete/${this.car._id}`);
         this.deleteCarFrontend(this.car._id);
         this.$toast.success(
           `${this.car.make} ${this.car.name} was deleted sucesfully!`,

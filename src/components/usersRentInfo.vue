@@ -6,9 +6,16 @@
           class="text-capitalize"
           v-if="!rentedCars.hasReturned || !isActiveRents"
         >
-          <b> {{ rentedCars.car.make }} {{ rentedCars.car.name }} </b>
+          <b v-if="rentedCars && rentedCars.car"> {{ rentedCars.car.make }} {{ rentedCars.car.name }} </b>
+          <b v-else> DELETED CAR </b>
         </v-expansion-panel-header>
-        <v-expansion-panel-content>
+        <v-expansion-panel-header
+          class="text-capitalize"
+          v-else
+        >
+          DELETED VEHICLE
+        </v-expansion-panel-header>
+        <v-expansion-panel-content v-if="rentedCars && rentedCars.car">
           <v-row align="center">
             <v-col xs="12" md="6" sm="12" lg="4">
               <p><b>Vehicle loaction: </b> {{ rentedCars.location }}</p>
@@ -53,6 +60,9 @@
               >
             </v-col>
           </v-row>
+        </v-expansion-panel-content>
+        <v-expansion-panel-content v-else>
+          NO INFORMATION
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

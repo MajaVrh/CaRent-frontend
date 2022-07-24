@@ -3,7 +3,7 @@
     <v-container class="pr-8 pl-8 mt-12 mb-12">
       <v-row class="justify-center align-center text-center mt-8">
         <v-col :cols="12" :xs="12" :md="5" :sm="12" class="my-n4 mx-n8">
-          <div v-if="this.user.isAdmin">
+          <div v-if="user && user.isAdmin">
             <v-dialog transition="dialog-top-transition" max-width="78%">
               <template v-slot:activator="{ on, attrs }">
                 <v-col
@@ -307,6 +307,7 @@
                       >
                         <v-text-field
                           v-model="seats"
+                          type="number"
                           label="Seats"
                           outlined
                           dense
@@ -322,6 +323,7 @@
                         class="topMargin"
                         ><v-text-field
                           v-model="power"
+                          type="number"
                           label="Power (Hp)"
                           outlined
                           dense
@@ -357,6 +359,7 @@
                       >
                         <v-text-field
                           v-model="luggageCapacity"
+                          type="number"
                           label="Luggage capacity (l)"
                           outlined
                           dense
@@ -371,6 +374,7 @@
                         class="topMargin"
                       >
                         <v-text-field
+                        
                           v-model="productionYear"
                           label="Production Year"
                           outlined
@@ -432,7 +436,7 @@
         >
         <v-col :cols="12" :xs="12" :md="5" :sm="12" class="my-n4 mx-n8">
           <template>
-            <div v-if="this.user.isAdmin">
+            <div v-if="user && user.isAdmin">
               <v-dialog transition="dialog-top-transition " max-width="78%">
                 <template v-slot:activator="{ on, attrs }">
                   <v-col
@@ -560,12 +564,14 @@
 
                           <v-text-field
                             v-model="seats"
+                            type="number"
                             label="Seats"
                             color="orange"
                           ></v-text-field>
                           <v-text-field
                             v-model="luggageCapacity"
                             label="Luggage Capacity (l)"
+                            type="number"
                             color="orange"
                           ></v-text-field>
 
@@ -579,6 +585,7 @@
                           <v-text-field
                             v-model="power"
                             label="Power (Hp)"
+                            type="number"
                             color="orange"
                           ></v-text-field
                         ></v-col>
@@ -593,6 +600,7 @@
                           ></v-select>
                           <v-text-field
                             v-model="doors"
+                            type="number"
                             label="Doors"
                             color="orange"
                           ></v-text-field>
@@ -600,6 +608,7 @@
                           <v-text-field
                             v-model="productionYear"
                             label="Production year"
+                            type="number"
                             color="orange"
                           ></v-text-field>
                           <v-text-field
@@ -620,6 +629,7 @@
                           <v-text-field
                             v-model="price"
                             label="Price (€)"
+                            type="number"
                             color="orange"
                           ></v-text-field>
 
@@ -699,7 +709,7 @@
 ----------->
     <div>
       <v-container>
-        <v-card flat v-if="!this.user.isAdmin" class="justify-center">
+        <v-card flat v-if="!user && user.isAdmin" class="justify-center">
           <v-card-text class="mt-n12 px-12">
             <v-row
               class="text-h4 mt-n12 black--text d-flex ml-0 mb-6"
@@ -930,6 +940,7 @@
             <v-row class="justify-center px-6">
               <v-col :cols="12" :xs="12" :md="4" :sm="4" class="topMargin">
                 <v-text-field
+                type="number"
                   v-model="seats"
                   label="Seats"
                   outlined
@@ -941,6 +952,7 @@
               <v-col :cols="12" :xs="12" :md="4" :sm="4" class="topMargin"
                 ><v-text-field
                   v-model="power"
+                  type="number"
                   label="Power (Hp)"
                   outlined
                   dense
@@ -965,6 +977,7 @@
                 <v-text-field
                   v-model="luggageCapacity"
                   label="Luggage capacity (l)"
+                  type="number"
                   outlined
                   dense
                   color="#153040"
@@ -973,6 +986,7 @@
               <v-col :cols="12" :xs="12" :md="4" :sm="4" class="topMargin">
                 <v-text-field
                   v-model="productionYear"
+                  type="number"
                   label="Production Year"
                   outlined
                   dense
