@@ -709,7 +709,7 @@
 ----------->
     <div>
       <v-container>
-        <v-card flat v-if="!user && user.isAdmin" class="justify-center">
+        <v-card flat v-if="user && !user.isAdmin" class="justify-center">
           <v-card-text class="mt-n12 px-12">
             <v-row
               class="text-h4 mt-n12 black--text d-flex ml-0 mb-6"

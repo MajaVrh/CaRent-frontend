@@ -352,7 +352,7 @@ export default {
 
     async deleteCar() {
       try {
-        await axios.delete(`https://carentbackend.herokuapp.com/car/delete/${this.car._id}`);
+        await axios.delete(`http://localhost:8000/car/delete/${this.car._id}`);
         this.deleteCarFrontend(this.car._id);
         this.$toast.success(
           `${this.car.make} ${this.car.name} was deleted sucesfully!`,
@@ -451,6 +451,7 @@ export default {
       } else return true;
     },
     async updateCar() {
+      console.log(this.newMake, this.newName, this.newSeats)
       try {
         const res = await axios.post(
           `https://carentbackend.herokuapp.com/car/update/${this.car._id}`,
