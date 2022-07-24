@@ -8,7 +8,13 @@
         >
           <b> {{ rentedCars.car.make }} {{ rentedCars.car.name }} </b>
         </v-expansion-panel-header>
-        <v-expansion-panel-content>
+        <v-expansion-panel-header
+          class="text-capitalize"
+          v-else
+        > 
+           DELETED VEHICLE
+        </v-expansion-panel-header>
+        <v-expansion-panel-content v-if="rentedCars && rentedCars.car">
           <v-row align="center">
             <v-col xs="12" md="6" sm="12" lg="4">
               <p><b>Vehicle loaction: </b> {{ rentedCars.location }}</p>
