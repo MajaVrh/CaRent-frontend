@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-row
       class="text-h4 black--text d-flex ml-0 mb-2"
       style="font-family: 'Jockey One', sans-serif !important"
@@ -8,16 +8,19 @@
     >
     <v-row class="justify-space-between">
       <v-col lg="3" sm="5" md="3" xs="12">
-        <p> <b> Doors: </b>{{ carInfo.car.doors }}</p>
-        <p> <b> Seats: </b> {{ carInfo.car.seats }}</p>
-        <p> <b> Luggage Capacity: </b>{{ carInfo.car.luggageCapacity }}l</p>
-        <p> <b> Transmission: </b> {{ carInfo.car.transmission }}</p>
+        <p><b> Doors: </b>{{ carInfo.car.doors }}</p>
+        <p><b> Seats: </b> {{ carInfo.car.seats }}</p>
+        <p><b> Luggage Capacity: </b>{{ carInfo.car.luggageCapacity }}l</p>
+        <p><b> Transmission: </b> {{ carInfo.car.transmission }}</p>
       </v-col>
       <v-col lg="3" sm="5" md="3" xs="12">
-        <p> <b> Fuel: </b> {{ carInfo.car.fuel }}</p>
-        <p> <b> Body type: </b> {{ carInfo.car.bodyType }}</p>
-        <p> <b> Driver license category: </b> {{ carInfo.car.driverLicenseCategory }}</p>
-        <p> <b> Price per day:</b> {{carInfo.car.price}}€ </p>
+        <p><b> Fuel: </b> {{ carInfo.car.fuel }}</p>
+        <p><b> Body type: </b> {{ carInfo.car.bodyType }}</p>
+        <p>
+          <b> Driver license category: </b>
+          {{ carInfo.car.driverLicenseCategory }}
+        </p>
+        <p><b> Price per day:</b> {{ carInfo.car.price }}€</p>
       </v-col>
       <v-col sm="12" md="5" xs="12" lg="6" align="center">
         <v-img
@@ -68,7 +71,15 @@
         <div
           style="font-family: 'Jockey One', sans-serif !important"
           class="text-h5 mt-4"
-          v-if="daysRent != 0"
+          v-if="daysUntilRent != 0"
+        >
+          Days until rent: {{ daysUntilRent }}
+          {{ Pluralize("day", daysUntilRent + 1) }}
+        </div>
+        <div
+          style="font-family: 'Jockey One', sans-serif !important"
+          class="text-h5 mt-4"
+          v-else-if="daysRent != 0"
         >
           Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent + 1) }}
         </div>
@@ -85,7 +96,15 @@
       <div
         style="font-family: 'Jockey One', sans-serif !important"
         class="text-h5 mt-4"
-        v-if="daysRent != 0"
+        v-if="daysUntilRent != 0"
+      >
+        Days until rent: {{ daysUntilRent }}
+        {{ Pluralize("day", daysUntilRent + 1) }}
+      </div>
+      <div
+        style="font-family: 'Jockey One', sans-serif !important"
+        class="text-h5 mt-4"
+        v-else-if="daysRent != 0"
       >
         Remaining time: {{ daysRent }} {{ Pluralize("day", daysRent + 1) }}
       </div>
@@ -113,6 +132,7 @@ export default {
   data() {
     return {
       daysRent: null,
+      daysUntilRent: null,
       dateDropOff: new Date(this.carInfo.dropOff),
       dateCheckOut: new Date(this.carInfo.checkOut),
     };
@@ -124,9 +144,17 @@ export default {
       this.daysRent = daysRent - 1;
       console.log(daysRent);
     },
+    calcRentCountdown(){
+      var today = new Date();
+      const dateDif = Math.abs(today - this.dateCheckOut);
+      const daysUntilRent = Math.ceil(dateDif / (1000 * 60 * 60 * 24));
+      this.daysUntilRent = daysUntilRent - 1;
+      console.log(daysUntilRent);
+    }
   },
   mounted() {
     this.calcTimeDiff();
+    this. calcRentCountdown()
   },
 };
 </script>
