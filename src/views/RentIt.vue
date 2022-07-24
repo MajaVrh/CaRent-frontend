@@ -307,6 +307,7 @@
                       >
                         <v-text-field
                           v-model="seats"
+                          type="number"
                           label="Seats"
                           outlined
                           dense
@@ -323,6 +324,7 @@
                         ><v-text-field
                           v-model="power"
                           label="Power (Hp)"
+                          type="number"
                           outlined
                           dense
                           color="#153040"
@@ -358,6 +360,7 @@
                         <v-text-field
                           v-model="luggageCapacity"
                           label="Luggage capacity (l)"
+                          type="number"
                           outlined
                           dense
                           color="#153040"
@@ -372,6 +375,7 @@
                       >
                         <v-text-field
                           v-model="productionYear"
+                          type="number"
                           label="Production Year"
                           outlined
                           dense
@@ -559,12 +563,14 @@
                           <v-text-field
                             v-model="seats"
                             label="Seats"
+                            type="number"
                             color="orange"
                           ></v-text-field>
                           <v-text-field
                             v-model="luggageCapacity"
                             label="Luggage Capacity (l)"
                             color="orange"
+                            type="number"
                           ></v-text-field>
 
                           <v-select
@@ -576,6 +582,7 @@
                           ></v-select>
                           <v-text-field
                             v-model="power"
+                            type="number"
                             label="Power (Hp)"
                             color="orange"
                           ></v-text-field
@@ -591,12 +598,14 @@
                           ></v-select>
                           <v-text-field
                             v-model="doors"
+                            type="number"
                             label="Doors"
                             color="orange"
                           ></v-text-field>
 
                           <v-text-field
                             v-model="productionYear"
+                            type="number"
                             label="Production year"
                             color="orange"
                           ></v-text-field>
@@ -618,6 +627,7 @@
                           <v-text-field
                             v-model="price"
                             label="Price (€)"
+                            type="number"
                             color="orange"
                           ></v-text-field>
 
@@ -930,6 +940,7 @@
                 <v-text-field
                   v-model="seats"
                   label="Seats"
+                  type="number"
                   outlined
                   dense
                   color="#153040"
@@ -940,6 +951,7 @@
                 ><v-text-field
                   v-model="power"
                   label="Power (Hp)"
+                  type="number"
                   outlined
                   dense
                   color="#153040"
@@ -963,6 +975,7 @@
                 <v-text-field
                   v-model="luggageCapacity"
                   label="Luggage capacity (l)"
+                  type="number"
                   outlined
                   dense
                   color="#153040"
@@ -972,6 +985,7 @@
                 <v-text-field
                   v-model="productionYear"
                   label="Production Year"
+                  type="number"
                   outlined
                   dense
                   color="#153040"
