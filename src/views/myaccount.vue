@@ -195,7 +195,7 @@ export default {
 
     async updateData() {
       try {
-        const res = await axios.post("https://carentbackend.herokuapp.com/user/update", {
+        const res = await axios.patch("https://carentbackend.herokuapp.com/user/update", {
           newName: this.user.name,
           newSurname: this.user.surname,
           newAdress: this.user.adress,

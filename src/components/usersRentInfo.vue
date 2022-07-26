@@ -77,7 +77,7 @@ export default {
       const idCarInfo2 = idCarInfo._id;
       console.log(idCarInfo2);
       try {
-        await axios.post("https://carentbackend.herokuapp.com/rent/updateReturnal", {
+        await axios.patch("https://carentbackend.herokuapp.com/rent/updateReturnal", {
           idUser: userID,
           idCarInfo: idCarInfo2,
         });

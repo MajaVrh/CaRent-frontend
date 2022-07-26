@@ -37,7 +37,6 @@
           <v-expansion-panels flat>
             <v-expansion-panel v-for="(userInfo, i) in rentInfo" :key="i">
               <v-expansion-panel-header
-                class="text-capitalize"
                 v-if="userInfo.user"
               >
                 {{ userInfo.user.name }} {{ userInfo.user.surname }} ({{
@@ -45,7 +44,6 @@
                 }})
               </v-expansion-panel-header>
               <v-expansion-panel-header
-                class="text-capitalize"
                 v-else-if="!userInfo.user"
               >
                 DELETED USER

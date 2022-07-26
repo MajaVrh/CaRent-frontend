@@ -1033,7 +1033,7 @@
           </v-card-actions>
         </v-card>
       </v-container>
-      <div v-if="isSearched || user.isAdmin">
+      <div v-if="isSearched || user && user.isAdmin">
         <v-container class="mt-n8 mb-8" v-for="car in cars" :key="car._id">
           <offeredCar
             class="justify-center animacija"
@@ -1140,11 +1140,10 @@ export default {
     offeredCar,
   },
   mounted() {
-    if (this.user.isAdmin) {
+    if (this.user && this.user.isAdmin) {
       this.isSearched = true;
     }
     this.rentSuccessful();
-    this.isAdmin();
     this.getCars();
     this.oneDayLater = new Date();
     this.oneDayLater.setDate(new Date(this.dateCheckOut).getDate() + 1);
@@ -1280,12 +1279,7 @@ export default {
       this.price = 1000;
       this.location = "";
     },
-    isAdmin() {
-      if (this.user.isAdmin) {
-        this.searchVisible = false;
-        this.isUser = false;
-      } else this.searchVisible = true;
-    },
+
     isSearchedCars() {
       if (this.location) {
         this.isSearched = true;
