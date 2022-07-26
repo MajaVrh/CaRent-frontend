@@ -296,6 +296,7 @@ export default {
       "Crossover",
       "SUV",
       "Van",
+      "Hatchback",
       "Other",
     ],
     items: [
@@ -303,7 +304,7 @@ export default {
       "Rijeka",
       "Split",
       "Varaždin",
-      "Vukovar",
+      "Vinkovci",
       "Zadar",
       "Zagreb",
     ],
