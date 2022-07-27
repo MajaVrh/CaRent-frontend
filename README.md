@@ -3,6 +3,7 @@ Grupa korisnika -  Ljudi kojima je potrebna usluga rentanja motornih vozila. Jed
 Ova web aplikacija sadrži  mogućnost prijave ili registraciju korisnika. Prijava u sustav moguća je kao admin ili korisnik.
 Korisnik - rentanje automobila (odabir datuma i lokacije odlaska i dolaska, odabir motornog vozila te plaćanje), kontaktiranje admina u slučaju nužde i praćenje aktivnih rentova. 
 Admin - uređivanje ponude, praćenje prometa, dodjeljivanje/opozvati admina i praćenje svih aktivnih i dosadašnjih rentova
+Neregistrirani korisnik - Samo osnovne stranice sa informacijama i kontakt forma 
 
 ### Autori i zaduženja
 
